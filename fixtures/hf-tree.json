@@ -1,0 +1,1 @@
+[ { "type": "file", "path": "cards/alice.png", "size": 40000 }, { "type": "file", "path": "cards/huge.png", "size": 9000000 }, { "type": "file", "path": "wi/dragons.json", "size": 800 }, { "type": "file", "path": "README.md", "size": 100 }, { "type": "directory", "path": "cards" } ]
