@@ -1,0 +1,1 @@
+{ "entries": { "0": { "uid": 0, "key": ["dragon"], "keysecondary": [], "comment": "Dragons", "content": "Big lizards.", "constant": false, "disable": false, "order": 100, "position": 0 }, "1": { "uid": 1, "key": ["sword"], "keysecondary": ["blade"], "comment": "", "content": "Sharp.", "constant": true, "disable": true, "order": 50, "position": 1 } } }

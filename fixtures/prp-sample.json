@@ -1,0 +1,4 @@
+[
+  { "id": "every-trick-works-once", "title": "Every Trick Works Once", "rating": 8.54, "shortDescription": "It hunts the town one night a month.", "overview": "You are the Warden of Hollowbrook.", "intro": "You are the Warden of Hollowbrook, keeper of the old bargain.", "tags": ["dread", "cat-and-mouse", "dark fantasy"], "starters": ["The ledger is open.", "Brin is already talking."], "cardImage": "https://user.uploads.dev/file/9994dd9d27a019ab7c77d14a27e3542f.webp", "background": { "landscape": "https://user.uploads.dev/file/06c1a95a42581b39e71ab1d515764fcf.webp" }, "music": [] },
+  { "id": "after-hours", "title": "After Hours", "rating": 7.1, "shortDescription": "A late shift.", "overview": "o", "intro": "i", "tags": ["romance", "NSFW"], "starters": ["s1"], "cardImage": "https://user.uploads.dev/file/aaaa.webp", "background": {}, "music": [] }
+]
