@@ -1,0 +1,1 @@
+{ "sha": "abc", "truncated": false, "tree": [ { "path": "alice.png", "type": "blob", "size": 30000 }, { "path": "big.png", "type": "blob", "size": 5000000 }, { "path": "lore/wi.json", "type": "blob", "size": 600 }, { "path": "src", "type": "tree" } ] }
