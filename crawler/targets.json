@@ -1,0 +1,6 @@
+[
+  { "id": "blizzardui", "label": "BlizzardUI", "url": "https://perchance.org/blizzardui?pan={id}", "kinds": ["character", "lorebook", "scenario"], "receiver": false },
+  { "id": "aether", "label": "Aether", "url": "https://perchance.org/aetherui-airpg?pan={id}", "kinds": ["character", "lorebook", "scenario"], "receiver": false },
+  { "id": "fur-ai", "label": "FurAI", "url": "https://perchance.org/fur-ai", "kinds": ["character"], "receiver": false },
+  { "id": "as-social", "label": "Social DB", "url": "https://perchance.org/as-social", "kinds": ["character", "lorebook"], "receiver": false }
+]
