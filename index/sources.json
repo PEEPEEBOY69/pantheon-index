@@ -1,0 +1,1095 @@
+[
+ {
+  "id": "chub",
+  "label": "Chub.ai",
+  "kinds": [
+   "character"
+  ],
+  "status": "live",
+  "adapter": "chub.json",
+  "hosts": [
+   "chub.ai",
+   "charhub.ai",
+   "characterhub.org",
+   "venus.chub.ai",
+   "gateway.chub.ai",
+   "avatars.charhub.io"
+  ],
+  "probe": "https://api.chub.ai/search?namespace=characters&first=1",
+  "evidence": "shipped generators",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "json",
+   "ms": 434,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 2191
+  },
+  "lastCrawl": {
+   "at": 1788302777,
+   "ok": true,
+   "count": 19936,
+   "fresh": 19936,
+   "error": null,
+   "errors": 0
+  }
+ },
+ {
+  "id": "chub-lorebooks",
+  "label": "Chub.ai Lorebooks",
+  "kinds": [
+   "lorebook"
+  ],
+  "status": "live",
+  "adapter": "chub-lorebooks.json",
+  "hosts": [],
+  "probe": "https://api.chub.ai/search?namespace=lorebooks&first=1",
+  "evidence": "Blizzard A.6b",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "json",
+   "ms": 214,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 1522
+  },
+  "lastCrawl": {
+   "at": 1788302777,
+   "ok": true,
+   "count": 4997,
+   "fresh": 4997,
+   "error": null,
+   "errors": 0
+  }
+ },
+ {
+  "id": "fictionlab",
+  "label": "FictionLab",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "live",
+  "adapter": "fictionlab.json",
+  "hosts": [
+   "fictionlab.ai"
+  ],
+  "probe": "https://fictionlab.ai/api/search?version=2&keyw=&size=1&searchType=scenarios&sortType=trending&time=all_time&page=0&mature=false",
+  "evidence": "as-social, Berg; Cloudflare challenge 403 from datacenter AND residential (2026-09-01) — live via superFetch only",
+  "crawl": false,
+  "sweep": {
+   "status": 403,
+   "cors": false,
+   "kind": "challenge",
+   "ms": 357,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "perchance-rp",
+  "label": "Perchance RP scenarios",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "live",
+  "adapter": "perchance-rp.mjs",
+  "hosts": [],
+  "probe": "https://user.uploads.dev/file/4bae8c63c1b8a8f0485e27e30737dc44.json",
+  "evidence": "measured 2026-09-01: 10,019,449 bytes, CORS *",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "json",
+   "ms": 2275,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 9956468
+  },
+  "lastCrawl": {
+   "at": 1788302777,
+   "ok": true,
+   "count": 723,
+   "fresh": 723,
+   "error": null,
+   "errors": 0
+  }
+ },
+ {
+  "id": "huggingface",
+  "label": "HuggingFace datasets",
+  "kinds": [
+   "character",
+   "lorebook"
+  ],
+  "status": "live",
+  "adapter": "huggingface.mjs",
+  "hosts": [
+   "huggingface.co"
+  ],
+  "probe": "https://huggingface.co/api/datasets?search=character%20card&limit=1",
+  "evidence": "open API",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "json",
+   "ms": 465,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 651
+  },
+  "lastCrawl": {
+   "at": 1788302777,
+   "ok": true,
+   "count": 34,
+   "fresh": 34,
+   "error": null,
+   "errors": 1
+  }
+ },
+ {
+  "id": "github",
+  "label": "GitHub card repos",
+  "kinds": [
+   "character",
+   "lorebook"
+  ],
+  "status": "live",
+  "adapter": "github-topics.mjs",
+  "hosts": [],
+  "probe": "https://api.github.com/search/repositories?q=topic:character-cards&per_page=1",
+  "evidence": "open API",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "json",
+   "ms": 383,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 5636
+  },
+  "lastCrawl": {
+   "at": 1788302777,
+   "ok": true,
+   "count": 222,
+   "fresh": 222,
+   "error": null,
+   "errors": 17
+  }
+ },
+ {
+  "id": "character-tavern",
+  "label": "Character Tavern",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "character-tavern.com",
+   "cards.character-tavern.com",
+   "ct-cards.storage.character-tavern.com"
+  ],
+  "probe": "https://character-tavern.com/",
+  "evidence": "shipped generators",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 476,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 55048
+  }
+ },
+ {
+  "id": "aicharactercards",
+  "label": "AI Character Cards",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "aicharactercards.com",
+   "api.aicharactercards.com"
+  ],
+  "probe": "https://api.aicharactercards.com/",
+  "evidence": "shipped generators",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 559,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 1133
+  }
+ },
+ {
+  "id": "jannyai",
+  "label": "JannyAI",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "jannyai.com"
+  ],
+  "probe": "https://jannyai.com/",
+  "evidence": "shipped generators",
+  "sweep": {
+   "status": 403,
+   "cors": false,
+   "kind": "challenge",
+   "ms": 216,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "crushon",
+  "label": "CrushOn",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "crushon.ai"
+  ],
+  "probe": "https://crushon.ai/",
+  "evidence": "shipped generators",
+  "sweep": {
+   "status": 403,
+   "cors": false,
+   "kind": "challenge",
+   "ms": 272,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "backyard",
+  "label": "Backyard AI Hub",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "backyard.ai"
+  ],
+  "probe": "https://backyard.ai/hub",
+  "evidence": "curated list",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 717,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 51457
+  }
+ },
+ {
+  "id": "risu-realm",
+  "label": "Risu AI Realm",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "realm.risuai.net",
+   "risuai.net"
+  ],
+  "probe": "https://realm.risuai.net/",
+  "evidence": "curated list",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 1147,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 119282
+  }
+ },
+ {
+  "id": "wyvern",
+  "label": "Wyvern Chat",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "app.wyvern.chat",
+   "wyvern.chat"
+  ],
+  "probe": "https://app.wyvern.chat/",
+  "evidence": "curated list",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 293,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 600328
+  }
+ },
+ {
+  "id": "soulweaver",
+  "label": "Soulweaver AI",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "soulweaverai.com"
+  ],
+  "probe": "https://soulweaverai.com/",
+  "evidence": "curated list",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 989,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 28332
+  }
+ },
+ {
+  "id": "nyai",
+  "label": "NYAI",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "nyai.me"
+  ],
+  "probe": "https://nyai.me/ai/bots",
+  "evidence": "curated list",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 525,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 3365
+  }
+ },
+ {
+  "id": "datacat",
+  "label": "DataCat",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "datacat.run"
+  ],
+  "probe": "https://datacat.run/",
+  "evidence": "curated list",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 1239,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 264605
+  }
+ },
+ {
+  "id": "botbooru",
+  "label": "Bot Booru",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "botbooru.com"
+  ],
+  "probe": "https://botbooru.com/",
+  "evidence": "curated list (archive)",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 724,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 343209
+  }
+ },
+ {
+  "id": "char-archive",
+  "label": "Char Archive",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "char-archive.evulid.cc"
+  ],
+  "probe": "https://char-archive.evulid.cc/",
+  "evidence": "curated list (archive)",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 319,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 3232
+  }
+ },
+ {
+  "id": "chatbots-neocities",
+  "label": "Chatbots Neocities",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "chatbots.neocities.org"
+  ],
+  "probe": "https://chatbots.neocities.org/",
+  "evidence": "curated list (archive)",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 116,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 23485
+  }
+ },
+ {
+  "id": "agnai",
+  "label": "Agnai",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "agnai.chat"
+  ],
+  "probe": "https://agnai.chat/",
+  "evidence": "named, unverified",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 417,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 1568
+  }
+ },
+ {
+  "id": "spicychat",
+  "label": "SpicyChat",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "spicychat.ai"
+  ],
+  "probe": "https://spicychat.ai/",
+  "evidence": "named, unverified",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 185,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 10434
+  }
+ },
+ {
+  "id": "moescape",
+  "label": "Yodayo / Moescape",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "moescape.ai",
+   "yodayo.com"
+  ],
+  "probe": "https://moescape.ai/",
+  "evidence": "named, unverified",
+  "sweep": {
+   "status": 403,
+   "cors": false,
+   "kind": "challenge",
+   "ms": 380,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "minitavern",
+  "label": "MiniTavern market",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "mini-tavern.com"
+  ],
+  "probe": "https://mini-tavern.com/",
+  "evidence": "named, unverified",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 1054,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 62524
+  }
+ },
+ {
+  "id": "sillycard",
+  "label": "Sillycard",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "sillycard-web.pages.dev"
+  ],
+  "probe": "https://sillycard-web.pages.dev/",
+  "evidence": "named, unverified",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 281,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 36639
+  }
+ },
+ {
+  "id": "aidungeon",
+  "label": "AI Dungeon",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "aidungeon.com",
+   "play.aidungeon.com"
+  ],
+  "probe": "https://play.aidungeon.com/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 314,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 20036
+  }
+ },
+ {
+  "id": "aiga",
+  "label": "aiga_ Shared Worlds",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "aiga.io"
+  ],
+  "probe": "https://www.aiga.io/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 447,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 168229
+  }
+ },
+ {
+  "id": "rpggo",
+  "label": "RPGGO",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "rpggo.ai"
+  ],
+  "probe": "https://rpggo.ai/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 813,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 20207
+  }
+ },
+ {
+  "id": "altworld",
+  "label": "Altworld",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "altworld.io"
+  ],
+  "probe": "https://altworld.io/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 190,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 145928
+  }
+ },
+ {
+  "id": "talefy",
+  "label": "Talefy",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "talefy.ai"
+  ],
+  "probe": "https://talefy.ai/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 1049,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 335958
+  }
+ },
+ {
+  "id": "kobold",
+  "label": "KoboldAI",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "koboldai.net"
+  ],
+  "probe": "https://koboldai.net/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 933,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 1722386
+  }
+ },
+ {
+  "id": "novelai",
+  "label": "NovelAI scenarios",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "novelai.net"
+  ],
+  "probe": "https://novelai.net/",
+  "evidence": "named",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 275,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 197682
+  }
+ },
+ {
+  "id": "bronya-rand",
+  "label": "Bronya Rand's Character Bot Archive",
+  "kinds": [
+   "lorebook",
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "bronya-rand.github.io"
+  ],
+  "probe": "https://bronya-rand.github.io/reimagined-couscous/world-lore-books",
+  "evidence": "search result",
+  "sweep": {
+   "status": 200,
+   "cors": true,
+   "kind": "html",
+   "ms": 168,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 16955
+  }
+ },
+ {
+  "id": "janitorai",
+  "label": "JanitorAI",
+  "kinds": [
+   "character"
+  ],
+  "status": "blocked",
+  "hosts": [
+   "janitorai.com"
+  ],
+  "probe": "https://janitorai.com/",
+  "evidence": "Cloudflare 403 from browser (2026-08-21)",
+  "note": "index + open only",
+  "sweep": {
+   "status": 403,
+   "cors": false,
+   "kind": "challenge",
+   "ms": 338,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "characterai",
+  "label": "Character.AI",
+  "kinds": [
+   "character"
+  ],
+  "status": "blocked",
+  "hosts": [
+   "character.ai",
+   "characterai.io",
+   "c.ai"
+  ],
+  "probe": "https://character.ai/",
+  "evidence": "no public API",
+  "note": "open only",
+  "sweep": {
+   "status": 403,
+   "cors": false,
+   "kind": "challenge",
+   "ms": 242,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "voxta",
+  "label": "Voxta",
+  "kinds": [
+   "character"
+  ],
+  "status": "blocked",
+  "hosts": [
+   "voxta.ai"
+  ],
+  "probe": "https://voxta.ai/",
+  "evidence": "custom format",
+  "note": "open only",
+  "sweep": {
+   "status": 200,
+   "cors": false,
+   "kind": "html",
+   "ms": 489,
+   "at": 1788302777,
+   "consecutiveFailures": 0,
+   "bytes": 1319
+  }
+ },
+ {
+  "id": "as-social",
+  "label": "Social DB (as-social)",
+  "kinds": [
+   "character",
+   "lorebook"
+  ],
+  "status": "blocked",
+  "hosts": [],
+  "probe": null,
+  "evidence": "server-plugin store; readable only once they publish a snapshot (spec §19.4)",
+  "note": "partnership ask",
+  "sweep": {
+   "kind": "skipped",
+   "at": 1788302777
+  }
+ },
+ {
+  "id": "fur-ai",
+  "label": "FurAI",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [],
+  "probe": null,
+  "evidence": "G2G friendly per source header",
+  "note": "partnership ask",
+  "sweep": {
+   "kind": "skipped",
+   "at": 1788302777
+  }
+ },
+ {
+  "id": "nd-api",
+  "label": "nd-api (unidentified)",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "prod.nd-api.com",
+   "cdn.nd-api.com"
+  ],
+  "probe": "https://prod.nd-api.com/",
+  "evidence": "hit by several shipped generators; identify",
+  "sweep": {
+   "status": 404,
+   "cors": false,
+   "kind": "error",
+   "ms": 194,
+   "at": 1788302777,
+   "consecutiveFailures": 1,
+   "error": "http"
+  }
+ },
+ {
+  "id": "rentry-co",
+  "label": "rentry.co",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "rentry.co"
+  ],
+  "probe": "https://rentry.co/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "rentry-charcard-list",
+   "rentry-meta-bot-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "googletagmanager-com",
+  "label": "googletagmanager.com",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "googletagmanager.com"
+  ],
+  "probe": "https://googletagmanager.com/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "rentry-charcard-list",
+   "rentry-meta-bot-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "blocky-mint-github-io",
+  "label": "blocky-mint.github.io",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "blocky-mint.github.io"
+  ],
+  "probe": "https://blocky-mint.github.io/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "schema-org",
+  "label": "schema.org",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "schema.org"
+  ],
+  "probe": "https://schema.org/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "t-co",
+  "label": "t.co",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "t.co"
+  ],
+  "probe": "https://t.co/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "cdn-jsdelivr-net",
+  "label": "cdn.jsdelivr.net",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "cdn.jsdelivr.net"
+  ],
+  "probe": "https://cdn.jsdelivr.net/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "realfavicongenerator-net",
+  "label": "realfavicongenerator.net",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "realfavicongenerator.net"
+  ],
+  "probe": "https://realfavicongenerator.net/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "browsehappy-com",
+  "label": "browsehappy.com",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "browsehappy.com"
+  ],
+  "probe": "https://browsehappy.com/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "link-to-whatever-social-network-com",
+  "label": "link-to-whatever-social-network.com",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "link-to-whatever-social-network.com"
+  ],
+  "probe": "https://link-to-whatever-social-network.com/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "rentry-org",
+  "label": "rentry.org",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "rentry.org"
+  ],
+  "probe": "https://rentry.org/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "jekyllrb-com",
+  "label": "jekyllrb.com",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "jekyllrb.com"
+  ],
+  "probe": "https://jekyllrb.com/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ },
+ {
+  "id": "mademistakes-com",
+  "label": "mademistakes.com",
+  "kinds": [
+   "character"
+  ],
+  "status": "candidate",
+  "hosts": [
+   "mademistakes.com"
+  ],
+  "probe": "https://mademistakes.com/",
+  "evidence": "aggregator",
+  "discoveredFrom": [
+   "blocky-character-card-list"
+  ],
+  "ts": 1788302777
+ }
+]

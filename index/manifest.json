@@ -1,0 +1,110 @@
+{
+ "v": 1,
+ "builtAt": 1788302777,
+ "base": {
+  "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
+  "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
+ },
+ "sources": {
+  "chub": {
+   "count": 19936,
+   "heads": [
+    "chub/head-000.json",
+    "chub/head-001.json",
+    "chub/head-002.json",
+    "chub/head-003.json",
+    "chub/head-004.json",
+    "chub/head-005.json",
+    "chub/head-006.json",
+    "chub/head-007.json"
+   ],
+   "recs": [
+    "chub/rec-000.json",
+    "chub/rec-001.json",
+    "chub/rec-002.json",
+    "chub/rec-003.json",
+    "chub/rec-004.json",
+    "chub/rec-005.json",
+    "chub/rec-006.json",
+    "chub/rec-007.json"
+   ],
+   "bytes": 17653829
+  },
+  "chub-lorebooks": {
+   "count": 4997,
+   "heads": [
+    "chub-lorebooks/head-000.json",
+    "chub-lorebooks/head-001.json"
+   ],
+   "recs": [
+    "chub-lorebooks/rec-000.json",
+    "chub-lorebooks/rec-001.json"
+   ],
+   "bytes": 4199959
+  },
+  "perchance-rp": {
+   "count": 723,
+   "heads": [
+    "perchance-rp/head-000.json"
+   ],
+   "recs": [
+    "perchance-rp/rec-000.json"
+   ],
+   "bytes": 681267
+  },
+  "huggingface": {
+   "count": 34,
+   "heads": [
+    "huggingface/head-000.json"
+   ],
+   "recs": [
+    "huggingface/rec-000.json"
+   ],
+   "bytes": 41407
+  },
+  "github": {
+   "count": 222,
+   "heads": [
+    "github/head-000.json"
+   ],
+   "recs": [
+    "github/rec-000.json"
+   ],
+   "bytes": 229158
+  }
+ },
+ "adaptersUrl": "adapters.json",
+ "sourcesUrl": "sources.json",
+ "targetsUrl": "targets.json",
+ "hashes": {
+  "adapters.json": "997c43b68a6f9c08c0f341267abd0f6f3a66ba5c8c9e77a870f4b922c65d91f3",
+  "sources.json": "f35d651f383ed431081d1e89b9415661f3ed8eab890db98ebf8fe3a83bd26556",
+  "targets.json": "917499337ceb7e63024e0c6737fc525487f623b13aee56a2b1857f0b0483ae8b",
+  "chub/rec-000.json": "e7ed7134ca39dd7f8f6ef4ec2edbf129a26fde164c09876b7cca8d6c6eef806e",
+  "chub/head-000.json": "29b17a6643bf31e18d2c9da6d69d1af83d94ae1c56c18a4536684d1cb7b0f6a3",
+  "chub/rec-001.json": "8ca53ed138860913f83f1a47e1ec65cf2de4ca2e5fe473e23d569bb08a426b13",
+  "chub/head-001.json": "455c95dc9df4db53c93cecf7b55206bf5319e7eb199bc1379d1b7638684b1a40",
+  "chub/rec-002.json": "8e3fce2480cc8d35eb598d22514df13fc664baedf180af7a929aecd63a873701",
+  "chub/head-002.json": "e51a7a96d7e95c34aa4634f522fac2234639e06f7a93d590cb5dd3477ffc5b57",
+  "chub/rec-003.json": "d1f23fc4e8ba9059c43f431078b9d8d03d3a3d1d9b7a7941a8fe63da1993cae6",
+  "chub/head-003.json": "046f4ebc0c729d7cb1c313bd9b9367aa0042bac15ea2cdf0b5e986945e1cb851",
+  "chub/rec-004.json": "04d4ff32cf96f5be1bb2423e28a65a32f350a6c3fc8f5f2d3460e4a030977214",
+  "chub/head-004.json": "e3affc5ca2abaaed04d0e42f499fc1c11b2524f0198112fd14645fc3bdda8285",
+  "chub/rec-005.json": "9c8c5259dc96ea681e47fef47297bd91ab1768da47447418217ad5bed9423be6",
+  "chub/head-005.json": "65830f1bb07ddd884e03e4663dc470346ef5e428d79e07ca0185c3cec4a73550",
+  "chub/rec-006.json": "3a3eddee06d59d9054bd68fc4838f8044b9e6be9cc919fcbbeeca77579f5bd35",
+  "chub/head-006.json": "9845e64d2c4628c216cfd568615688c3790cb0a9f50cd1a9a6e35085c97a75c6",
+  "chub/rec-007.json": "899cc48efb287aa062fdf9ebdb5f994b2f4e2cfdae15992f939be2801226c6e8",
+  "chub/head-007.json": "927119b8fcc444a5b380ffc5b1f07efd5d2f60a27fefb29ac22b05e0a72d4c47",
+  "chub-lorebooks/rec-000.json": "fcd53de6877dd871a474bc9c4b0c92ba099bc6e7746ba85df69172785debeae5",
+  "chub-lorebooks/head-000.json": "935a9dd60cf6ad85d3c18bf228c7b419742042196676eccc6e7b5dd3aef57620",
+  "chub-lorebooks/rec-001.json": "ff3c82bd164c3fac7123e60ad478e0c8e1a41e715dcd6f7edbc3a4c915823054",
+  "chub-lorebooks/head-001.json": "87a1b1c10b8f84862b6b8ea108b7f3cc0b8010d13df675f45adbe08cf2f106a4",
+  "perchance-rp/rec-000.json": "be7102e9c6b2381a828661b9901730ee3d09890af07200901d4a4deac086e38f",
+  "perchance-rp/head-000.json": "c58eeb8a64ee3341ec0aa6f73c7c98d36c753832b13b11eb6694b53de03c301d",
+  "huggingface/rec-000.json": "2de460a9d270bf64e4f0d9af4907b77c3632f23415876b7c7874bcffcf9fb823",
+  "huggingface/head-000.json": "2d08dee2b793abad8ab7874b3b1a10c44d74ad1189bcf45994b207db26891f9e",
+  "github/rec-000.json": "3576ec93610fdbf3a1e53e1ec6eca30b75a0118e4d11e7a1c4382f43e66b4f67",
+  "github/head-000.json": "cb8636eb7190560d61527af2440c247a15d41f40d39f137541e22ee80eb1830c"
+ }
+}
