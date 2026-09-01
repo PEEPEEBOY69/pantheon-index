@@ -21,16 +21,16 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 434,
-   "at": 1788302777,
+   "ms": 448,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 2191
   },
   "lastCrawl": {
-   "at": 1788302777,
+   "at": 1788305004,
    "ok": true,
-   "count": 19936,
-   "fresh": 19936,
+   "count": 20075,
+   "fresh": 19975,
    "error": null,
    "errors": 0
   }
@@ -50,16 +50,16 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 214,
-   "at": 1788302777,
+   "ms": 245,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 1522
   },
   "lastCrawl": {
-   "at": 1788302777,
+   "at": 1788305004,
    "ok": true,
-   "count": 4997,
-   "fresh": 4997,
+   "count": 5079,
+   "fresh": 4954,
    "error": null,
    "errors": 0
   }
@@ -82,9 +82,9 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 357,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 196,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
  },
@@ -103,13 +103,13 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 2275,
-   "at": 1788302777,
+   "ms": 2977,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 9956468
   },
   "lastCrawl": {
-   "at": 1788302777,
+   "at": 1788305004,
    "ok": true,
    "count": 723,
    "fresh": 723,
@@ -135,13 +135,13 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 465,
-   "at": 1788302777,
+   "ms": 218,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 651
   },
   "lastCrawl": {
-   "at": 1788302777,
+   "at": 1788305004,
    "ok": true,
    "count": 34,
    "fresh": 34,
@@ -165,18 +165,18 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 383,
-   "at": 1788302777,
+   "ms": 359,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 5636
   },
   "lastCrawl": {
-   "at": 1788302777,
+   "at": 1788305004,
    "ok": true,
    "count": 222,
    "fresh": 222,
    "error": null,
-   "errors": 17
+   "errors": 14
   }
  },
  {
@@ -197,8 +197,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 476,
-   "at": 1788302777,
+   "ms": 518,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 55048
   }
@@ -220,8 +220,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 559,
-   "at": 1788302777,
+   "ms": 627,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 1133
   }
@@ -242,9 +242,9 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 216,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 202,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
  },
@@ -264,9 +264,9 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 272,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 309,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
  },
@@ -286,8 +286,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 717,
-   "at": 1788302777,
+   "ms": 645,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 51457
   }
@@ -309,10 +309,10 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 1147,
-   "at": 1788302777,
+   "ms": 1015,
+   "at": 1788305004,
    "consecutiveFailures": 0,
-   "bytes": 119282
+   "bytes": 112149
   }
  },
  {
@@ -332,8 +332,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 293,
-   "at": 1788302777,
+   "ms": 363,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 600328
   }
@@ -354,8 +354,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 989,
-   "at": 1788302777,
+   "ms": 854,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 28332
   }
@@ -376,8 +376,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 525,
-   "at": 1788302777,
+   "ms": 976,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 3365
   }
@@ -398,8 +398,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 1239,
-   "at": 1788302777,
+   "ms": 1571,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 264605
   }
@@ -420,8 +420,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 724,
-   "at": 1788302777,
+   "ms": 806,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 343209
   }
@@ -442,8 +442,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 319,
-   "at": 1788302777,
+   "ms": 414,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 3232
   }
@@ -464,8 +464,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 116,
-   "at": 1788302777,
+   "ms": 154,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 23485
   }
@@ -486,8 +486,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 417,
-   "at": 1788302777,
+   "ms": 370,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 1568
   }
@@ -508,8 +508,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 185,
-   "at": 1788302777,
+   "ms": 351,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 10434
   }
@@ -531,9 +531,9 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 380,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 318,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
  },
@@ -553,8 +553,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 1054,
-   "at": 1788302777,
+   "ms": 905,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 62524
   }
@@ -575,8 +575,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 281,
-   "at": 1788302777,
+   "ms": 228,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 36639
   }
@@ -598,8 +598,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 314,
-   "at": 1788302777,
+   "ms": 297,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 20036
   }
@@ -620,8 +620,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 447,
-   "at": 1788302777,
+   "ms": 324,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 168229
   }
@@ -642,8 +642,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 813,
-   "at": 1788302777,
+   "ms": 724,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 20207
   }
@@ -664,8 +664,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 190,
-   "at": 1788302777,
+   "ms": 265,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 145928
   }
@@ -686,8 +686,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 1049,
-   "at": 1788302777,
+   "ms": 1096,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 335958
   }
@@ -708,8 +708,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 933,
-   "at": 1788302777,
+   "ms": 796,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 1722386
   }
@@ -730,8 +730,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 275,
-   "at": 1788302777,
+   "ms": 215,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 197682
   }
@@ -753,8 +753,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 168,
-   "at": 1788302777,
+   "ms": 415,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 16955
   }
@@ -776,9 +776,9 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 338,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 184,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
  },
@@ -801,9 +801,9 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 242,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 322,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
  },
@@ -824,8 +824,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 489,
-   "at": 1788302777,
+   "ms": 603,
+   "at": 1788305004,
    "consecutiveFailures": 0,
    "bytes": 1319
   }
@@ -844,7 +844,7 @@
   "note": "partnership ask",
   "sweep": {
    "kind": "skipped",
-   "at": 1788302777
+   "at": 1788305004
   }
  },
  {
@@ -860,7 +860,7 @@
   "note": "partnership ask",
   "sweep": {
    "kind": "skipped",
-   "at": 1788302777
+   "at": 1788305004
   }
  },
  {
@@ -880,216 +880,10 @@
    "status": 404,
    "cors": false,
    "kind": "error",
-   "ms": 194,
-   "at": 1788302777,
-   "consecutiveFailures": 1,
+   "ms": 294,
+   "at": 1788305004,
+   "consecutiveFailures": 2,
    "error": "http"
   }
- },
- {
-  "id": "rentry-co",
-  "label": "rentry.co",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "rentry.co"
-  ],
-  "probe": "https://rentry.co/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "rentry-charcard-list",
-   "rentry-meta-bot-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "googletagmanager-com",
-  "label": "googletagmanager.com",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "googletagmanager.com"
-  ],
-  "probe": "https://googletagmanager.com/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "rentry-charcard-list",
-   "rentry-meta-bot-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "blocky-mint-github-io",
-  "label": "blocky-mint.github.io",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "blocky-mint.github.io"
-  ],
-  "probe": "https://blocky-mint.github.io/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "schema-org",
-  "label": "schema.org",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "schema.org"
-  ],
-  "probe": "https://schema.org/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "t-co",
-  "label": "t.co",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "t.co"
-  ],
-  "probe": "https://t.co/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "cdn-jsdelivr-net",
-  "label": "cdn.jsdelivr.net",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "cdn.jsdelivr.net"
-  ],
-  "probe": "https://cdn.jsdelivr.net/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "realfavicongenerator-net",
-  "label": "realfavicongenerator.net",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "realfavicongenerator.net"
-  ],
-  "probe": "https://realfavicongenerator.net/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "browsehappy-com",
-  "label": "browsehappy.com",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "browsehappy.com"
-  ],
-  "probe": "https://browsehappy.com/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "link-to-whatever-social-network-com",
-  "label": "link-to-whatever-social-network.com",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "link-to-whatever-social-network.com"
-  ],
-  "probe": "https://link-to-whatever-social-network.com/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "rentry-org",
-  "label": "rentry.org",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "rentry.org"
-  ],
-  "probe": "https://rentry.org/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "jekyllrb-com",
-  "label": "jekyllrb.com",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "jekyllrb.com"
-  ],
-  "probe": "https://jekyllrb.com/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
- },
- {
-  "id": "mademistakes-com",
-  "label": "mademistakes.com",
-  "kinds": [
-   "character"
-  ],
-  "status": "candidate",
-  "hosts": [
-   "mademistakes.com"
-  ],
-  "probe": "https://mademistakes.com/",
-  "evidence": "aggregator",
-  "discoveredFrom": [
-   "blocky-character-card-list"
-  ],
-  "ts": 1788302777
  }
 ]
