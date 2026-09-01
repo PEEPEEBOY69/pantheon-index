@@ -1,0 +1,17 @@
+{
+  "id": "chub-lorebooks", "label": "Chub.ai Lorebooks", "kinds": ["lorebook"], "status": "live", "transport": "plain",
+  "caps": { "s": "live", "i": true, "o": true },
+  "search": {
+    "url": "https://api.chub.ai/search",
+    "params": { "q": "search", "nsfw": "nsfw", "sort": "sort", "tags": "topics", "page": "page" },
+    "fixed": { "namespace": "lorebooks", "first": 24 },
+    "controls": ["q", "nsfw", "sort", "tags", "page"],
+    "sorts": { "relevance": "default", "newest": "created_at", "popular": "download_count" },
+    "items": "data.nodes",
+    "map": { "nid": "id", "n": "name", "b": "tagline|description", "t": "topics", "c": "avatar_url|max_res_url", "nsfw": "nsfw_image", "o": "https://chub.ai/lorebooks/{fullPath}", "tok": "nTokens", "pu": "https://api.chub.ai/api/lorebooks/{id}" }
+  },
+  "detail": { "transport": "super", "format": "chublore" },
+  "origin": "https://chub.ai/lorebooks/{fullPath}",
+  "crawl": { "pageStart": 1, "pages": 50, "passes": [ { "sort": "download_count", "nsfw": "true", "first": 100 } ] },
+  "probe": "https://api.chub.ai/search?namespace=lorebooks&first=1"
+}

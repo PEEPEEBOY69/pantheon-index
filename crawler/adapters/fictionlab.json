@@ -1,0 +1,17 @@
+{
+  "id": "fictionlab", "label": "FictionLab", "kinds": ["scenario"], "status": "live", "transport": "super",
+  "caps": { "s": "live", "i": true, "o": true },
+  "search": {
+    "url": "https://fictionlab.ai/api/search",
+    "params": { "q": "keyw", "nsfw": "mature", "sort": "sortType", "page": "page" },
+    "fixed": { "version": 2, "size": 40, "searchType": "scenarios", "time": "all_time" },
+    "controls": ["q", "nsfw", "sort", "page"],
+    "sorts": { "relevance": "relevance", "newest": "newest", "popular": "trending" },
+    "items": "results|data.results|scenarios",
+    "map": { "nid": "id", "n": "title|name", "b": "description", "t": "tags", "c": "https://fictionlab.ai/image-cdn/{image}", "nsfw": "mature", "o": "https://fictionlab.ai/scenario/{id}", "pu": "https://fictionlab.ai/api/scenario/fetch/{id}?version=2" }
+  },
+  "detail": { "transport": "super", "format": "fl" },
+  "origin": "https://fictionlab.ai/scenario/{id}",
+  "crawl": { "pageStart": 0, "pages": 30, "passes": [ { "sort": "trending", "nsfw": "true" }, { "sort": "newest", "nsfw": "true" } ] },
+  "probe": "https://fictionlab.ai/api/search?version=2&keyw=&size=1&searchType=scenarios&sortType=trending&time=all_time&page=0&mature=false"
+}

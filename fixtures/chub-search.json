@@ -1,0 +1,5 @@
+{ "data": { "count": 2, "nodes": [
+  { "id": 101, "name": "Alice", "fullPath": "cash/alice", "tagline": "An elf ranger.", "description": "long", "topics": ["Fantasy", "Elf"], "avatar_url": "https://avatars.charhub.io/avatars/cash/alice/avatar.webp", "max_res_url": "https://avatars.charhub.io/avatars/cash/alice/chara_card_v2.png", "nsfw_image": false, "starCount": 3, "nTokens": 812 },
+  { "id": 102, "name": "Bob", "fullPath": "someone/bob", "tagline": "", "description": "A blacksmith.", "topics": ["NSFW"], "avatar_url": null, "max_res_url": "https://avatars.charhub.io/avatars/someone/bob/chara_card_v2.png", "nsfw_image": true, "starCount": 0, "nTokens": 300 },
+  { "id": 103, "name": "", "fullPath": "x/blank", "topics": [] }
+] } }

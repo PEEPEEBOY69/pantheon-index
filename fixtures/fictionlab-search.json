@@ -1,0 +1,1 @@
+{ "results": [ { "id": "abc123", "title": "Late Shift", "description": "A quiet diner.", "image": "img/late.webp", "tags": ["slice of life"], "mature": false }, { "id": "def456", "title": "After Dark", "description": "x", "image": "img/dark.webp", "tags": ["romance"], "mature": true } ] }

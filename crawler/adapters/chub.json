@@ -1,0 +1,17 @@
+{
+  "id": "chub", "label": "Chub.ai", "kinds": ["character"], "status": "live", "transport": "plain",
+  "caps": { "s": "live", "i": true, "o": true },
+  "search": {
+    "url": "https://api.chub.ai/search",
+    "params": { "q": "search", "nsfw": "nsfw", "sort": "sort", "tags": "topics", "page": "page" },
+    "fixed": { "namespace": "characters", "first": 24, "include_forks": "true", "min_tokens": 50 },
+    "controls": ["q", "nsfw", "sort", "tags", "page"],
+    "sorts": { "relevance": "default", "newest": "created_at", "popular": "download_count" },
+    "items": "data.nodes",
+    "map": { "nid": "id", "n": "name", "b": "tagline|description", "t": "topics", "c": "avatar_url|max_res_url", "nsfw": "nsfw_image", "o": "https://chub.ai/characters/{fullPath}", "tok": "nTokens", "pu": "https://avatars.charhub.io/avatars/{fullPath}/chara_card_v2.png" }
+  },
+  "detail": { "transport": "plain", "format": "ccv2png" },
+  "origin": "https://chub.ai/characters/{fullPath}",
+  "crawl": { "pageStart": 1, "pages": 100, "passes": [ { "sort": "download_count", "nsfw": "true", "first": 100 }, { "sort": "created_at", "nsfw": "true", "first": 100 } ] },
+  "probe": "https://api.chub.ai/search?namespace=characters&first=1"
+}
