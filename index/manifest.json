@@ -1,13 +1,13 @@
 {
  "v": 1,
- "builtAt": 1788305004,
+ "builtAt": 1788306038,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
  },
  "sources": {
   "chub": {
-   "count": 20075,
+   "count": 20174,
    "heads": [
     "chub/head-000.json",
     "chub/head-001.json",
@@ -28,7 +28,7 @@
     "chub/rec-006.json",
     "chub/rec-007.json"
    ],
-   "bytes": 17779077
+   "bytes": 17868815
   },
   "chub-lorebooks": {
    "count": 5079,
@@ -78,7 +78,7 @@
  "targetsUrl": "targets.json",
  "hashes": {
   "adapters.json": "997c43b68a6f9c08c0f341267abd0f6f3a66ba5c8c9e77a870f4b922c65d91f3",
-  "sources.json": "ad53bc21617e3028a150aa05cc1c9588b8ed9d6b4e7790cb00531e7e916fc9ff",
+  "sources.json": "059ea6d88e93b33585758c720c808e456066d09f3a051f79b80aa9f99614c8ef",
   "targets.json": "917499337ceb7e63024e0c6737fc525487f623b13aee56a2b1857f0b0483ae8b",
   "chub/rec-000.json": "18d2b3b63bb2e899a6e88ac4953b8672ccaf546b240c7b763c0cc7287ffa78cb",
   "chub/head-000.json": "2ee97971e9e09ecd01fac202d20dd3eb049b0b7849634a94db7be91f804face5",
@@ -86,16 +86,16 @@
   "chub/head-001.json": "60b2bb0b40345f0c50f6113475e69a6bc5c54521d2f85031f471ac9cca24fdf4",
   "chub/rec-002.json": "130a6f93f7370b953f63bb4c03f0e348e04509b9c671942a67d86d26d0964e90",
   "chub/head-002.json": "65462da27870f0571153b9d0a5d9295229cc906bb47dad01192cfeaf6281f273",
-  "chub/rec-003.json": "785928d429527fc38fa96fefb717ad0c1412e1714468427329a6cb465fceb2c9",
-  "chub/head-003.json": "ef86e6da9bf1804dad233783b44350cec4bd344caa2510f8fb6f510c437425d8",
-  "chub/rec-004.json": "9666d2dab8767046cfa2e855361e1add883fd5fa3f725eb9edbfb4cfa32ca254",
-  "chub/head-004.json": "2a92f1a64f2e5783174a1f46dffc431ad7160f936375ec46458eb81103231fab",
-  "chub/rec-005.json": "8e036ca86ac81e0552ae34ec8a4e6cc87390a57cd76b0ac1b85ba511d70a9aa0",
-  "chub/head-005.json": "be34bdcf7f8bee7d1c7fc06660ab1c6fb3beba3c9b4546e6dbaf9edd8d34e8d8",
-  "chub/rec-006.json": "26d152d0d1431b2f9ed3e8746ed03b9b94d70f89cf677aed7d93cb07dc4951b9",
-  "chub/head-006.json": "069ad04767e340cd7af84f7d04195ef41b0aa132d43c5faa2fb6b99b757195cd",
-  "chub/rec-007.json": "40b6898600adc050fc833ba49e37069c1bd00d00b0d32d8d5cc2dc6a354ec860",
-  "chub/head-007.json": "8916fe369ba0d550d896e448e4076969c7521471ff024bc3704b903b6773aeca",
+  "chub/rec-003.json": "09a69700c04d3b6207c85d08261fa04a3ca2cee132b76fbc2e265bc8a326e23d",
+  "chub/head-003.json": "5561f409125f073145c4b63914d3ceae169aca39b0c891355193661252c782e3",
+  "chub/rec-004.json": "50ad736e3db7a4f5f0fe5894505e1e80259bd0373dc068985808a52408e8938d",
+  "chub/head-004.json": "56211a13d886e05e7894d0138033df3d37e431d9e616851f6a007d964cb58c6a",
+  "chub/rec-005.json": "43e4c882345bd698750a2caa4a944f52b0584c2d62a97e9fb65feb910a8e5314",
+  "chub/head-005.json": "a326ec2fee8aca1ac0ea86e532e13586ba55504ad6dc060c664749055f322dff",
+  "chub/rec-006.json": "8e63cf346f505fefb51785f30f736a4f29280efda3906378605287aa607e1987",
+  "chub/head-006.json": "935c809d277f79fcd1b1005922d72b74d880fe3ce4c09271303a54adaa8e5caa",
+  "chub/rec-007.json": "f056e22a0d8342ad721dbdb5f27454d4c26357fc8cdd4ffc93979ed1b6ee14f3",
+  "chub/head-007.json": "fa91cfe4eb82d8acc7c9183c827f883fd04f7a598fc183711f8d2af9da66acd2",
   "chub-lorebooks/rec-000.json": "dda14ecfdd76ac09a80d1461d8eba1fd8858f094b4557ecd90223e02c589d316",
   "chub-lorebooks/head-000.json": "935a9dd60cf6ad85d3c18bf228c7b419742042196676eccc6e7b5dd3aef57620",
   "chub-lorebooks/rec-001.json": "b900e03cd0e054e1afb003aead4bd5bc68bb6ea254a94216d9fcb4866b4f45eb",
