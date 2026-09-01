@@ -1,0 +1,7 @@
+# Card sites
+- https://chub.ai/ — the big one
+- https://www.character-tavern.com/cards
+- Bot Booru: https://botbooru.com/
+- https://newsite.example/characters (new!)
+- https://newsite.example/lorebooks
+- mailto:nobody@example.com https://rentry.org/other-list
