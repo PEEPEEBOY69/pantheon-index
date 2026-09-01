@@ -8,6 +8,10 @@ test("sameContent ignores ts only", () => {
   assert.equal(sameContent(rec("a", 1), rec("a", 2)), true);
   assert.equal(sameContent(rec("a", 1), rec("a", 1, { n: "x" })), false);
 });
+test("sameContent: nsfw record from a shard (b:null) equals a fresh one carrying its blurb", () => {
+  assert.equal(sameContent(rec("a", 1, { nsfw: true, b: null }), rec("a", 2, { nsfw: true, b: "the blurb" })), true);
+  assert.equal(sameContent(rec("a", 1, { nsfw: false, b: "" }), rec("a", 2, { nsfw: false, b: "the blurb" })), false);
+});
 test("changed record is replaced and carries the new ts; unchanged keeps old bytes", () => {
   const { records, seen } = mergeWithPrevious([rec("a", 100, { n: "old" }), rec("b", 100)], [rec("a", 200, { n: "new" }), rec("b", 200)], { now: 200 });
   assert.equal(records.find(r => r.id === "a").ts, 200); assert.equal(records.find(r => r.id === "b").ts, 100, "unchanged record keeps ts");
