@@ -4,7 +4,7 @@ import { createFetcher } from "../crawler/lib/fetch.mjs";
 import { get } from "../crawler/lib/pathlang.mjs";
 const f = createFetcher({ minIntervalMs: 300, retries: 1 });
 const checks = [
-  ["chub search shape", "https://api.chub.ai/search?namespace=characters&first=2", b => Array.isArray(get(b, "data.nodes")) && get(b, "data.nodes[0].fullPath")],
+  ["chub search shape", "https://api.chub.ai/search?namespace=characters&first=2", b => Array.isArray(get(b, "data.nodes")) && typeof get(b, "data.nodes[].fullPath")[0] === "string"],
   ["chub lorebooks shape", "https://api.chub.ai/search?namespace=lorebooks&first=2", b => Array.isArray(get(b, "data.nodes"))],
   ["fictionlab shape", "https://fictionlab.ai/api/search?version=2&keyw=&size=2&searchType=scenarios&sortType=trending&time=all_time&page=0&mature=false", b => Array.isArray(get(b, "results|data.results|scenarios"))],
   ["perchance rp blob", "https://user.uploads.dev/file/4bae8c63c1b8a8f0485e27e30737dc44.json", b => Array.isArray(b) && b.length >= 700 && b[0].title && b[0].cardImage],

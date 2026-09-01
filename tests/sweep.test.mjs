@@ -10,6 +10,8 @@ test("classifyBody", () => {
   assert.equal(classifyBody(403, new Headers(), "cf-chl-bypass"), "challenge");
   assert.equal(classifyBody(200, new Headers({ "content-type": "text/html" }), "<html>ok</html>"), "html");
   assert.equal(classifyBody(500, new Headers(), ""), "error");
+  assert.equal(classifyBody(200, new Headers({ "content-type": "application/json" }), JSON.stringify([{ intro: "just a moment, then attention required" }])), "json");
+  assert.equal(classifyBody(200, new Headers({ "content-type": "text/html" }), "<html>" + "x".repeat(5000) + "Just a moment</html>"), "html");
 });
 test("sweepSource records status, cors, kind, ms, and resets consecutiveFailures on success", async () => {
   const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([{ match: "https://ok/", body: { a: 1 }, headers: { "access-control-allow-origin": "*" } }]) });

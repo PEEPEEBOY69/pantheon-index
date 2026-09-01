@@ -41,7 +41,11 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
 
   for (const s of sources) { s.sweep = await sweepSource(fetcher, s, { ts: now }); log(`sweep ${s.id}: ${s.sweep.kind} ${s.sweep.status ?? ""}`); }
 
-  for (const s of sources.filter(x => x.status === "live" && x.adapter)) {
+  for (const s of sources.filter(x => x.status === "live" && x.adapter && x.crawl === false)) {
+    try { adapters.push((await loadAdapter(s.adapter)).descriptor); log(`adapter ${s.id}: exported, not crawled (crawl:false)`); }
+    catch (e) { errors.push({ source: s.id, message: String(e.message || e) }); }
+  }
+  for (const s of sources.filter(x => x.status === "live" && x.adapter && x.crawl !== false)) {
     let ok = true, fresh = [], errMsg = null, adapterErrors = [];
     try {
       const ad = await loadAdapter(s.adapter);

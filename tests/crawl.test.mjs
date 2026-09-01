@@ -36,10 +36,11 @@ test("runCrawl writes a complete index from fixtures", async () => {
   const result = await runCrawl({ outDir: out, fetcher: fetcher(), now: 1_700_000_000, limits: { huggingface: { datasets: 5, filesPerDataset: 20 }, github: { repos: 5, filesPerRepo: 20 } }, log: () => {} });
   const m = read(path.join(out, "manifest.json"));
   assert.equal(m.v, 1); assert.equal(m.builtAt, 1_700_000_000);
-  assert.deepEqual(Object.keys(m.sources).sort(), ["chub", "chub-lorebooks", "fictionlab", "github", "huggingface", "perchance-rp"]);
+  assert.deepEqual(Object.keys(m.sources).sort(), ["chub", "chub-lorebooks", "github", "huggingface", "perchance-rp"], "fictionlab is crawl:false");
   assert.equal(m.sources.chub.count, 2); assert.equal(m.sources["perchance-rp"].count, 2); assert.equal(m.sources.huggingface.count, 2);
   for (const [, s] of Object.entries(m.sources)) for (const f of [...s.heads, ...s.recs]) { assert.ok(fs.existsSync(path.join(out, f)), f); assert.ok(m.hashes[f]); }
   const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub").search); assert.ok(adapters.find(a => a.id === "perchance-rp").caps);
+  assert.ok(adapters.find(a => a.id === "fictionlab").search, "crawl:false adapters still ship to the plugin");
   const sources = read(path.join(out, "sources.json")); const chub = sources.find(s => s.id === "chub"); assert.equal(chub.sweep.kind, "json"); assert.equal(chub.lastCrawl.ok, true); assert.equal(chub.lastCrawl.count, 2);
   assert.ok(sources.find(s => s.id === "jannyai").sweep.at); assert.ok(sources.some(s => s.status === "candidate" && s.discoveredFrom), "aggregator candidates appended");
   assert.ok(fs.existsSync(path.join(out, "targets.json")));

@@ -4,10 +4,12 @@ const CHALLENGE = /just a moment|cf-chl|challenge-platform|attention required|en
 
 export function classifyBody(status, headers, text) {
   const ct = (headers && headers.get && headers.get("content-type")) || "";
-  if (CHALLENGE.test(text || "") || status === 403 || status === 503 || status === 429) return "challenge";
+  if (status === 403 || status === 503 || status === 429) return "challenge";
   if (status >= 400 || status === 0) return "error";
   if (/json/i.test(ct)) return "json";
-  if (/html/i.test(ct)) return "html";
+  // Challenge pages are HTML; only look at the head of an HTML body so a JSON blob or a long
+  // page that merely contains the words never gets misread (perchance-rp did, 2026-09-01).
+  if (/html/i.test(ct) || !ct) return CHALLENGE.test(String(text || "").slice(0, 4096)) ? "challenge" : "html";
   return "other";
 }
 
