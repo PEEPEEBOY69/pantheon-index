@@ -7,7 +7,7 @@ import { createHash } from "node:crypto";
 import { createFetcher } from "./lib/fetch.mjs";
 import { crawlDeclarative, validateAdapter } from "./lib/adapters-runtime.mjs";
 import { sweepSource } from "./lib/sweep.mjs";
-import { discover } from "./lib/aggregator.mjs";
+import { discover, isIgnoredHost } from "./lib/aggregator.mjs";
 import { mergeWithPrevious } from "./lib/merge.mjs";
 import { writeSourceShards } from "./lib/shard.mjs";
 import { buildManifest } from "./lib/manifest.mjs";
@@ -36,7 +36,7 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
   const prevSources = await readJson(path.join(outDir, "sources.json"), []);
   const prevById = new Map(prevSources.map(s => [s.id, s]));
   const sources = seed.map(s => ({ ...s, sweep: prevById.get(s.id)?.sweep, lastCrawl: prevById.get(s.id)?.lastCrawl }));
-  for (const s of prevSources) if (s.discoveredFrom && !sources.find(x => x.id === s.id)) sources.push(s);
+  for (const s of prevSources) if (s.discoveredFrom && !sources.find(x => x.id === s.id) && !(s.hosts || []).some(isIgnoredHost)) sources.push(s);
   const errors = []; const manifestSources = {}; const adapters = [];
 
   for (const s of sources) { s.sweep = await sweepSource(fetcher, s, { ts: now }); log(`sweep ${s.id}: ${s.sweep.kind} ${s.sweep.status ?? ""}`); }
@@ -55,8 +55,10 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
       if (fresh.length === 0 && adapterErrors.length) { ok = false; errMsg = adapterErrors[0].message; }
     } catch (e) { ok = false; errMsg = String(e.message || e); }
     const prev = await previousRecords(outDir, s.id);
-    const merged = mergeWithPrevious(prev, fresh, { now, crawlOk: ok });
+    const prevSeen = await readJson(path.join(outDir, s.id, "seen.json"), {});
+    const { records: merged, seen } = mergeWithPrevious(prev, fresh, { now, crawlOk: ok, prevSeen });
     const written = await writeSourceShards(outDir, s.id, merged);
+    await fs.writeFile(path.join(outDir, s.id, "seen.json"), JSON.stringify(seen));
     manifestSources[s.id] = written;
     s.lastCrawl = { at: now, ok, count: merged.length, fresh: fresh.length, error: errMsg, errors: adapterErrors.length };
     if (!ok) errors.push({ source: s.id, message: errMsg });

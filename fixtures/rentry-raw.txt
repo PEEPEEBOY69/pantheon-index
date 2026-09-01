@@ -2,6 +2,6 @@
 - https://chub.ai/ — the big one
 - https://www.character-tavern.com/cards
 - Bot Booru: https://botbooru.com/
-- https://newsite.example/characters (new!)
-- https://newsite.example/lorebooks
+- https://newsite.gg/characters (new!)
+- https://newsite.gg/lorebooks
 - mailto:nobody@example.com https://rentry.org/other-list
