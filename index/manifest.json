@@ -1,13 +1,13 @@
 {
  "v": 1,
- "builtAt": 1788306038,
+ "builtAt": 1788338807,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
  },
  "sources": {
   "chub": {
-   "count": 20174,
+   "count": 20254,
    "heads": [
     "chub/head-000.json",
     "chub/head-001.json",
@@ -28,10 +28,10 @@
     "chub/rec-006.json",
     "chub/rec-007.json"
    ],
-   "bytes": 17868815
+   "bytes": 17941529
   },
   "chub-lorebooks": {
-   "count": 5079,
+   "count": 5083,
    "heads": [
     "chub-lorebooks/head-000.json",
     "chub-lorebooks/head-001.json"
@@ -40,7 +40,7 @@
     "chub-lorebooks/rec-000.json",
     "chub-lorebooks/rec-001.json"
    ],
-   "bytes": 4259548
+   "bytes": 4262991
   },
   "perchance-rp": {
    "count": 723,
@@ -78,28 +78,28 @@
  "targetsUrl": "targets.json",
  "hashes": {
   "adapters.json": "997c43b68a6f9c08c0f341267abd0f6f3a66ba5c8c9e77a870f4b922c65d91f3",
-  "sources.json": "059ea6d88e93b33585758c720c808e456066d09f3a051f79b80aa9f99614c8ef",
+  "sources.json": "cd3a62fa5c56d507a1a1d95a22a9f3b8b3ccc1646944862945ba30461b5e5255",
   "targets.json": "917499337ceb7e63024e0c6737fc525487f623b13aee56a2b1857f0b0483ae8b",
-  "chub/rec-000.json": "18d2b3b63bb2e899a6e88ac4953b8672ccaf546b240c7b763c0cc7287ffa78cb",
-  "chub/head-000.json": "2ee97971e9e09ecd01fac202d20dd3eb049b0b7849634a94db7be91f804face5",
-  "chub/rec-001.json": "624cd3044f8b4eef84281d0b11581e8313c86817ddae1f5ec3770186710e9cc2",
-  "chub/head-001.json": "60b2bb0b40345f0c50f6113475e69a6bc5c54521d2f85031f471ac9cca24fdf4",
-  "chub/rec-002.json": "130a6f93f7370b953f63bb4c03f0e348e04509b9c671942a67d86d26d0964e90",
-  "chub/head-002.json": "65462da27870f0571153b9d0a5d9295229cc906bb47dad01192cfeaf6281f273",
-  "chub/rec-003.json": "09a69700c04d3b6207c85d08261fa04a3ca2cee132b76fbc2e265bc8a326e23d",
-  "chub/head-003.json": "5561f409125f073145c4b63914d3ceae169aca39b0c891355193661252c782e3",
-  "chub/rec-004.json": "50ad736e3db7a4f5f0fe5894505e1e80259bd0373dc068985808a52408e8938d",
-  "chub/head-004.json": "56211a13d886e05e7894d0138033df3d37e431d9e616851f6a007d964cb58c6a",
-  "chub/rec-005.json": "43e4c882345bd698750a2caa4a944f52b0584c2d62a97e9fb65feb910a8e5314",
-  "chub/head-005.json": "a326ec2fee8aca1ac0ea86e532e13586ba55504ad6dc060c664749055f322dff",
-  "chub/rec-006.json": "8e63cf346f505fefb51785f30f736a4f29280efda3906378605287aa607e1987",
-  "chub/head-006.json": "935c809d277f79fcd1b1005922d72b74d880fe3ce4c09271303a54adaa8e5caa",
-  "chub/rec-007.json": "f056e22a0d8342ad721dbdb5f27454d4c26357fc8cdd4ffc93979ed1b6ee14f3",
-  "chub/head-007.json": "fa91cfe4eb82d8acc7c9183c827f883fd04f7a598fc183711f8d2af9da66acd2",
-  "chub-lorebooks/rec-000.json": "dda14ecfdd76ac09a80d1461d8eba1fd8858f094b4557ecd90223e02c589d316",
+  "chub/rec-000.json": "16017de4009cea8bb5ce4b0cc4861f1cfb256c34dbd3804320d37aa05d843a83",
+  "chub/head-000.json": "ac29b8b284c7ad839a43e9dff78965ca379b7fd7724465280ea59e8f4aa242b4",
+  "chub/rec-001.json": "cbaa1400f388e43899ab13abdc74daff3a91f8a471ba5fcb4cc7d4a42bbbea2b",
+  "chub/head-001.json": "956263c8cfe56cc5d201a4caa58daaa4998226ff87294ec4bda1a2e49396937c",
+  "chub/rec-002.json": "c19c9cdd9d95b35d56cd1643648aaec2ffe792f502cbbab2a190949ebe4a49e9",
+  "chub/head-002.json": "125a1acc528bbb1856e2b8cc7b70ec6086f26d65dc62a9d6ec6bed133cbf8e49",
+  "chub/rec-003.json": "9305dce429d0da9ddfc11daa696aac66840ab49f230743a4ffdf5a03338aacd5",
+  "chub/head-003.json": "e3303bee2044c65bbb656d2c2f66cb351ba5d195c17a65fd098d3ea34256dbe8",
+  "chub/rec-004.json": "d34f64e1bacdaa302d7e77bfcde057d3382fdbff7cacbd672ecfb4793759f88e",
+  "chub/head-004.json": "88b6d8a4497004cb4ab3f692048828cc41f0bd6e9f2ecc9e25cb5bb7253cc268",
+  "chub/rec-005.json": "8deb3b68129ae2193a25a333b3da5ab4273469bc6bdaa55c01c7213a768d1493",
+  "chub/head-005.json": "050ce856366a9dcc40af01b5953a56b9db803a007c5ef41fb499181dd45142a4",
+  "chub/rec-006.json": "aa30b9c52615f386eb4070de152cd37e317ab8d0a5944e412a7fcf5370f9db46",
+  "chub/head-006.json": "eb44a240ed310407022a8e775819e96aad5fd4591d4c0012f44cf55c5b7bd217",
+  "chub/rec-007.json": "1dc9a631f9a9d5f7bcc966ecf21596dbdd61f4192c305f56a5612de476ed7b30",
+  "chub/head-007.json": "8b7530ea1c6dd65af4a564b24fd7c85bfe9a0e73ac2834ed8fa00eaa14b99fdc",
+  "chub-lorebooks/rec-000.json": "52d4e723ffb2af55440462788cc03ab40dfde8a7fa5f5f33f920878242f51dcb",
   "chub-lorebooks/head-000.json": "935a9dd60cf6ad85d3c18bf228c7b419742042196676eccc6e7b5dd3aef57620",
-  "chub-lorebooks/rec-001.json": "b900e03cd0e054e1afb003aead4bd5bc68bb6ea254a94216d9fcb4866b4f45eb",
-  "chub-lorebooks/head-001.json": "2ec7107dcce8b9341e60a8ae89e3715d1f0707eec84b4336f92118090cea042c",
+  "chub-lorebooks/rec-001.json": "18fba4cb693a45e5583e34ca55ea626d1e1135a2d1556e66dfde449f369b5d19",
+  "chub-lorebooks/head-001.json": "5a39ee56c689399de31f7fd2dfe98ce812b2201530d7296ce60c66ae4843e164",
   "perchance-rp/rec-000.json": "be7102e9c6b2381a828661b9901730ee3d09890af07200901d4a4deac086e38f",
   "perchance-rp/head-000.json": "c58eeb8a64ee3341ec0aa6f73c7c98d36c753832b13b11eb6694b53de03c301d",
   "huggingface/rec-000.json": "64d092c5f905f384f23f5b1cf671419801b5b5fd8f769cd3ae55acd283ed9914",
