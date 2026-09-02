@@ -12,6 +12,9 @@ const checks = [
   ["perchance rp blob", "https://user.uploads.dev/file/4bae8c63c1b8a8f0485e27e30737dc44.json", b => Array.isArray(b) && b.length >= 700 && b[0].title && b[0].cardImage],
   ["huggingface datasets", "https://huggingface.co/api/datasets?search=character%20card&limit=2", b => Array.isArray(b) && b[0] && b[0].id],
   ["github search", "https://api.github.com/search/repositories?q=topic:character-cards&per_page=1", b => Array.isArray(b.items)],
+  ["character tavern sections", "https://character-tavern.com/api/homepage/sections", b => Array.isArray(b.trending) && typeof get(b, "trending[].path")[0] === "string" && Number.isFinite(b.trending[0].permanentTokens)],
+  ["aicharactercards listing", "https://api.aicharactercards.com/api/cards?page=1&limit=1", b => Array.isArray(b.data) && b.data[0] && typeof b.data[0].imageUrl === "string" && Number.isFinite(get(b, "pagination.total"))],
+  ["bronya rand world info", "https://bronya-rand.github.io/reimagined-couscous/world-info/HSR.json", b => b && typeof b.entries === "object"],
 ];
 let failed = 0;
 for (const [name, url, ok, opts = {}] of checks) {

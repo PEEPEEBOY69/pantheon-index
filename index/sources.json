@@ -21,16 +21,16 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 242,
-   "at": 1788338807,
+   "ms": 457,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 2191
   },
   "lastCrawl": {
-   "at": 1788338807,
+   "at": 1788377565,
    "ok": true,
-   "count": 20254,
-   "fresh": 19976,
+   "count": 20344,
+   "fresh": 19977,
    "error": null,
    "errors": 0
   }
@@ -50,15 +50,15 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 122,
-   "at": 1788338807,
+   "ms": 215,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 1522
   },
   "lastCrawl": {
-   "at": 1788338807,
+   "at": 1788377565,
    "ok": true,
-   "count": 5083,
+   "count": 5085,
    "fresh": 4997,
    "error": null,
    "errors": 0
@@ -82,8 +82,8 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 183,
-   "at": 1788338807,
+   "ms": 177,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }
@@ -103,13 +103,13 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 1287,
-   "at": 1788338807,
+   "ms": 2526,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 9956468
   },
   "lastCrawl": {
-   "at": 1788338807,
+   "at": 1788377565,
    "ok": true,
    "count": 723,
    "fresh": 723,
@@ -135,13 +135,13 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 103,
-   "at": 1788338807,
+   "ms": 323,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 651
   },
   "lastCrawl": {
-   "at": 1788338807,
+   "at": 1788377565,
    "ok": true,
    "count": 34,
    "fresh": 34,
@@ -165,13 +165,13 @@
    "status": 200,
    "cors": true,
    "kind": "json",
-   "ms": 376,
-   "at": 1788338807,
+   "ms": 454,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 5636
   },
   "lastCrawl": {
-   "at": 1788338807,
+   "at": 1788377565,
    "ok": true,
    "count": 222,
    "fresh": 218,
@@ -185,22 +185,31 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "live",
   "hosts": [
    "character-tavern.com",
    "cards.character-tavern.com",
    "ct-cards.storage.character-tavern.com"
   ],
   "probe": "https://character-tavern.com/",
-  "evidence": "shipped generators",
+  "evidence": "homepage sections JSON is open; card PNGs on a CORS-open storage host (2026-09-02)",
+  "adapter": "character-tavern.mjs",
   "sweep": {
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 620,
-   "at": 1788338807,
+   "ms": 584,
+   "at": 1788377565,
    "consecutiveFailures": 0,
-   "bytes": 55187
+   "bytes": 54979
+  },
+  "lastCrawl": {
+   "at": 1788377565,
+   "ok": true,
+   "count": 53,
+   "fresh": 53,
+   "error": null,
+   "errors": 0
   }
  },
  {
@@ -209,21 +218,30 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "live",
   "hosts": [
    "aicharactercards.com",
    "api.aicharactercards.com"
   ],
   "probe": "https://api.aicharactercards.com/",
-  "evidence": "shipped generators",
+  "evidence": "open JSON listing at api.aicharactercards.com/api/cards, ~560 cards; /uploads/ is CORS-open (2026-09-02)",
+  "adapter": "aicharactercards.mjs",
   "sweep": {
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 508,
-   "at": 1788338807,
+   "ms": 7737,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 1133
+  },
+  "lastCrawl": {
+   "at": 1788377565,
+   "ok": true,
+   "count": 556,
+   "fresh": 556,
+   "error": null,
+   "errors": 0
   }
  },
  {
@@ -242,8 +260,8 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 97,
-   "at": 1788338807,
+   "ms": 253,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }
@@ -264,8 +282,8 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 209,
-   "at": 1788338807,
+   "ms": 255,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }
@@ -276,20 +294,20 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "backyard.ai"
   ],
   "probe": "https://backyard.ai/hub",
-  "evidence": "curated list",
+  "evidence": "/hub redirects to sign-in (2026-09-02)",
   "sweep": {
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 471,
-   "at": 1788338807,
+   "ms": 1021,
+   "at": 1788377565,
    "consecutiveFailures": 0,
-   "bytes": 51394
+   "bytes": 51536
   }
  },
  {
@@ -306,13 +324,13 @@
   "probe": "https://realm.risuai.net/",
   "evidence": "curated list",
   "sweep": {
-   "status": 403,
+   "status": 200,
    "cors": false,
-   "kind": "challenge",
-   "ms": 88,
-   "at": 1788338807,
-   "consecutiveFailures": 2,
-   "error": "http"
+   "kind": "html",
+   "ms": 1540,
+   "at": 1788377565,
+   "consecutiveFailures": 0,
+   "bytes": 121455
   }
  },
  {
@@ -321,21 +339,21 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "app.wyvern.chat",
    "wyvern.chat"
   ],
   "probe": "https://app.wyvern.chat/",
-  "evidence": "curated list",
+  "evidence": "api.wyvern.chat answers 401 (2026-09-02)",
   "sweep": {
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 275,
-   "at": 1788338807,
+   "ms": 421,
+   "at": 1788377565,
    "consecutiveFailures": 0,
-   "bytes": 600317
+   "bytes": 600328
   }
  },
  {
@@ -354,8 +372,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 731,
-   "at": 1788338807,
+   "ms": 808,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 28332
   }
@@ -376,8 +394,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 592,
-   "at": 1788338807,
+   "ms": 1772,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 3365
   }
@@ -395,13 +413,13 @@
   "probe": "https://datacat.run/",
   "evidence": "curated list",
   "sweep": {
-   "status": 403,
+   "status": 200,
    "cors": false,
-   "kind": "challenge",
-   "ms": 37,
-   "at": 1788338807,
-   "consecutiveFailures": 2,
-   "error": "http"
+   "kind": "html",
+   "ms": 1429,
+   "at": 1788377565,
+   "consecutiveFailures": 0,
+   "bytes": 264605
   }
  },
  {
@@ -420,8 +438,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 798,
-   "at": 1788338807,
+   "ms": 737,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 343209
   }
@@ -432,18 +450,18 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "dead",
   "hosts": [
    "char-archive.evulid.cc"
   ],
   "probe": "https://char-archive.evulid.cc/",
-  "evidence": "curated list (archive)",
+  "evidence": "site says Shutdown (2026-09-02)",
   "sweep": {
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 110,
-   "at": 1788338807,
+   "ms": 227,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 3232
   }
@@ -454,18 +472,18 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "dead",
   "hosts": [
    "chatbots.neocities.org"
   ],
   "probe": "https://chatbots.neocities.org/",
-  "evidence": "curated list (archive)",
+  "evidence": "a webring of sites, not a card library (2026-09-02)",
   "sweep": {
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 877,
-   "at": 1788338807,
+   "ms": 260,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 23485
   }
@@ -486,8 +504,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 248,
-   "at": 1788338807,
+   "ms": 444,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 1568
   }
@@ -498,18 +516,18 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "spicychat.ai"
   ],
   "probe": "https://spicychat.ai/",
-  "evidence": "named, unverified",
+  "evidence": "prod.nd-api.com needs a bearer token (2026-09-02)",
   "sweep": {
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 323,
-   "at": 1788338807,
+   "ms": 213,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 10434
   }
@@ -531,8 +549,8 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 31,
-   "at": 1788338807,
+   "ms": 212,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }
@@ -553,8 +571,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 1998,
-   "at": 1788338807,
+   "ms": 900,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 62524
   }
@@ -565,18 +583,18 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "dead",
   "hosts": [
    "sillycard-web.pages.dev"
   ],
   "probe": "https://sillycard-web.pages.dev/",
-  "evidence": "named, unverified",
+  "evidence": "a viewer app, not a library (2026-09-02)",
   "sweep": {
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 83,
-   "at": 1788338807,
+   "ms": 247,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 36639
   }
@@ -598,8 +616,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 306,
-   "at": 1788338807,
+   "ms": 180,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 20036
   }
@@ -620,8 +638,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 538,
-   "at": 1788338807,
+   "ms": 565,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 168229
   }
@@ -642,8 +660,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 228,
-   "at": 1788338807,
+   "ms": 510,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 20207
   }
@@ -664,10 +682,10 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 274,
-   "at": 1788338807,
+   "ms": 210,
+   "at": 1788377565,
    "consecutiveFailures": 0,
-   "bytes": 145928
+   "bytes": 146036
   }
  },
  {
@@ -686,8 +704,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 830,
-   "at": 1788338807,
+   "ms": 1166,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 335958
   }
@@ -708,8 +726,8 @@
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 372,
-   "at": 1788338807,
+   "ms": 928,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 1722386
   }
@@ -730,8 +748,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 1233,
-   "at": 1788338807,
+   "ms": 263,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 197682
   }
@@ -743,20 +761,29 @@
    "lorebook",
    "character"
   ],
-  "status": "candidate",
+  "status": "live",
   "hosts": [
    "bronya-rand.github.io"
   ],
   "probe": "https://bronya-rand.github.io/reimagined-couscous/world-lore-books",
-  "evidence": "search result",
+  "evidence": "static GitHub Pages archive: 84 bot pages with V2 JSON+PNG, world-info JSON books; CORS * (2026-09-02)",
+  "adapter": "bronya-rand.mjs",
   "sweep": {
    "status": 200,
    "cors": true,
    "kind": "html",
-   "ms": 161,
-   "at": 1788338807,
+   "ms": 163,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 16955
+  },
+  "lastCrawl": {
+   "at": 1788377565,
+   "ok": true,
+   "count": 204,
+   "fresh": 204,
+   "error": null,
+   "errors": 0
   }
  },
  {
@@ -776,8 +803,8 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 236,
-   "at": 1788338807,
+   "ms": 342,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }
@@ -801,8 +828,8 @@
    "status": 403,
    "cors": false,
    "kind": "challenge",
-   "ms": 140,
-   "at": 1788338807,
+   "ms": 127,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }
@@ -824,8 +851,8 @@
    "status": 200,
    "cors": false,
    "kind": "html",
-   "ms": 546,
-   "at": 1788338807,
+   "ms": 580,
+   "at": 1788377565,
    "consecutiveFailures": 0,
    "bytes": 1319
   }
@@ -844,7 +871,7 @@
   "note": "partnership ask",
   "sweep": {
    "kind": "skipped",
-   "at": 1788338807
+   "at": 1788377565
   }
  },
  {
@@ -860,7 +887,7 @@
   "note": "partnership ask",
   "sweep": {
    "kind": "skipped",
-   "at": 1788338807
+   "at": 1788377565
   }
  },
  {
@@ -880,8 +907,8 @@
    "status": 404,
    "cors": false,
    "kind": "error",
-   "ms": 160,
-   "at": 1788338807,
+   "ms": 208,
+   "at": 1788377565,
    "consecutiveFailures": 4,
    "error": "http"
   }

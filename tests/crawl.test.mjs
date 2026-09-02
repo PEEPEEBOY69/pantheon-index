@@ -26,6 +26,14 @@ function fetcher(overrides = []) {
     { match: "https://api.github.com/search/repositories?", body: read("fixtures/gh-search.json") },
     { match: "https://api.github.com/repos/someone/cards/git/trees/main?recursive=1", body: read("fixtures/gh-tree.json") },
     { match: "https://raw.githubusercontent.com/someone/cards/main/alice.png", body: png }, { match: "https://raw.githubusercontent.com/someone/cards/main/lore/wi.json", body: read("fixtures/stwi.json") },
+    { match: "https://character-tavern.com/api/homepage/sections", body: read("fixtures/ct-sections.json") },
+    { match: "https://api.aicharactercards.com/api/cards?page=1", body: read("fixtures/aicc-cards.json") }, { match: "https://api.aicharactercards.com/api/cards?", body: { data: [], pagination: { total: 3 } } },
+    { match: "https://api.aicharactercards.com/uploads/", body: png },
+    { match: "https://bronya-rand.github.io/reimagined-couscous/world-lore-books", body: fs.readFileSync("fixtures/bronya-books.html", "utf8"), kind: "text" },
+    { match: "https://bronya-rand.github.io/reimagined-couscous/world-info/HSR.json", body: read("fixtures/stwi.json") }, { match: "https://bronya-rand.github.io/reimagined-couscous/world-info/Broken.json", body: { nope: 1 } },
+    { match: "https://bronya-rand.github.io/reimagined-couscous/bot-list", body: fs.readFileSync("fixtures/bronya-bot-list.html", "utf8"), kind: "text" },
+    { match: "https://bronya-rand.github.io/reimagined-couscous/acheron", body: fs.readFileSync("fixtures/bronya-bot.html", "utf8"), kind: "text" }, { match: "https://bronya-rand.github.io/reimagined-couscous/blade", body: "<html><h1>Blade</h1></html>", kind: "text" },
+    { match: "https://bronya-rand.github.io/reimagined-couscous/chars/%5BHSR%5D%20Acheron/Acheron.json", body: card }, { match: "https://bronya-rand.github.io/reimagined-couscous/chars/%5BHSR%5D%20Acheron/Acheron%20(no%20scenario).json", body: { spec: "other" } },
     { match: "https://rentry.org/", body: fs.readFileSync("fixtures/rentry-raw.txt", "utf8"), kind: "text" }, { match: "https://blocky-mint.github.io/", body: "<a href='https://chub.ai/'>x</a>", kind: "text" },
     { match: /^https:\/\//, body: "<html>ok</html>", kind: "text", headers: { "access-control-allow-origin": "*" } },
   ]) });
@@ -36,7 +44,8 @@ test("runCrawl writes a complete index from fixtures", async () => {
   const result = await runCrawl({ outDir: out, fetcher: fetcher(), now: 1_700_000_000, limits: { huggingface: { datasets: 5, filesPerDataset: 20 }, github: { repos: 5, filesPerRepo: 20 } }, log: () => {} });
   const m = read(path.join(out, "manifest.json"));
   assert.equal(m.v, 1); assert.equal(m.builtAt, 1_700_000_000);
-  assert.deepEqual(Object.keys(m.sources).sort(), ["chub", "chub-lorebooks", "github", "huggingface", "perchance-rp"], "fictionlab is crawl:false");
+  assert.deepEqual(Object.keys(m.sources).sort(), ["aicharactercards", "bronya-rand", "character-tavern", "chub", "chub-lorebooks", "github", "huggingface", "perchance-rp"], "fictionlab is crawl:false");
+  assert.equal(m.sources["character-tavern"].count, 3); assert.equal(m.sources.aicharactercards.count, 3); assert.equal(m.sources["bronya-rand"].count, 2);
   assert.equal(m.sources.chub.count, 2); assert.equal(m.sources["perchance-rp"].count, 2); assert.equal(m.sources.huggingface.count, 2);
   for (const [, s] of Object.entries(m.sources)) for (const f of [...s.heads, ...s.recs]) { assert.ok(fs.existsSync(path.join(out, f)), f); assert.ok(m.hashes[f]); }
   const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub").search); assert.ok(adapters.find(a => a.id === "perchance-rp").caps);

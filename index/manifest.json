@@ -1,13 +1,13 @@
 {
  "v": 1,
- "builtAt": 1788338807,
+ "builtAt": 1788377565,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
  },
  "sources": {
   "chub": {
-   "count": 20254,
+   "count": 20344,
    "heads": [
     "chub/head-000.json",
     "chub/head-001.json",
@@ -28,10 +28,10 @@
     "chub/rec-006.json",
     "chub/rec-007.json"
    ],
-   "bytes": 17941529
+   "bytes": 18022820
   },
   "chub-lorebooks": {
-   "count": 5083,
+   "count": 5085,
    "heads": [
     "chub-lorebooks/head-000.json",
     "chub-lorebooks/head-001.json"
@@ -40,7 +40,7 @@
     "chub-lorebooks/rec-000.json",
     "chub-lorebooks/rec-001.json"
    ],
-   "bytes": 4262991
+   "bytes": 4264510
   },
   "perchance-rp": {
    "count": 723,
@@ -71,40 +71,76 @@
     "github/rec-000.json"
    ],
    "bytes": 229158
+  },
+  "character-tavern": {
+   "count": 53,
+   "heads": [
+    "character-tavern/head-000.json"
+   ],
+   "recs": [
+    "character-tavern/rec-000.json"
+   ],
+   "bytes": 47624
+  },
+  "aicharactercards": {
+   "count": 556,
+   "heads": [
+    "aicharactercards/head-000.json"
+   ],
+   "recs": [
+    "aicharactercards/rec-000.json"
+   ],
+   "bytes": 535097
+  },
+  "bronya-rand": {
+   "count": 204,
+   "heads": [
+    "bronya-rand/head-000.json"
+   ],
+   "recs": [
+    "bronya-rand/rec-000.json"
+   ],
+   "bytes": 142672
   }
  },
  "adaptersUrl": "adapters.json",
  "sourcesUrl": "sources.json",
  "targetsUrl": "targets.json",
  "hashes": {
-  "adapters.json": "997c43b68a6f9c08c0f341267abd0f6f3a66ba5c8c9e77a870f4b922c65d91f3",
-  "sources.json": "cd3a62fa5c56d507a1a1d95a22a9f3b8b3ccc1646944862945ba30461b5e5255",
+  "adapters.json": "46f8226d0ef7339bcddfe9103b47fc0186f1b85554c0e98cf7e6ba017a63e4f8",
+  "sources.json": "05d053a427de3fe9cb2084465cbe63f6ba81594ac79e5cfbbcd45c607fc06a3e",
   "targets.json": "917499337ceb7e63024e0c6737fc525487f623b13aee56a2b1857f0b0483ae8b",
-  "chub/rec-000.json": "16017de4009cea8bb5ce4b0cc4861f1cfb256c34dbd3804320d37aa05d843a83",
-  "chub/head-000.json": "ac29b8b284c7ad839a43e9dff78965ca379b7fd7724465280ea59e8f4aa242b4",
-  "chub/rec-001.json": "cbaa1400f388e43899ab13abdc74daff3a91f8a471ba5fcb4cc7d4a42bbbea2b",
-  "chub/head-001.json": "956263c8cfe56cc5d201a4caa58daaa4998226ff87294ec4bda1a2e49396937c",
-  "chub/rec-002.json": "c19c9cdd9d95b35d56cd1643648aaec2ffe792f502cbbab2a190949ebe4a49e9",
-  "chub/head-002.json": "125a1acc528bbb1856e2b8cc7b70ec6086f26d65dc62a9d6ec6bed133cbf8e49",
-  "chub/rec-003.json": "9305dce429d0da9ddfc11daa696aac66840ab49f230743a4ffdf5a03338aacd5",
-  "chub/head-003.json": "e3303bee2044c65bbb656d2c2f66cb351ba5d195c17a65fd098d3ea34256dbe8",
-  "chub/rec-004.json": "d34f64e1bacdaa302d7e77bfcde057d3382fdbff7cacbd672ecfb4793759f88e",
-  "chub/head-004.json": "88b6d8a4497004cb4ab3f692048828cc41f0bd6e9f2ecc9e25cb5bb7253cc268",
-  "chub/rec-005.json": "8deb3b68129ae2193a25a333b3da5ab4273469bc6bdaa55c01c7213a768d1493",
-  "chub/head-005.json": "050ce856366a9dcc40af01b5953a56b9db803a007c5ef41fb499181dd45142a4",
-  "chub/rec-006.json": "aa30b9c52615f386eb4070de152cd37e317ab8d0a5944e412a7fcf5370f9db46",
-  "chub/head-006.json": "eb44a240ed310407022a8e775819e96aad5fd4591d4c0012f44cf55c5b7bd217",
-  "chub/rec-007.json": "1dc9a631f9a9d5f7bcc966ecf21596dbdd61f4192c305f56a5612de476ed7b30",
-  "chub/head-007.json": "8b7530ea1c6dd65af4a564b24fd7c85bfe9a0e73ac2834ed8fa00eaa14b99fdc",
-  "chub-lorebooks/rec-000.json": "52d4e723ffb2af55440462788cc03ab40dfde8a7fa5f5f33f920878242f51dcb",
-  "chub-lorebooks/head-000.json": "935a9dd60cf6ad85d3c18bf228c7b419742042196676eccc6e7b5dd3aef57620",
-  "chub-lorebooks/rec-001.json": "18fba4cb693a45e5583e34ca55ea626d1e1135a2d1556e66dfde449f369b5d19",
-  "chub-lorebooks/head-001.json": "5a39ee56c689399de31f7fd2dfe98ce812b2201530d7296ce60c66ae4843e164",
+  "chub/rec-000.json": "17bcd40ff8c2f03cd597329e6fb538155aeb9dca5625a87db55d910f4612eecf",
+  "chub/head-000.json": "29632cea80b39078226c398e0e5b3a81c9f18bfe37552c196c61de8303a19444",
+  "chub/rec-001.json": "f0cc177ac283a58eb49c519c11f369f9b224ca87ec1ecabfd376588f3d84a03e",
+  "chub/head-001.json": "d748f554ec35ffc2386f96cc148e4c928b41fb6287afc59f5e75cfcf530c644f",
+  "chub/rec-002.json": "8ac3b69a799b995016ae4190971546b732abbb84ec7ba820bd44f55cbecc3f28",
+  "chub/head-002.json": "78253ab6beb36fdafe75754fa48f6056bc7b4b92d88b0c9dde10449334cc85f5",
+  "chub/rec-003.json": "db4c1cb3f646fbc3c637734ec980242a68e0b004b378f362f4fe5d3e7d48a81f",
+  "chub/head-003.json": "b206033b5cebf18aeac7dd7d7ee81f5aba5fa3b3050b6ac76d58542980ec1ce9",
+  "chub/rec-004.json": "2f9e433a0c5940291c443725ba7ae4f2be5233399657d1a64da6eeba6b402695",
+  "chub/head-004.json": "ccbfb27e14b772cba415bf44f333403a42ed0b7d810539203d5e55cf54801070",
+  "chub/rec-005.json": "2ef4f0fbecc45c26fbaff1029c0b7ad1bfd06062d8c08e546cf3152acdc1e40d",
+  "chub/head-005.json": "a915989d42f2af0b6db19b5ddad9327a95b1c38e8deda7db330235f3152d597d",
+  "chub/rec-006.json": "fe67aea2913eb11e7600f37415a4a26805f655ef31d45f25b13f9e433fd4b7c1",
+  "chub/head-006.json": "e6e545cf629abe34427ad248c593fec3ab1cd0b3c383d1c57532d82314e2050c",
+  "chub/rec-007.json": "35d8145b2029866c24c09d8f89071d0637d7013957ee46da83bcb97683171ef6",
+  "chub/head-007.json": "51669a2726e28aa2108c95159b4bb602c1c71873a74d7990feb0a324e1ba6b2f",
+  "chub-lorebooks/rec-000.json": "6722fc3438f5e2737463cd949527c400939f8cdba556c5cbd2ca86d491597363",
+  "chub-lorebooks/head-000.json": "3787db3988a84bc5eb353072d1c579e9b9ecefd7c988c2549d5e6a753b032365",
+  "chub-lorebooks/rec-001.json": "22443e70842828dca3f7219fe61c2f530b338e0d1fb8b147a326ecd91fc04910",
+  "chub-lorebooks/head-001.json": "7c27b1b231102a2f2711e7b83d1d083bc9c379e93633138df9c824bf35f2f9c5",
   "perchance-rp/rec-000.json": "be7102e9c6b2381a828661b9901730ee3d09890af07200901d4a4deac086e38f",
   "perchance-rp/head-000.json": "c58eeb8a64ee3341ec0aa6f73c7c98d36c753832b13b11eb6694b53de03c301d",
   "huggingface/rec-000.json": "64d092c5f905f384f23f5b1cf671419801b5b5fd8f769cd3ae55acd283ed9914",
   "huggingface/head-000.json": "2d08dee2b793abad8ab7874b3b1a10c44d74ad1189bcf45994b207db26891f9e",
   "github/rec-000.json": "3576ec93610fdbf3a1e53e1ec6eca30b75a0118e4d11e7a1c4382f43e66b4f67",
-  "github/head-000.json": "cb8636eb7190560d61527af2440c247a15d41f40d39f137541e22ee80eb1830c"
+  "github/head-000.json": "cb8636eb7190560d61527af2440c247a15d41f40d39f137541e22ee80eb1830c",
+  "character-tavern/rec-000.json": "2b7a92686979b95709e0b4d852040fa767ee3df2d10872b0b2eebb705fc6ce67",
+  "character-tavern/head-000.json": "0ad8fb9b1237c4b11c84d81f00db5736d30001d9947da572c5f22edf8196ab86",
+  "aicharactercards/rec-000.json": "740740c0aec4bfd4db5f9973dda87badcc6c5d68cc37dc40a44e46390f95ac02",
+  "aicharactercards/head-000.json": "b18646d7e552bbf2a78e29401e0a4ba1b580be5e0cb8092807fcc4135f0e5640",
+  "bronya-rand/rec-000.json": "8eb8384d7c24ad7eb61f7efef73d8f02161c1d61e353fcfb45a5b011e2b0cb74",
+  "bronya-rand/head-000.json": "fc117357999f83c888cec0a0c604ab3b963fc471a290f678b118a700216ee17b"
  }
 }
