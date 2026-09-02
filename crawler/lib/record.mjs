@@ -21,7 +21,8 @@ export function normaliseTags(arr) {
   return out;
 }
 
-const isHttps = u => typeof u === "string" && /^https:\/\/[^\s]+$/.test(u) && u.length <= LIMITS.url;
+// https only — plus loopback http, which never occurs in real data and lets the browser tests serve fixtures locally.
+const isHttps = u => typeof u === "string" && (/^https:\/\/[^\s]+$/.test(u) || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/[^\s]*$/.test(u)) && u.length <= LIMITS.url;
 
 export function makeRecord(input) {
   const { src, k, nid, n, b, t, c, nsfw, o, p, caps, tok, ts } = input;
