@@ -30,7 +30,7 @@ async function previousRecords(outDir, src) {
   return out;
 }
 
-export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log }) {
+export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null }) {
   await fs.mkdir(outDir, { recursive: true });
   const seed = JSON.parse(await fs.readFile(path.join(here, "sources.json"), "utf8"));
   const prevSources = await readJson(path.join(outDir, "sources.json"), []);
@@ -47,14 +47,19 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
   }
   for (const s of sources.filter(x => x.status === "live" && x.adapter && x.crawl !== false)) {
     let ok = true, fresh = [], errMsg = null, adapterErrors = [];
-    try {
-      const ad = await loadAdapter(s.adapter);
-      adapters.push(ad.descriptor);
-      const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id] });
-      fresh = res.records; adapterErrors = res.errors || [];
-      if (fresh.length === 0 && adapterErrors.length) { ok = false; errMsg = adapterErrors[0].message; }
-    } catch (e) { ok = false; errMsg = String(e.message || e); }
     const prev = await previousRecords(outDir, s.id);
+    if (Array.isArray(only) && !only.includes(s.id)) {
+      try { adapters.push((await loadAdapter(s.adapter)).descriptor); } catch (e) { ok = false; errMsg = String(e.message || e); }
+      fresh = prev; log(`crawl ${s.id}: kept ${prev.length} previous records (--only)`);
+    } else {
+      try {
+        const ad = await loadAdapter(s.adapter);
+        adapters.push(ad.descriptor);
+        const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id] });
+        fresh = res.records; adapterErrors = res.errors || [];
+        if (fresh.length === 0 && adapterErrors.length) { ok = false; errMsg = adapterErrors[0].message; }
+      } catch (e) { ok = false; errMsg = String(e.message || e); }
+    }
     const prevSeen = await readJson(path.join(outDir, s.id, "seen.json"), {});
     const { records: merged, seen } = mergeWithPrevious(prev, fresh, { now, crawlOk: ok, prevSeen });
     const written = await writeSourceShards(outDir, s.id, merged);
@@ -81,7 +86,8 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   const outDir = path.resolve(here, "..", "index");
-  runCrawl({ outDir }).then(({ manifest, errors }) => {
+  const onlyArg = process.argv.find(a => a.startsWith("--only=")); const only = onlyArg ? onlyArg.slice(7).split(",").map(s => s.trim()).filter(Boolean) : null;
+  runCrawl({ outDir, only }).then(({ manifest, errors }) => {
     console.log(`built ${Object.keys(manifest.sources).length} sources, ${errors.length} errors`);
     for (const e of errors) console.error(`  ${e.source}: ${e.message}`);
     process.exit(0);

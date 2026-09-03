@@ -7,7 +7,7 @@ test("postRecord: tags flattened and de-underscored, sfw/nsfw auto tags become t
   assert.equal(postRecord(posts.posts[1], 9).nsfw, true); assert.deepEqual(tagNames([{ name: "a_b" }, "c", null]), ["a b", "c"]);
 });
 test("crawl: pages the listing per pass until total, dedups, adds lorebooks; records validate; listing down → error", async () => {
-  const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([{ match: /botbooru\.com\/posts\/\?page=1&/, body: posts }, { match: /botbooru\.com\/posts\/\?/, body: { total: 2, posts: [] } }, { match: "https://botbooru.com/api/lorebooks?page=1", body: books }, { match: "https://botbooru.com/api/lorebooks?", body: { items: [], total: 1 } }]) });
+  const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([{ match: /botbooru\.com\/posts\/\?offset=0&/, body: posts }, { match: /botbooru\.com\/posts\/\?/, body: { total: 2, posts: [] } }, { match: "https://botbooru.com/api/lorebooks?offset=0", body: books }, { match: "https://botbooru.com/api/lorebooks?", body: { items: [], total: 1 } }]) });
   const { records, errors } = await crawl(f, { ts: 3 }); assert.equal(errors.length, 0); assert.equal(records.length, 3);
   const lb = records.find(r => r.k === "lorebook"); assert.equal(lb.n, "Fullmetal Alchemist"); assert.equal(lb.p.u, "https://botbooru.com/api/lorebooks/616"); assert.equal(lb.p.f, "bblore"); assert.equal(lb.tok, 9800); assert.equal(lb.o, "https://botbooru.com/lorebooks/yemhd");
   for (const r of records) assert.equal(validateRecord(r).ok, true, r.id);

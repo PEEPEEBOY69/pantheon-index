@@ -35,7 +35,7 @@ function fetcher(overrides = []) {
     { match: "https://bronya-rand.github.io/reimagined-couscous/acheron", body: fs.readFileSync("fixtures/bronya-bot.html", "utf8"), kind: "text" }, { match: "https://bronya-rand.github.io/reimagined-couscous/blade", body: "<html><h1>Blade</h1></html>", kind: "text" },
     { match: "https://bronya-rand.github.io/reimagined-couscous/chars/%5BHSR%5D%20Acheron/Acheron.json", body: card }, { match: "https://bronya-rand.github.io/reimagined-couscous/chars/%5BHSR%5D%20Acheron/Acheron%20(no%20scenario).json", body: { spec: "other" } },
     { match: /sv\.risuai\.xyz\/realm\/.*page%3D%3D0.*nsfw%3D%3Dfalse.*sort%3D%3Ddownloads/, body: read("fixtures/realm-list.json") }, { match: "https://sv.risuai.xyz/realm/", body: { cards: [] } },
-    { match: /botbooru\.com\/posts\/\?page=1&/, body: read("fixtures/bb-posts.json") }, { match: "https://botbooru.com/posts/?", body: { total: 2, posts: [] } }, { match: "https://botbooru.com/api/lorebooks?page=1", body: read("fixtures/bb-lorebooks.json") }, { match: "https://botbooru.com/api/lorebooks?", body: { items: [], total: 1 } },
+    { match: /botbooru\.com\/posts\/\?offset=0&/, body: read("fixtures/bb-posts.json") }, { match: "https://botbooru.com/posts/?", body: { total: 2, posts: [] } }, { match: "https://botbooru.com/api/lorebooks?offset=0", body: read("fixtures/bb-lorebooks.json") }, { match: "https://botbooru.com/api/lorebooks?", body: { items: [], total: 1 } },
     { match: "https://rentry.org/", body: fs.readFileSync("fixtures/rentry-raw.txt", "utf8"), kind: "text" }, { match: "https://blocky-mint.github.io/", body: "<a href='https://chub.ai/'>x</a>", kind: "text" },
     { match: /^https:\/\//, body: "<html>ok</html>", kind: "text", headers: { "access-control-allow-origin": "*" } },
   ]) });
@@ -66,4 +66,15 @@ test("runCrawl: one adapter failing keeps the previous shards for that source an
   const m = read(path.join(out, "manifest.json")); assert.equal(m.sources["perchance-rp"].count, 2, "previous kept");
   const src = read(path.join(out, "sources.json")).find(s => s.id === "perchance-rp"); assert.equal(src.lastCrawl.ok, false); assert.match(src.lastCrawl.error, /HTTP 500/);
   assert.ok(r2.errors.some(e => e.source === "perchance-rp"));
+});
+test("runCrawl --only re-crawls the named sources and keeps every other source's previous records and manifest entry", async () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), "pantheon-index-"));
+  await runCrawl({ outDir: out, fetcher: fetcher(), now: 1_700_000_000, limits: { huggingface: { datasets: 1, filesPerDataset: 5 }, github: { repos: 1, filesPerRepo: 5 } }, log: () => {} });
+  const before = read(path.join(out, "manifest.json"));
+  const broken = fetcher([{ match: "https://user.uploads.dev/file/4bae8c63c1b8a8f0485e27e30737dc44.json", status: 500, body: "x", kind: "text" }]);
+  const r = await runCrawl({ outDir: out, fetcher: broken, now: 1_700_086_400, only: ["botbooru"], limits: { huggingface: { datasets: 1, filesPerDataset: 5 }, github: { repos: 1, filesPerRepo: 5 } }, log: () => {} });
+  const after = read(path.join(out, "manifest.json"));
+  assert.deepEqual(Object.keys(after.sources).sort(), Object.keys(before.sources).sort()); assert.equal(after.sources["perchance-rp"].count, before.sources["perchance-rp"].count, "not crawled, not broken: kept");
+  assert.equal(r.errors.length, 0, "the broken source was not touched"); assert.equal(after.sources.botbooru.count, 3);
+  const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub"), "adapters still exported for kept sources");
 });
