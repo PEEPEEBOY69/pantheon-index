@@ -1,6 +1,6 @@
 {
  "v": 1,
- "builtAt": 1788394961,
+ "builtAt": 1788398269,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
@@ -93,7 +93,7 @@
    "bytes": 536101
   },
   "risu-realm": {
-   "count": 3276,
+   "count": 3533,
    "heads": [
     "risu-realm/head-000.json",
     "risu-realm/head-001.json"
@@ -102,7 +102,7 @@
     "risu-realm/rec-000.json",
     "risu-realm/rec-001.json"
    ],
-   "bytes": 2485990
+   "bytes": 3221847
   },
   "botbooru": {
    "count": 3417,
@@ -131,8 +131,8 @@
  "sourcesUrl": "sources.json",
  "targetsUrl": "targets.json",
  "hashes": {
-  "adapters.json": "81ee991dae5c9ba116c6dc5ba776504b319545ce1728c8ebee7ba3ac84316250",
-  "sources.json": "039efafa97f4dc413253cdf1110f5ced9499b915a3d734f9a2a7cdc60c27c1df",
+  "adapters.json": "edc045e11d4a85960a88e6dc1d05f6ed245812767284f5aff994b23f9a007ad1",
+  "sources.json": "59c3e2aa520b58c9c0a8ddad6acac4bb45636f95db4a0da6a8d6952b5cbd5dee",
   "targets.json": "09df37c4af27aa0f7ab7aa701d461613b2d0d318047d3b8351dc0ae1a5f9eb67",
   "chub/rec-000.json": "17bcd40ff8c2f03cd597329e6fb538155aeb9dca5625a87db55d910f4612eecf",
   "chub/head-000.json": "29632cea80b39078226c398e0e5b3a81c9f18bfe37552c196c61de8303a19444",
@@ -164,10 +164,10 @@
   "character-tavern/head-000.json": "44cf43cf81743c52a8a9e377e127c0acece54cb8c129ceafd529186c5c4761b6",
   "aicharactercards/rec-000.json": "98e53f7e2a85a10c4dcf742c4d41ce3fa47733b98469cdf565499e0b958814e3",
   "aicharactercards/head-000.json": "afa3e4ff57e20bf476875fe00356967c4de80b1de805c57c455971088c2472bc",
-  "risu-realm/rec-000.json": "02d84608a07c881c2483b72c60f9c03d9f5ae36c6886e301d6bb45b173d39c52",
-  "risu-realm/head-000.json": "6dfaab0606941aa70a83fbc18c2ba47932cbb77477d6142deecf0d1e8dba072a",
-  "risu-realm/rec-001.json": "f0df0463356808ed9fbf188441dd3aa5fd6d6911a1c7ee6c1c699067d5e6662c",
-  "risu-realm/head-001.json": "e1a629b5df80be3858b60765b185fce52b2bdd970fcc11a92b8cfe93768bc497",
+  "risu-realm/rec-000.json": "28685bfd68727574487038c2e00c9fb13380ae9a782231f33000fcb66dd57949",
+  "risu-realm/head-000.json": "409bf0ad7b5b8c8e51014df7bc338387f121273bf067bf12ed13688b06f71fcb",
+  "risu-realm/rec-001.json": "f42887a0f7b86a6243507e2eb423235d6c396c3b991a35f1e097b6894a8f229c",
+  "risu-realm/head-001.json": "e024cdb8fad2a9c60d34bcd1b9109c5747e25c2d1bcb757af93dc3d8699b9266",
   "botbooru/rec-000.json": "5230dd029e164d36de1d897b121b08865bb9b667f731d9113a9dcb11e10bbd22",
   "botbooru/head-000.json": "eb488c991b2f8a59b1551126b5da7baf096ec535d1820299ce13e6f39a0996df",
   "botbooru/rec-001.json": "62ec7dc79c43a8e5920badf6ec0f4b6e6e7a9b313cbbebf2005e7b3599b88ea9",

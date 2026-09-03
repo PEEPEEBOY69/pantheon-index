@@ -1,4 +1,4 @@
-// RisuAI Realm: the list endpoint its own client uses (found in kwaroran/RisuAI src/ts/characterCards.ts, 2026-09-02):
+// RisuAI Realm (covers: the list's `img` is a 64-hex resource id served at sv.risuai.xyz/resource/<id>, ~60 KB — measured 2026-09-02): the list endpoint its own client uses (found in kwaroran/RisuAI src/ts/characterCards.ts, 2026-09-02):
 //   GET https://sv.risuai.xyz/realm/<encoded "search==…&&page==N&&nsfw==bool&&sort==…&&web==web">?cache=30
 // 30 cards a page for sorts "" / downloads / trending / random (the client's "recommended" is page-0-only).
 // Downloads are PNG (older) or charx zip (newer), both CORS *, no headers needed. Covers are the full card files, so none.
@@ -38,7 +38,7 @@ export async function crawl(fetcher, { ts, limits = DEFAULT_LIMITS, log = () => 
           if (byId.has(raw.id)) continue;
           const tags = Array.isArray(raw.tags) ? raw.tags.map(String) : [];
           try {
-            byId.set(raw.id, makeRecord({ src: meta.id, k: "character", nid: raw.id, n: String(raw.name || "").replace(/[*_`#]/g, "").trim(), b: cleanDesc(raw.desc), t: tags, c: null, nsfw: nsfw || isNsfwTags(tags), o: meta.originBase + raw.id, p: { tr: "plain", u: meta.downloadBase + raw.id + "?cors=true", f: "charx" }, caps: meta.caps, tok: null, ts }));
+            byId.set(raw.id, makeRecord({ src: meta.id, k: "character", nid: raw.id, n: String(raw.name || "").replace(/[*_`#]/g, "").trim(), b: cleanDesc(raw.desc), t: tags, c: /^[0-9a-f]{64}$/i.test(String(raw.img || "")) ? meta.hub + "/resource/" + raw.img : null, nsfw: nsfw || isNsfwTags(tags), o: meta.originBase + raw.id, p: { tr: "plain", u: meta.downloadBase + raw.id + "?cors=true", f: "charx" }, caps: meta.caps, tok: null, ts }));
             fresh++;
           } catch (e) { if (e instanceof RecordError) skipped++; else throw e; }
         }

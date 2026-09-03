@@ -1,5 +1,17 @@
 [
   {
+    "id": "ai-character-chat",
+    "label": "AI Character Chat",
+    "url": "https://perchance.org/ai-character-chat",
+    "kinds": [
+      "character"
+    ],
+    "receiver": false,
+    "format": "aicc-hash",
+    "verified": true,
+    "note": "verified 2026-09-02: a #{addCharacter:\u2026} link opened the app's add-character dialog with name and description prefilled (Pantheon transcript, browser pane). The character travels in the URL hash, the form the app itself uses for its built-in characters."
+  },
+  {
     "id": "blizzardui",
     "label": "BlizzardUI",
     "url": "https://perchance.org/blizzardui?pan={id}",
@@ -10,7 +22,7 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
     "id": "aether",
@@ -23,7 +35,7 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
     "id": "fur-ai",
@@ -34,7 +46,7 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
     "id": "as-social",
@@ -46,6 +58,6 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   }
 ]
