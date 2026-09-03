@@ -1,5 +1,30 @@
 [
   {
+    "id": "ai-character-chat",
+    "label": "AI Character Chat",
+    "url": "https://perchance.org/ai-character-chat",
+    "kinds": [
+      "character",
+      "lorebook"
+    ],
+    "receiver": false,
+    "format": "aicc-hash",
+    "verified": true,
+    "note": "verified 2026-09-02: a #{addCharacter:\u2026} link opened the app's add-character dialog with name and description prefilled (Pantheon transcript, browser pane). The character travels in the URL hash, the form the app itself uses for its built-in characters. Lorebooks: uploaded as AICC plain-text lore (one paragraph per entry) and attached to a narrator character via loreBookUrls; a character with an embedded book gets the book attached the same way."
+  },
+  {
+    "id": "ai-rpg",
+    "label": "AI RPG",
+    "url": "https://perchance.org/ai-rpg",
+    "kinds": [
+      "scenario"
+    ],
+    "receiver": false,
+    "format": "airpg-upload",
+    "verified": true,
+    "note": "2026-09-02: ai-rpg loads #data=uup1:<upload> / #data=<url> as a shared adventure (format perchance-ai-rpg-v1, read from its source; as-social ships the identical flow in production). Watched: the link opens ai-rpg's 'load this shared adventure' confirmation. The perchance-rp source in the index is ai-rpg's own gallery."
+  },
+  {
     "id": "blizzardui",
     "label": "BlizzardUI",
     "url": "https://perchance.org/blizzardui?pan={id}",
@@ -10,12 +35,12 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
     "id": "aether",
     "label": "Aether",
-    "url": "https://perchance.org/aetherui-airpg?pan={id}",
+    "url": "https://perchance.org/aetherui?pan={id}",
     "kinds": [
       "character",
       "lorebook",
@@ -23,7 +48,7 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
     "id": "fur-ai",
@@ -34,7 +59,7 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
     "id": "as-social",
@@ -46,6 +71,6 @@
     ],
     "receiver": false,
     "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   }
 ]
