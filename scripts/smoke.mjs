@@ -14,6 +14,8 @@ const checks = [
   ["github search", "https://api.github.com/search/repositories?q=topic:character-cards&per_page=1", b => Array.isArray(b.items)],
   ["character tavern sections", "https://character-tavern.com/api/homepage/sections", b => Array.isArray(b.trending) && typeof get(b, "trending[].path")[0] === "string" && Number.isFinite(b.trending[0].permanentTokens)],
   ["aicharactercards listing", "https://api.aicharactercards.com/api/cards?page=1&limit=1", b => Array.isArray(b.data) && b.data[0] && typeof b.data[0].imageUrl === "string" && Number.isFinite(get(b, "pagination.total"))],
+  ["risu realm list", "https://sv.risuai.xyz/realm/" + encodeURIComponent("search== __shared&&page==0&&nsfw==false&&sort==downloads&&web==web") + "?cache=30", b => Array.isArray(b.cards) && b.cards.length > 0 && typeof b.cards[0].id === "string"],
+  ["botbooru listing", "https://botbooru.com/posts/?page=1&per_page=1&sort=latest", b => Array.isArray(b.posts) && b.posts[0] && typeof b.posts[0].character_name === "string" && Number.isFinite(b.total)],
   ["bronya rand world info", "https://bronya-rand.github.io/reimagined-couscous/world-info/HSR.json", b => b && typeof b.entries === "object"],
 ];
 let failed = 0;

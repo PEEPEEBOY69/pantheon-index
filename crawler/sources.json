@@ -161,13 +161,15 @@
     "kinds": [
       "character"
     ],
-    "status": "candidate",
+    "status": "live",
     "hosts": [
       "realm.risuai.net",
-      "risuai.net"
+      "risuai.net",
+      "sv.risuai.xyz"
     ],
     "probe": "https://realm.risuai.net/",
-    "evidence": "curated list"
+    "evidence": "list endpoint from the open-source client (sv.risuai.xyz/realm/…), 30 cards a page across four sorts; downloads are PNG or charx, CORS * (2026-09-02)",
+    "adapter": "risu-realm.mjs"
   },
   {
     "id": "wyvern",
@@ -226,14 +228,16 @@
     "id": "botbooru",
     "label": "Bot Booru",
     "kinds": [
-      "character"
+      "character",
+      "lorebook"
     ],
-    "status": "candidate",
+    "status": "live",
     "hosts": [
       "botbooru.com"
     ],
     "probe": "https://botbooru.com/",
-    "evidence": "curated list (archive)"
+    "evidence": "gallery JSON from /js/ui.js: /posts/?page&per_page=24, /post/{id} with all card fields, /api/lorebooks; no CORS (super-fetch); ~3,300 visible posts, ~140 lorebooks (2026-09-02)",
+    "adapter": "botbooru.mjs"
   },
   {
     "id": "char-archive",

@@ -1,6 +1,51 @@
 [
-  { "id": "blizzardui", "label": "BlizzardUI", "url": "https://perchance.org/blizzardui?pan={id}", "kinds": ["character", "lorebook", "scenario"], "receiver": false },
-  { "id": "aether", "label": "Aether", "url": "https://perchance.org/aetherui-airpg?pan={id}", "kinds": ["character", "lorebook", "scenario"], "receiver": false },
-  { "id": "fur-ai", "label": "FurAI", "url": "https://perchance.org/fur-ai", "kinds": ["character"], "receiver": false },
-  { "id": "as-social", "label": "Social DB", "url": "https://perchance.org/as-social", "kinds": ["character", "lorebook"], "receiver": false }
+  {
+    "id": "blizzardui",
+    "label": "BlizzardUI",
+    "url": "https://perchance.org/blizzardui?pan={id}",
+    "kinds": [
+      "character",
+      "lorebook",
+      "scenario"
+    ],
+    "receiver": false,
+    "verified": false,
+    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+  },
+  {
+    "id": "aether",
+    "label": "Aether",
+    "url": "https://perchance.org/aetherui-airpg?pan={id}",
+    "kinds": [
+      "character",
+      "lorebook",
+      "scenario"
+    ],
+    "receiver": false,
+    "verified": false,
+    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+  },
+  {
+    "id": "fur-ai",
+    "label": "FurAI",
+    "url": "https://perchance.org/fur-ai",
+    "kinds": [
+      "character"
+    ],
+    "receiver": false,
+    "verified": false,
+    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+  },
+  {
+    "id": "as-social",
+    "label": "Social DB",
+    "url": "https://perchance.org/as-social",
+    "kinds": [
+      "character",
+      "lorebook"
+    ],
+    "receiver": false,
+    "verified": false,
+    "note": "not yet confirmed to receive a Pantheon handoff — flip verified once a real import through this target is observed"
+  }
 ]

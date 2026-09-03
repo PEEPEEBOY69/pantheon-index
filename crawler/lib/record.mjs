@@ -1,6 +1,6 @@
 // The one record envelope every source collapses into (spec §5). Short field names on purpose.
 export const KINDS = ["character", "lorebook", "scenario"];
-export const FORMATS = ["ccv2png", "ccv2json", "ccv3json", "stwi", "chublore", "fl", "prp", "hubjson"];
+export const FORMATS = ["ccv2png", "ccv2json", "ccv3json", "stwi", "chublore", "fl", "prp", "hubjson", "charx", "bbjson", "bblore"];
 export const TRANSPORTS = ["plain", "super", "index"];
 export const LIMITS = { name: 100, blurb: 300, tags: 20, tagLen: 30, url: 300 };
 

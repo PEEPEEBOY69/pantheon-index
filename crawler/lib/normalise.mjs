@@ -62,6 +62,23 @@ export function textOf(p) {
   push(p); return parts.join("\n");
 }
 export const estimateTokens = payload => Math.ceil(textOf(payload).length / 4);
+// Botbooru's post detail JSON (spec §5.1, format "bbjson"): every card field is top-level under its own names.
+export function characterFromBotbooru(post) {
+  if (!post || typeof post !== "object" || typeof post.character_name !== "string") return null;
+  const tags = Array.isArray(post.tags) ? post.tags.map(t => (t && typeof t === "object" ? t.name : t)).filter(Boolean) : [];
+  const card = { spec: "chara_card_v2", spec_version: "2.0", data: { name: post.character_name, description: post.description || "", personality: post.personality || "", scenario: post.scenario || "", first_mes: post.first_mes || "", mes_example: post.mes_example || "", creator_notes: post.creator_notes || "", system_prompt: post.system_prompt || "", post_history_instructions: post.post_history_instructions || "", alternate_greetings: Array.isArray(post.alternate_greetings) ? post.alternate_greetings : [], tags, creator: post.uploader_name || "", character_book: post.lorebook_json && typeof post.lorebook_json === "object" ? post.lorebook_json : undefined } };
+  return characterFromCard(card);
+}
+// Botbooru's lorebook detail JSON (format "bblore"): entries carry keys/content under Botbooru's names; normalised through the ST world-info path.
+export function lorebookFromBotbooru(lb) {
+  if (!lb || typeof lb !== "object") return null;
+  const raw = Array.isArray(lb.entries) ? lb.entries : (lb.data && Array.isArray(lb.data.entries) ? lb.data.entries : (lb.data && lb.data.entries && typeof lb.data.entries === "object" ? Object.values(lb.data.entries) : []));
+  if (!raw.length) return null;
+  const entries = {};
+  raw.forEach((e, i) => { if (!e || typeof e !== "object") return; entries[String(i)] = { uid: i, key: Array.isArray(e.keys) ? e.keys : Array.isArray(e.key) ? e.key : typeof e.keys === "string" ? e.keys.split(",").map(s => s.trim()).filter(Boolean) : [], keysecondary: Array.isArray(e.secondary_keys) ? e.secondary_keys : [], comment: e.comment || e.name || e.title || "", content: e.content || "", constant: Boolean(e.constant || e.always_on), disable: e.enabled === false, order: Number.isFinite(e.insertion_order) ? e.insertion_order : Number.isFinite(e.order) ? e.order : 100, position: Number.isFinite(e.position) ? e.position : 0 }; });
+  const out = lorebookFromStWi({ name: lb.title || lb.name || "Lorebook", description: lb.description || lb.uploader_tagline || "", entries });
+  return out;
+}
 export function detectFormat(obj) {
   if (!obj || typeof obj !== "object") return null;
   if (obj.spec === "chara_card_v3") return "ccv3json";
