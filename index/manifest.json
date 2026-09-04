@@ -1,13 +1,13 @@
 {
  "v": 1,
- "builtAt": 1788488990,
+ "builtAt": 1788511838,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
  },
  "sources": {
   "chub": {
-   "count": 20461,
+   "count": 20768,
    "heads": [
     "chub/head-000.json",
     "chub/head-001.json",
@@ -28,10 +28,10 @@
     "chub/rec-006.json",
     "chub/rec-007.json"
    ],
-   "bytes": 18668764
+   "bytes": 18948843
   },
   "chub-lorebooks": {
-   "count": 5088,
+   "count": 5090,
    "heads": [
     "chub-lorebooks/head-000.json",
     "chub-lorebooks/head-001.json"
@@ -40,7 +40,7 @@
     "chub-lorebooks/rec-000.json",
     "chub-lorebooks/rec-001.json"
    ],
-   "bytes": 4404647
+   "bytes": 4406738
   },
   "perchance-rp": {
    "count": 723,
@@ -70,17 +70,17 @@
    "recs": [
     "github/rec-000.json"
    ],
-   "bytes": 234888
+   "bytes": 234897
   },
   "character-tavern": {
-   "count": 55,
+   "count": 57,
    "heads": [
     "character-tavern/head-000.json"
    ],
    "recs": [
     "character-tavern/rec-000.json"
    ],
-   "bytes": 50796
+   "bytes": 52510
   },
   "aicharactercards": {
    "count": 557,
@@ -93,7 +93,7 @@
    "bytes": 550734
   },
   "risu-realm": {
-   "count": 4012,
+   "count": 4229,
    "heads": [
     "risu-realm/head-000.json",
     "risu-realm/head-001.json"
@@ -102,10 +102,10 @@
     "risu-realm/rec-000.json",
     "risu-realm/rec-001.json"
    ],
-   "bytes": 3772392
+   "bytes": 3983464
   },
   "botbooru": {
-   "count": 3422,
+   "count": 3424,
    "heads": [
     "botbooru/head-000.json",
     "botbooru/head-001.json"
@@ -114,7 +114,7 @@
     "botbooru/rec-000.json",
     "botbooru/rec-001.json"
    ],
-   "bytes": 3829393
+   "bytes": 3831807
   },
   "bronya-rand": {
    "count": 204,
@@ -133,47 +133,47 @@
  "tagsUrl": "tags.json",
  "hashes": {
   "adapters.json": "edc045e11d4a85960a88e6dc1d05f6ed245812767284f5aff994b23f9a007ad1",
-  "sources.json": "448f0ba6bea27f52f80e68b77f7bc2c58a47f6b148c7ebbae35a97c4cd275d83",
+  "sources.json": "627a463deebe0b6f107da2c49ee00469ee5b6dd60d97c9552f48c8a0eb7969f7",
   "targets.json": "8fd3c302bf2601e7b3eb003cf8e99e38efc45c48082b6e4b1f9cee7b2d21b08d",
-  "tags.json": "3bc2cb954a1ed982ca09ffffba1586fc21c1e823c714b20ba058a0aeedbfc888",
-  "chub/rec-000.json": "17bcd40ff8c2f03cd597329e6fb538155aeb9dca5625a87db55d910f4612eecf",
-  "chub/head-000.json": "a54d215e39c6a8ab9a21f9d62d7cdc49b8cc19cc911ba3e0bc8e19dbeea0b6be",
-  "chub/rec-001.json": "c3b5ad7054d5cd4f2f615e0ff4c0d5ba2dc1f0996d113dc463907c2788cd08f3",
-  "chub/head-001.json": "ef46cbeff988e9bf9ede71e7896d5090a8be939478c7bcd669979176907552ed",
-  "chub/rec-002.json": "8203b91b990bc29924550aa3945ed630cdff7ea0a7d22a87abfa7b642ba24a14",
-  "chub/head-002.json": "42c988603caa7206ad4bd5dad190e999b7c3b4f45eff1c74993ddfde3d9f8374",
-  "chub/rec-003.json": "50e09c7171bfe1272e35b1830cae7af40953c8fb52adc4a1a6d8b352077cdfb5",
-  "chub/head-003.json": "87faaa5e8449e342c0e41e5f0c9650ac51daecf04a66631b305f2e8e7fcf1abf",
-  "chub/rec-004.json": "df158fd33e1b1b84969f5e666b7f1a10a6a096ed9facde1a666c70a547d1cf27",
-  "chub/head-004.json": "fbab6a1dec9f6cc43fa7073c8b14471fcc5aed35c72c90464cb01076837aa092",
-  "chub/rec-005.json": "5ba8979de83f3df718a1510020f91f0663cf3e12f0761a222e3d6e148ecff731",
-  "chub/head-005.json": "a166536d472051434b23445a6e1d1a4ca5c827f71e435c3688db0ad4c7f1ecca",
-  "chub/rec-006.json": "2fb4ab5a6061ee1eee2219abd8adde14d037a32cbc9ccf4e025d175605421aa8",
-  "chub/head-006.json": "dadd7c6ec70c250a23fb5e2bacb8862430b463400dc21dcfa51d50bcfe7f52de",
-  "chub/rec-007.json": "f39981f26d1a0d31ebbb38d95cbfc57781b6f021246001d2e8d1f49923fb95c9",
-  "chub/head-007.json": "0255d7d1c459ca3ab4dbb34fd6ef58a698e948b56de5a34764076669f28abc33",
-  "chub-lorebooks/rec-000.json": "2fb6c4940e7f026def5864e3b6f1d8283f28083ce536e6966de963fe6e5d57e9",
-  "chub-lorebooks/head-000.json": "126ce51983c49d7c992ee5e342ebfc06109a21a70e0abc4ca7b393807afbaf33",
-  "chub-lorebooks/rec-001.json": "f452662a5d712baec722912e5b7dda27ef568904375b6529ad58c748151c10db",
-  "chub-lorebooks/head-001.json": "6e40133ad3dc504012c2de3f913f7dce2ed6e37fd5b4865551d030e6d4a9c683",
+  "tags.json": "32f7ff9a46d101a310cce422023cb30502484cd81f711d5f06dc5a9f5c7fb705",
+  "chub/rec-000.json": "118509422dcbf21555bbba7d06923ced2d6fc6ceee7290af8a37099cb5acf851",
+  "chub/head-000.json": "c550ff6c1210803473f2ce336c413855c0b6ee62ee267dda74add579349b871e",
+  "chub/rec-001.json": "039b6b8da25758e0c1bb355d4ba72dc45e15e3953dbc0cd18a6fd9e55035cefa",
+  "chub/head-001.json": "aa21454f5e0261596a94da158d5faceb6af394dbe8b6d5d04d56a303fa8e836d",
+  "chub/rec-002.json": "bd7bd2afef59c42988f2e3af6103edf8908c6c8ed86315f1af0fd2f28b57c764",
+  "chub/head-002.json": "d97ba1c438723ccdb0027633d00636a453df0c6e39efd95c5fcb2bdceab44941",
+  "chub/rec-003.json": "b9cfb86e9c610515772419ae701189c86d28fb87080b39d06163890e41513d00",
+  "chub/head-003.json": "34b3ed5c2164db22edf176412e16f0c6c8ad1eb84c924b87dcc3af101539a7c8",
+  "chub/rec-004.json": "fd4324641f65ea48987e5303308d4005966b2749d9a13e6f1b156e9196effca1",
+  "chub/head-004.json": "e102005f8648f9a26b5618acb431fc10026eb724cebc2d3ccd66ea35b2796aa6",
+  "chub/rec-005.json": "d01773074e5f4281c14c661f0f7bcba5185d19e22c8cf007659e35d562d04cc0",
+  "chub/head-005.json": "8b3d3a979c91e387141057376c0749ddda1693c12d0517f87fb5a61910922ebb",
+  "chub/rec-006.json": "64ba18857abfa45e80a9137b0c9ae92c01e60f690db8f827d6a287925c082698",
+  "chub/head-006.json": "ab3d7d036db4ae2b56bdf7e9e07105eb676112252834b98e73307bf1b42bbb8b",
+  "chub/rec-007.json": "164cf3e8e7bb161933adfeb0bd5682ff07679eb456f952630a14e201f367a8ff",
+  "chub/head-007.json": "3951c728bd01cca4c35c85801f32acc5ccfbd92d7b6c92c5f12da16ce5a20b64",
+  "chub-lorebooks/rec-000.json": "8bfe5cf74ccd62c9b49506c428c9693531749ac8e9f3b349933e479e92d391fb",
+  "chub-lorebooks/head-000.json": "fba8c401cf5ed38bf3b54a5e8f3deb289f83cf06030245ef5aa07ffbe1262e37",
+  "chub-lorebooks/rec-001.json": "80ef463b55281448422f73ebdabb65f6540301ff20b1ab121b3deb0543383242",
+  "chub-lorebooks/head-001.json": "2639a61652b1c581ff5f8164d80d2b45a8eb29107452a4866c8041d1f83f7d46",
   "perchance-rp/rec-000.json": "be7102e9c6b2381a828661b9901730ee3d09890af07200901d4a4deac086e38f",
   "perchance-rp/head-000.json": "566ccd7e1deeb81ddfb6d43d0cd4d5aa2eeacab5f752231dfbcb37abf00496fe",
   "huggingface/rec-000.json": "64d092c5f905f384f23f5b1cf671419801b5b5fd8f769cd3ae55acd283ed9914",
   "huggingface/head-000.json": "b6e183a939f897f39ae1445d913505c3c8368a321dbcff4b6c3e25d603ba6c02",
-  "github/rec-000.json": "3576ec93610fdbf3a1e53e1ec6eca30b75a0118e4d11e7a1c4382f43e66b4f67",
-  "github/head-000.json": "6fd77604b898d296086f257001f8b835b98c3df81804d1ca17b00f1360d213a1",
-  "character-tavern/rec-000.json": "5a5f81f5a11ee7f303ae537b0d2cd61d78c40cc51f549b0d3d6e828b5526ffbf",
-  "character-tavern/head-000.json": "0dc639a3f19411e740b764b694905cfa79d0ed7dc88349230f21dc71ef093f31",
+  "github/rec-000.json": "c5ba66d7a3d151d586886d4ce796c470888c476378a13f3ab1b8b95c408e70f4",
+  "github/head-000.json": "9fc9a78f0bbc2493952fd17657a0d51a1facef3bdf06f9f5784eac3b9acf4fcd",
+  "character-tavern/rec-000.json": "0f927623c076c3a184262c668c65c7cf1e1b2093dfca72dce27aa5120674ee17",
+  "character-tavern/head-000.json": "0ee05cd324ce2911cba479f91201e16ab9b7523a5000fa2e870ae0cee26b3471",
   "aicharactercards/rec-000.json": "98e53f7e2a85a10c4dcf742c4d41ce3fa47733b98469cdf565499e0b958814e3",
   "aicharactercards/head-000.json": "ae71a7b35929a8ed53bb52fe2e6f2eb04e21ca8cb9f433f1f0d7bc671fcb6a9b",
-  "risu-realm/rec-000.json": "de344d6788be8b3f3561219f61cf1f1de73a4b2e2b4be43a9f02c23f5d245f8d",
-  "risu-realm/head-000.json": "417f5e93aa41b69654792b77f8ab7cf139bce85b3ce3a2401feb8e6d0eec1049",
-  "risu-realm/rec-001.json": "68cd6dfb5865d83fda6d2f27bf9886a534c580ddfc93224a9e4832679cb01bb5",
-  "risu-realm/head-001.json": "a9f849f648467ff6e1dc73651bd3c9823c3335029164d00f2a8e5e4923678092",
+  "risu-realm/rec-000.json": "e0f425beb0ce1ec3d76a3d5aa4bc64df2cda67fee46b44bfc71fca972fa1d04e",
+  "risu-realm/head-000.json": "1dd1bb50a2cbdf88845e5f890e03fbf59e5393aa3d0dc9f9380c532eba4ba11b",
+  "risu-realm/rec-001.json": "b25d5d6d46237bbc95e8371bfa69bf59fe3d724083647f3c72545d373613ac26",
+  "risu-realm/head-001.json": "da99283cfb550a5ea6c370ef7e25f2ac41ae581ee869bae0b9fc3afffd5b8f58",
   "botbooru/rec-000.json": "7029cddbd13e5f4b4a014b08ab8f004c0563006c708a529a54df470d1b8df411",
   "botbooru/head-000.json": "9b0a4818ca320f90d1314791d96038e89570c061bcc907b5d4e7fd99d1b7c809",
-  "botbooru/rec-001.json": "44f870b0c2c23a068449474b6a09878962139e5661c9d7e24890a330a56ce511",
-  "botbooru/head-001.json": "2894e68fce5ac45de5fe2287e8168b31a0e5e2ec47ce29e301021967ff9ad0dd",
+  "botbooru/rec-001.json": "6ff1e679debe8bab82a0bba122d91de02dc8cac46933c191c3075dcc7a9150bb",
+  "botbooru/head-001.json": "9a269f8b8298895cc18fbf4508ae1622b60675c9ff5c2e93af787bc00f8806cb",
   "bronya-rand/rec-000.json": "8eb8384d7c24ad7eb61f7efef73d8f02161c1d61e353fcfb45a5b011e2b0cb74",
   "bronya-rand/head-000.json": "5751742c55b294539dba323cecb4cd63c08e356e5aabe4cfbf47fb2197eef456"
  }
