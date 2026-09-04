@@ -67,6 +67,16 @@ test("runCrawl: one adapter failing keeps the previous shards for that source an
   const src = read(path.join(out, "sources.json")).find(s => s.id === "perchance-rp"); assert.equal(src.lastCrawl.ok, false); assert.match(src.lastCrawl.error, /HTTP 500/);
   assert.ok(r2.errors.some(e => e.source === "perchance-rp"));
 });
+test("runCrawl writes tags.json: per-kind facets over every record in the index, hashed in the manifest and pointed at by tagsUrl", async () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), "pantheon-index-"));
+  const { manifest } = await runCrawl({ outDir: out, fetcher: fetcher(), now: 1_700_000_000, limits: { huggingface: { datasets: 1, filesPerDataset: 5 }, github: { repos: 1, filesPerRepo: 5 } }, log: () => {} });
+  assert.equal(manifest.tagsUrl, "tags.json");
+  const tags = read(path.join(out, "tags.json"));
+  assert.deepEqual(Object.keys(tags).sort(), ["character", "lorebook", "scenario"]);
+  for (const rows of Object.values(tags)) for (const row of rows) { assert.equal(typeof row[0], "string"); assert.equal(typeof row[1], "number"); assert.ok(row[1] >= 2, "a facet needs more than one record"); assert.ok(row.length === 2 || typeof row[2] === "string"); }
+  assert.ok(manifest.hashes["tags.json"], "hashed like every other file, so a rebuilt vocabulary invalidates the cached one");
+});
+
 test("runCrawl --only re-crawls the named sources and keeps every other source's previous records and manifest entry", async () => {
   const out = fs.mkdtempSync(path.join(os.tmpdir(), "pantheon-index-"));
   await runCrawl({ outDir: out, fetcher: fetcher(), now: 1_700_000_000, limits: { huggingface: { datasets: 1, filesPerDataset: 5 }, github: { repos: 1, filesPerRepo: 5 } }, log: () => {} });

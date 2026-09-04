@@ -10,6 +10,7 @@ import { sweepSource } from "./lib/sweep.mjs";
 import { discover, isIgnoredHost } from "./lib/aggregator.mjs";
 import { mergeWithPrevious } from "./lib/merge.mjs";
 import { writeSourceShards } from "./lib/shard.mjs";
+import { buildTagFacets } from "./lib/tags.mjs";
 import { buildManifest } from "./lib/manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -37,6 +38,7 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
   const prevById = new Map(prevSources.map(s => [s.id, s]));
   const sources = seed.map(s => ({ ...s, sweep: prevById.get(s.id)?.sweep, lastCrawl: prevById.get(s.id)?.lastCrawl }));
   for (const s of prevSources) if (s.discoveredFrom && !sources.find(x => x.id === s.id) && !(s.hosts || []).some(isIgnoredHost)) sources.push(s);
+  const allRecords = [];
   const errors = []; const manifestSources = {}; const adapters = [];
 
   for (const s of sources) { s.sweep = await sweepSource(fetcher, s, { ts: now }); log(`sweep ${s.id}: ${s.sweep.kind} ${s.sweep.status ?? ""}`); }
@@ -62,6 +64,7 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
     }
     const prevSeen = await readJson(path.join(outDir, s.id, "seen.json"), {});
     const { records: merged, seen } = mergeWithPrevious(prev, fresh, { now, crawlOk: ok, prevSeen });
+    for (const rec of merged) allRecords.push(rec);
     const written = await writeSourceShards(outDir, s.id, merged);
     await fs.writeFile(path.join(outDir, s.id, "seen.json"), JSON.stringify(seen));
     manifestSources[s.id] = written;
@@ -74,12 +77,16 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
   for (const c of disc.candidates) if (!sources.find(x => x.hosts?.includes(c.host))) sources.push({ id: c.host.replace(/[^a-z0-9]+/g, "-"), label: c.host, kinds: ["character"], status: "candidate", hosts: [c.host], probe: `https://${c.host}/`, evidence: "aggregator", discoveredFrom: c.discoveredFrom, ts: c.ts });
   errors.push(...disc.errors.map(e => ({ source: "aggregator:" + e.aggregator, message: e.message })));
 
+  // Tag facets over everything we hold, so the plugin gets a real per-kind vocabulary (spec §8.2).
+  const tags = buildTagFacets(allRecords);
+  const tagsJson = JSON.stringify(tags);
+  await fs.writeFile(path.join(outDir, "tags.json"), tagsJson);
   const adaptersJson = JSON.stringify(adapters); const sourcesJson = JSON.stringify(sources, null, 1);
   const targetsJson = await fs.readFile(path.join(here, "targets.json"), "utf8");
   await fs.writeFile(path.join(outDir, "adapters.json"), adaptersJson);
   await fs.writeFile(path.join(outDir, "sources.json"), sourcesJson);
   await fs.writeFile(path.join(outDir, "targets.json"), targetsJson);
-  const manifest = buildManifest({ builtAt: now, sources: manifestSources, hashes: { "adapters.json": sha256(adaptersJson), "sources.json": sha256(sourcesJson), "targets.json": sha256(targetsJson) } });
+  const manifest = buildManifest({ builtAt: now, sources: manifestSources, hashes: { "adapters.json": sha256(adaptersJson), "sources.json": sha256(sourcesJson), "targets.json": sha256(targetsJson), "tags.json": sha256(tagsJson) } });
   await fs.writeFile(path.join(outDir, "manifest.json"), JSON.stringify(manifest, null, 1));
   return { manifest, errors };
 }
