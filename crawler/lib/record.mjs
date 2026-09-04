@@ -72,5 +72,9 @@ export function validateRecord(r) {
   return { ok: errors.length === 0, errors };
 }
 
-export const toHead = r => ({ id: r.id, n: r.n, t: r.t, k: r.k, nsfw: r.nsfw, c: r.c });
+// Heads carry what browsing needs without the payload. ts and tok are in here because without them
+// every row of an index-only source came back in shard order — "Trending now" and "Just added"
+// showed the identical twelve cards (seen live 2026-09-03). Two numbers per record, ~0.5 MB across
+// the whole index, and the rows become different pages.
+export const toHead = r => ({ id: r.id, n: r.n, t: r.t, k: r.k, nsfw: r.nsfw, c: r.c, ts: r.ts, tok: r.tok });
 export const applyNsfwGuard = r => (r.nsfw ? { ...r, b: null } : { ...r });

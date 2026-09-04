@@ -36,8 +36,10 @@ test("validateRecord catches import without payloadRef", () => {
   const r = makeRecord(base); r.p = { tr: null, u: null, f: null };
   const v = validateRecord(r); assert.equal(v.ok, false); assert.ok(v.errors.some(e => e.includes("caps.i")));
 });
-test("toHead projects the six head fields", () => {
-  assert.deepEqual(toHead(makeRecord(base)), { id: "chub:character:12345", n: "Alice", t: ["fantasy", "elf"], k: "character", nsfw: false, c: "https://cdn/x.png" });
+test("toHead projects the browsing fields, including ts and tok so rows can be sorted without the payload", () => {
+  const rec = makeRecord(base);
+  assert.deepEqual(toHead(rec), { id: "chub:character:12345", n: "Alice", t: ["fantasy", "elf"], k: "character", nsfw: false, c: "https://cdn/x.png", ts: rec.ts, tok: rec.tok });
+  assert.equal(typeof rec.ts, "number", "a head can be sorted by date without fetching the record");
 });
 test("applyNsfwGuard nulls blurb only when nsfw", () => {
   assert.equal(applyNsfwGuard(makeRecord(base)).b, "A blurb.");

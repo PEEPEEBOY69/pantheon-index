@@ -41,6 +41,17 @@ export function buildSearchUrl(a, params = {}) {
   return u.toString();
 }
 
+// A declarative adapter can map the source's own date into `ts` (seconds, milliseconds or an ISO
+// string — all three appear across these APIs). Without one every record from a nightly crawl shares
+// the crawl's timestamp, and "just added" is the same list as everything else.
+export function sourceDate(v) {
+  if (v == null || v === "") return null;
+  if (typeof v === "number" && Number.isFinite(v)) return Math.floor(v > 1e11 ? v / 1000 : v);
+  const n = Number(v);
+  if (Number.isFinite(n) && n > 1e8) return Math.floor(n > 1e11 ? n / 1000 : n);
+  const parsed = Date.parse(String(v));
+  return Number.isFinite(parsed) ? Math.floor(parsed / 1000) : null;
+}
 export function itemsToRecords(a, items, { ts }) {
   const records = []; let skipped = 0;
   for (const raw of Array.isArray(items) ? items : []) {
@@ -51,10 +62,11 @@ export function itemsToRecords(a, items, { ts }) {
     const pu = m.pu ? String(m.pu) : null;
     try {
       records.push(makeRecord({
+        ts: sourceDate(m.ts) || ts,
         src: a.id, k: kind, nid: m.nid, n: m.n, b: m.b, t: tags, c: m.c || null, nsfw, o: m.o,
         p: pu && a.detail ? { tr: a.detail.transport || a.transport, u: pu, f: a.detail.format } : null,
         caps: { s: a.caps.s, i: Boolean(pu && a.detail), o: true },
-        tok: Number(m.tok) || null, ts,
+        tok: Number(m.tok) || null,
       }));
     } catch (e) { if (e instanceof RecordError) skipped++; else throw e; }
   }
