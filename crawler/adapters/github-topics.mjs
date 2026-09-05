@@ -6,17 +6,21 @@ import { characterFromCard, lorebookFromStWi, detectFormat, estimateTokens, isNs
 export const meta = {
   id: "github", label: "GitHub card repos", kinds: ["character", "lorebook"], status: "live", transport: "crawler",
   caps: { s: "index", i: true, o: true },
-  topics: ["character-cards", "character-card", "lorebook"],
+  topics: ["character-cards", "character-card", "lorebook", "sillytavern", "tavern-cards", "character-ai", "chub", "world-info", "silly-tavern"],
+  // Plenty of card repos never set a topic at all, so search their names too. Read at 2026-09-05:
+  // topics alone found 222 records across three topics.
+  searches: ["sillytavern characters in:name,description", "tavern character cards in:name,description", "character cards collection in:name,description", "lorebook in:name,description worldinfo"],
   probe: "https://api.github.com/search/repositories?q=topic:character-cards&per_page=1",
 };
 const MAX_FILE = 2 * 1024 * 1024;
 
-export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, limits = { repos: 60, filesPerRepo: 300 }, log = () => {} }) {
+export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, limits = { repos: 140, filesPerRepo: 300 }, log = () => {} }) {
   const headers = { accept: "application/vnd.github+json", ...(token ? { authorization: `Bearer ${token}` } : {}) };
   const errors = []; const byId = new Map(); const repos = new Map();
-  for (const topic of meta.topics) {
+  const queries = [...meta.topics.map(t => "topic:" + t), ...(meta.searches || [])];
+  for (const topic of queries) {
     try {
-      const { body } = await fetcher.json(`https://api.github.com/search/repositories?q=topic:${topic}&sort=updated&per_page=100`, { headers });
+      const { body } = await fetcher.json(`https://api.github.com/search/repositories?q=${encodeURIComponent(topic).replace(/%3A/g, ":").replace(/%2C/g, ",")}&sort=updated&per_page=100`, { headers });
       for (const r of body?.items || []) if (r && r.full_name && !repos.has(r.full_name)) repos.set(r.full_name, r);
     } catch (e) { errors.push({ topic, message: String(e.message || e) }); }
   }

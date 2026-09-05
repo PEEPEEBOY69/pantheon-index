@@ -18,7 +18,11 @@ const routes = [
   { match: "https://raw.githubusercontent.com/someone/cards/main/alice.png", body: png },
   { match: "https://raw.githubusercontent.com/someone/cards/main/lore/wi.json", body: stwi },
 ];
-test("meta", () => { assert.deepEqual(meta.topics, ["character-cards", "character-card", "lorebook"]); });
+test("meta: topics and free-text searches, because plenty of card repos never set a topic", () => {
+  assert.ok(meta.topics.includes("character-cards") && meta.topics.includes("lorebook") && meta.topics.includes("sillytavern"));
+  assert.ok(meta.topics.length >= 9 && meta.searches.length >= 4);
+  assert.ok(meta.searches.every(s => /in:name,description/.test(s)), "searches are scoped, not a whole-index sweep");
+});
 test("crawl: topic search → trees → records; token header when GITHUB_TOKEN set", async () => {
   const impl = fakeFetch(routes);
   const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl });
@@ -34,7 +38,7 @@ test("crawl without token sends no authorization header and still works", async 
   await crawl(f, { ts: 3, token: undefined }); assert.equal("authorization" in impl.calls[0].opts.headers, false);
 });
 test("search failure for one topic is isolated", async () => {
-  const impl = fakeFetch([{ match: /topic:character-cards/, body: search }, { match: /topic:character-card\b/, status: 403, body: "rate" }, { match: /topic:lorebook/, body: { items: [] } }, ...routes.slice(1)]);
+  const impl = fakeFetch([{ match: /topic:character-cards/, body: search }, { match: /topic:character-card\b/, status: 403, body: "rate" }, { match: /search\/repositories/, body: { items: [] } }, ...routes.slice(1)]);
   const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl });
-  const { records, errors } = await crawl(f, { ts: 3, token: undefined }); assert.equal(records.length, 2); assert.equal(errors.length, 1);
+  const { records, errors } = await crawl(f, { ts: 3, token: undefined }); assert.equal(records.length, 2); assert.equal(errors.length, 1, "one refused query, one error, every other query still crawls");
 });

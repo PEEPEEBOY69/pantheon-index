@@ -7,12 +7,12 @@ export const meta = {
   id: "huggingface", label: "HuggingFace datasets", kinds: ["character", "lorebook"], status: "live", transport: "crawler",
   caps: { s: "index", i: true, o: true },
   probe: "https://huggingface.co/api/datasets?search=character%20card&limit=1",
-  queries: ["character card", "sillytavern", "tavern card", "lorebook", "world info"],
+  queries: ["character card", "sillytavern", "tavern card", "lorebook", "world info", "character cards", "chub", "roleplay characters", "character personas", "tavern ai", "character json", "waifu cards"],
 };
 const MAX_FILE = 2 * 1024 * 1024;
 const api = "https://huggingface.co";
 
-export async function crawl(fetcher, { ts, limits = { datasets: 20, filesPerDataset: 200 }, log = () => {} }) {
+export async function crawl(fetcher, { ts, limits = { datasets: 60, filesPerDataset: 300 }, log = () => {} }) {
   const errors = []; const byId = new Map(); const seenDatasets = new Set();
   const datasets = [];
   for (const q of meta.queries) {

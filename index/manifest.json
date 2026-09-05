@@ -1,6 +1,6 @@
 {
  "v": 1,
- "builtAt": 1788645307,
+ "builtAt": 1788647210,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
@@ -53,24 +53,24 @@
    "bytes": 700788
   },
   "huggingface": {
-   "count": 34,
+   "count": 608,
    "heads": [
     "huggingface/head-000.json"
    ],
    "recs": [
     "huggingface/rec-000.json"
    ],
-   "bytes": 42317
+   "bytes": 547805
   },
   "github": {
-   "count": 222,
+   "count": 225,
    "heads": [
     "github/head-000.json"
    ],
    "recs": [
     "github/rec-000.json"
    ],
-   "bytes": 234897
+   "bytes": 237179
   },
   "character-tavern": {
    "count": 60,
@@ -132,10 +132,10 @@
  "targetsUrl": "targets.json",
  "tagsUrl": "tags.json",
  "hashes": {
-  "adapters.json": "edc045e11d4a85960a88e6dc1d05f6ed245812767284f5aff994b23f9a007ad1",
-  "sources.json": "db9442c33b7e0ddd0e0aa263fc91fbd63fae959ab85c0c5b782ee018cda95a9a",
+  "adapters.json": "db22a77bc72180d24c1843462fd9be2b772da79b6e5ea63db820a450ec6197c9",
+  "sources.json": "80edc47d6e79a3d25a99e938208c6c4674bf34e7917095412bdbe3826b302ea2",
   "targets.json": "467e61ef9c84740f9a128907fdfe28bbf5bc4ebd2fe683274dfdd1a668f36433",
-  "tags.json": "a8f885cd88a7fa7a2a8b2e9c0cb28e9c89c641088fc17d16974a74bcb79c5b38",
+  "tags.json": "b26c8087858b5083efd325a833a7bab4a69b853bfb51f8843f1b21be54f9d67f",
   "chub/rec-000.json": "118509422dcbf21555bbba7d06923ced2d6fc6ceee7290af8a37099cb5acf851",
   "chub/head-000.json": "c550ff6c1210803473f2ce336c413855c0b6ee62ee267dda74add579349b871e",
   "chub/rec-001.json": "039b6b8da25758e0c1bb355d4ba72dc45e15e3953dbc0cd18a6fd9e55035cefa",
@@ -158,10 +158,10 @@
   "chub-lorebooks/head-001.json": "bd59902ea18fa7b042da6a8e609939aa725b388c5a8956dd40e9aee29cb92404",
   "perchance-rp/rec-000.json": "be7102e9c6b2381a828661b9901730ee3d09890af07200901d4a4deac086e38f",
   "perchance-rp/head-000.json": "566ccd7e1deeb81ddfb6d43d0cd4d5aa2eeacab5f752231dfbcb37abf00496fe",
-  "huggingface/rec-000.json": "64d092c5f905f384f23f5b1cf671419801b5b5fd8f769cd3ae55acd283ed9914",
-  "huggingface/head-000.json": "b6e183a939f897f39ae1445d913505c3c8368a321dbcff4b6c3e25d603ba6c02",
-  "github/rec-000.json": "c5ba66d7a3d151d586886d4ce796c470888c476378a13f3ab1b8b95c408e70f4",
-  "github/head-000.json": "9fc9a78f0bbc2493952fd17657a0d51a1facef3bdf06f9f5784eac3b9acf4fcd",
+  "huggingface/rec-000.json": "87fe199ef29b12804ea3a9a1dcdeeb736cea2b0ec5c8c53de41457c34af191ee",
+  "huggingface/head-000.json": "cb5954d36d727c56a8d34a5d76ff7502a60abfc053241b4382b780b15e82f0e0",
+  "github/rec-000.json": "87b40ad19e37d0477516dfd7a6d6b486b8bc39ed581488d4dcc3c8ba807586da",
+  "github/head-000.json": "9c78288fb6d9867779ba1d49300558e4987f2047dab8c653b62785d38cf9b87e",
   "character-tavern/rec-000.json": "af6542d312c1387c9e76519d95a087c28d21d0b1b462fed138086fc1bc6da7c5",
   "character-tavern/head-000.json": "7589fe18080ff2b2d88b74a8817c9a8b834969ddd80bbe47339df2de39af3e13",
   "aicharactercards/rec-000.json": "8e26e80963fb2e8360e79fbaa4e25cf15d687dd7342fd87f2f9aee1015cec1a8",
