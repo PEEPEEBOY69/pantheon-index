@@ -25,6 +25,19 @@
     "note": "2026-09-02: ai-rpg loads #data=uup1:<upload> / #data=<url> as a shared adventure (format perchance-ai-rpg-v1, read from its source; as-social ships the identical flow in production). Watched: the link opens ai-rpg's 'load this shared adventure' confirmation. The perchance-rp source in the index is ai-rpg's own gallery."
   },
   {
+    "id": "ai-girlfriend-chat",
+    "label": "AI Girlfriend Chat",
+    "url": "https://perchance.org/ai-girlfriend-chat",
+    "kinds": [
+      "character",
+      "lorebook"
+    ],
+    "receiver": false,
+    "format": "aicc-hash",
+    "verified": true,
+    "note": "verified 2026-09-05: same engine as ai-character-chat (its own addCharacter handler and loreBookUrls), and a #{addCharacter:\u2026} link opened its add-character dialog prefilled, watched in a browser."
+  },
+  {
     "id": "blizzardui",
     "label": "BlizzardUI",
     "url": "https://perchance.org/blizzardui?pan={id}",
