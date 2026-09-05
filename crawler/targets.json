@@ -77,17 +77,6 @@
     "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
   },
   {
-    "id": "fur-ai",
-    "label": "FurAI",
-    "url": "https://perchance.org/fur-ai",
-    "kinds": [
-      "character"
-    ],
-    "receiver": false,
-    "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
-  },
-  {
     "id": "as-social",
     "label": "Social DB",
     "url": "https://perchance.org/as-social",
@@ -98,5 +87,29 @@
     "receiver": false,
     "verified": false,
     "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
+  },
+  {
+    "id": "fur-ai",
+    "label": "FurAI",
+    "url": "https://perchance.org/fur-ai",
+    "kinds": [
+      "character"
+    ],
+    "receiver": false,
+    "format": "furai-upload",
+    "verified": false,
+    "note": "format read out of as-social, which ships this flow in production (2026-09-05): FurAI takes ?char_import=<url to its own JSON>&name=<Name>. Flip verified once a real open through it has been watched."
+  },
+  {
+    "id": "scenario-petrafiedacc",
+    "label": "Scenario PetrafiedACC",
+    "url": "https://perchance.org/scenario-petrafiedacc",
+    "kinds": [
+      "character"
+    ],
+    "receiver": false,
+    "format": "aicc-hash",
+    "verified": false,
+    "note": "as-social opens it with the same #{addCharacter:\u2026} hash as ai-character-chat (2026-09-05). Flip verified once watched."
   }
 ]
