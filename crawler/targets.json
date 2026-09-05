@@ -98,7 +98,7 @@
     "receiver": false,
     "format": "furai-upload",
     "verified": false,
-    "note": "format read out of as-social, which ships this flow in production (2026-09-05): FurAI takes ?char_import=<url to its own JSON>&name=<Name>. Flip verified once a real open through it has been watched."
+    "note": "format read out of as-social, which ships this flow in production (2026-09-05): ?char_import=<url to FurAI's own JSON>&name=<Name>. Watched FurAI download and read a probe card through it, but not the character landing in its list, so it stays hidden until that is seen."
   },
   {
     "id": "scenario-petrafiedacc",
@@ -109,7 +109,7 @@
     ],
     "receiver": false,
     "format": "aicc-hash",
-    "verified": false,
-    "note": "as-social opens it with the same #{addCharacter:\u2026} hash as ai-character-chat (2026-09-05). Flip verified once watched."
+    "verified": true,
+    "note": "verified 2026-09-05: the same #{addCharacter:\u2026} hash as ai-character-chat opened its Basic Info panel with the name prefilled, watched in a browser."
   }
 ]
