@@ -30,8 +30,11 @@ test("itemsToRecords: chub nodes → records; blank name skipped; nsfw from nsfw
   records.forEach(r => assert.equal(validateRecord(r).ok, true, JSON.stringify(validateRecord(r))));
 });
 test("itemsToRecords: fictionlab → scenario records with super transport", () => {
-  const { records } = itemsToRecords(fl, flFx.results, { ts: 1 });
+  const { records } = itemsToRecords(fl, flFx.hits, { ts: 1 });
   assert.equal(records[0].k, "scenario"); assert.equal(records[0].p.tr, "super"); assert.equal(records[0].p.f, "fl"); assert.equal(records[1].nsfw, true);
+  assert.equal(records[0].n, "The Flooded Library", "displayName, which is what the API actually returns");
+  assert.equal(records[0].c, "https://fictionlab.ai/image-cdn/abc123.webp");
+  assert.deepEqual(records[0].t, ["mystery", "slow burn"], "genres are the tags");
 });
 test("crawlDeclarative pages until empty, runs every pass, dedupes by id", async () => {
   const page2 = { data: { nodes: [chubFx.data.nodes[0]] } }, empty = { data: { nodes: [] } };
@@ -47,4 +50,24 @@ test("crawlDeclarative isolates a failing pass and reports it", async () => {
   const f = createFetcher({ fetchImpl: impl, minIntervalMs: 0, retries: 0 });
   const { records, errors } = await crawlDeclarative(chub, f, { ts: 1, maxPages: 1 });
   assert.equal(records.length, 2); assert.equal(errors.length, 1); assert.match(errors[0].message, /HTTP 500/);
+});
+test("imageBase: a bare filename becomes a CDN URL, an absolute one is left alone — FictionLab returns both", () => {
+  const a = { id: "fl", kinds: ["scenario"], transport: "super", caps: { s: "live", i: true, o: true }, imageBase: "https://fictionlab.ai/image-cdn/",
+    search: { items: "hits", map: { nid: "id", n: "displayName|title", b: "description", t: "genres", c: "mainImage|avatarURL", nsfw: "sensitiveContent", o: "https://fictionlab.ai/scenario/{id}", pu: "https://fictionlab.ai/api/scenario/fetch/{id}?version=2" } },
+    detail: { transport: "super", format: "fl" } };
+  const hits = [
+    { id: "s1", displayName: "The Flooded Library", description: "Water to the shelves.", genres: ["mystery"], sensitiveContent: false, mainImage: "abc123.webp" },
+    { id: "s2", title: "Second", description: "d", genres: [], sensitiveContent: true, mainImage: "https://cdn.example/full.png" },
+    { id: "s3", displayName: "Third", description: "d", genres: [], avatarURL: "/rel/av.png" },
+  ];
+  const { records } = itemsToRecords(a, hits, { ts: 5 });
+  assert.equal(records.length, 3);
+  assert.equal(records[0].n, "The Flooded Library");
+  assert.equal(records[0].c, "https://fictionlab.ai/image-cdn/abc123.webp", "a filename gets the CDN prefix");
+  assert.equal(records[1].c, "https://cdn.example/full.png", "an absolute URL is untouched");
+  assert.equal(records[1].nsfw, true, "sensitiveContent is the nsfw flag");
+  assert.equal(records[2].c, "https://fictionlab.ai/image-cdn/rel/av.png", "a leading slash does not double up");
+  assert.equal(records[0].o, "https://fictionlab.ai/scenario/s1");
+  assert.equal(records[0].p.u, "https://fictionlab.ai/api/scenario/fetch/s1?version=2");
+  assert.equal(records[0].k, "scenario");
 });

@@ -60,10 +60,14 @@ export function itemsToRecords(a, items, { ts }) {
     const tags = Array.isArray(m.t) ? m.t : typeof m.t === "string" ? m.t.split(",") : [];
     const nsfw = m.nsfw === true || m.nsfw === "true" || m.nsfw === 1 || isNsfwTags(tags);
     const pu = m.pu ? String(m.pu) : null;
+    // Some APIs return a bare filename for the cover and expect their own CDN prefix; an adapter
+    // declares that with imageBase, and an absolute URL is left alone.
+    const cover = m.c ? String(m.c) : null;
+    const c = cover && a.imageBase && !/^https?:\/\//i.test(cover) ? a.imageBase + cover.replace(/^\/+/, "") : cover;
     try {
       records.push(makeRecord({
         ts: sourceDate(m.ts) || ts,
-        src: a.id, k: kind, nid: m.nid, n: m.n, b: m.b, t: tags, c: m.c || null, nsfw, o: m.o,
+        src: a.id, k: kind, nid: m.nid, n: m.n, b: m.b, t: tags, c: c || null, nsfw, o: m.o,
         p: pu && a.detail ? { tr: a.detail.transport || a.transport, u: pu, f: a.detail.format } : null,
         caps: { s: a.caps.s, i: Boolean(pu && a.detail), o: true },
         tok: Number(m.tok) || null,

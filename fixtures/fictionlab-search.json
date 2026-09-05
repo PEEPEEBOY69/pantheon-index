@@ -1,1 +1,29 @@
-{ "results": [ { "id": "abc123", "title": "Late Shift", "description": "A quiet diner.", "image": "img/late.webp", "tags": ["slice of life"], "mature": false }, { "id": "def456", "title": "After Dark", "description": "x", "image": "img/dark.webp", "tags": ["romance"], "mature": true } ] }
+{
+ "hits": [
+  {
+   "id": "s1",
+   "displayName": "The Flooded Library",
+   "description": "Water laps at the shelves.",
+   "genres": [
+    "mystery",
+    "slow burn"
+   ],
+   "sensitiveContent": false,
+   "mainImage": "abc123.webp",
+   "likeCount": 42,
+   "creatorName": "someone"
+  },
+  {
+   "id": "s2",
+   "title": "Ash and Iron",
+   "description": "A city under a red sky.",
+   "genres": [
+    "dark fantasy"
+   ],
+   "sensitiveContent": true,
+   "mainImage": "https://fictionlab.ai/image-cdn/def456.webp",
+   "favoriteCount": 7,
+   "creatorName": "another"
+  }
+ ]
+}
