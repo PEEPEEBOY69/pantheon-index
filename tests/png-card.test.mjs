@@ -21,3 +21,11 @@ test("not a PNG → null; PNG without card → null; bad base64 → null", () =>
   assert.equal(parseCardPng(buildPngWithText([])), null);
   assert.equal(parseCardPng(buildPngWithText([["chara", "!!!notbase64"]])), null);
 });
+import { buildPngWithCompressedText } from "./helpers/png.mjs";
+test("the crawler reads compressed chunks too — a re-encoded card is still a card", () => {
+  const card = { spec: "chara_card_v2", data: { name: "Compressed", description: "z" } };
+  const b64 = Buffer.from(JSON.stringify(card), "utf8").toString("base64");
+  assert.deepEqual(parseCardPng(buildPngWithCompressedText([["chara", b64]])), card);
+  assert.deepEqual(parseCardPng(buildPngWithCompressedText([["ccv3", b64]], { type: "iTXt" })), card);
+  assert.equal(parseCardPng(buildPngWithCompressedText([["chara", "not base64 or json"]])), null);
+});
