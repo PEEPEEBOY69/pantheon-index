@@ -60,8 +60,8 @@
    "scenario"
   ],
   "receiver": false,
-  "verified": false,
-  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
+  "verified": true,
+  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed Turned on 2026-09-05: both are mine and both take all three kinds."
  },
  {
   "id": "aether",
@@ -73,8 +73,8 @@
    "scenario"
   ],
   "receiver": false,
-  "verified": false,
-  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
+  "verified": true,
+  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed Turned on 2026-09-05: both are mine and both take all three kinds."
  },
  {
   "id": "fur-ai",
