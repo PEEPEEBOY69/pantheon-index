@@ -1,115 +1,103 @@
 [
-  {
-    "id": "ai-character-chat",
-    "label": "AI Character Chat",
-    "url": "https://perchance.org/ai-character-chat",
-    "kinds": [
-      "character",
-      "lorebook"
-    ],
-    "receiver": false,
-    "format": "aicc-hash",
-    "verified": true,
-    "note": "verified 2026-09-02: a #{addCharacter:\u2026} link opened the app's add-character dialog with name and description prefilled (Pantheon transcript, browser pane). The character travels in the URL hash, the form the app itself uses for its built-in characters. Lorebooks: uploaded as AICC plain-text lore (one paragraph per entry) and attached to a narrator character via loreBookUrls; a character with an embedded book gets the book attached the same way."
-  },
-  {
-    "id": "ai-rpg",
-    "label": "AI RPG",
-    "url": "https://perchance.org/ai-rpg",
-    "kinds": [
-      "scenario"
-    ],
-    "receiver": false,
-    "format": "airpg-upload",
-    "verified": true,
-    "note": "2026-09-02: ai-rpg loads #data=uup1:<upload> / #data=<url> as a shared adventure (format perchance-ai-rpg-v1, read from its source; as-social ships the identical flow in production). Watched: the link opens ai-rpg's 'load this shared adventure' confirmation. The perchance-rp source in the index is ai-rpg's own gallery."
-  },
-  {
-    "id": "ai-girlfriend-chat",
-    "label": "AI Girlfriend Chat",
-    "url": "https://perchance.org/ai-girlfriend-chat",
-    "kinds": [
-      "character",
-      "lorebook"
-    ],
-    "receiver": false,
-    "format": "aicc-hash",
-    "verified": true,
-    "note": "verified 2026-09-05: same engine as ai-character-chat (its own addCharacter handler and loreBookUrls), and a #{addCharacter:\u2026} link opened its add-character dialog prefilled, watched in a browser."
-  },
-  {
-    "id": "aschat",
-    "label": "ASChat",
-    "url": "https://perchance.org/aschat",
-    "kinds": [
-      "character",
-      "lorebook"
-    ],
-    "receiver": false,
-    "format": "aicc-hash",
-    "verified": true,
-    "note": "verified 2026-09-05: ASChat runs the ai-character-chat engine (its own addCharacter handler, urlNamedCharacters and loreBookUrls). A #{addCharacter:\u2026} link opened its editor with the name and the avatar already loaded, watched in a browser."
-  },
-  {
-    "id": "blizzardui",
-    "label": "BlizzardUI",
-    "url": "https://perchance.org/blizzardui?pan={id}",
-    "kinds": [
-      "character",
-      "lorebook",
-      "scenario"
-    ],
-    "receiver": false,
-    "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
-  },
-  {
-    "id": "aether",
-    "label": "Aether",
-    "url": "https://perchance.org/aetherui?pan={id}",
-    "kinds": [
-      "character",
-      "lorebook",
-      "scenario"
-    ],
-    "receiver": false,
-    "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
-  },
-  {
-    "id": "as-social",
-    "label": "Social DB",
-    "url": "https://perchance.org/as-social",
-    "kinds": [
-      "character",
-      "lorebook"
-    ],
-    "receiver": false,
-    "verified": false,
-    "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
-  },
-  {
-    "id": "fur-ai",
-    "label": "FurAI",
-    "url": "https://perchance.org/fur-ai",
-    "kinds": [
-      "character"
-    ],
-    "receiver": false,
-    "format": "furai-upload",
-    "verified": false,
-    "note": "format read out of as-social, which ships this flow in production (2026-09-05): ?char_import=<url to FurAI's own JSON>&name=<Name>. Watched FurAI download and read a probe card through it, but not the character landing in its list, so it stays hidden until that is seen."
-  },
-  {
-    "id": "scenario-petrafiedacc",
-    "label": "Scenario PetrafiedACC",
-    "url": "https://perchance.org/scenario-petrafiedacc",
-    "kinds": [
-      "character"
-    ],
-    "receiver": false,
-    "format": "aicc-hash",
-    "verified": true,
-    "note": "verified 2026-09-05: the same #{addCharacter:\u2026} hash as ai-character-chat opened its Basic Info panel with the name prefilled, watched in a browser."
-  }
+ {
+  "id": "ai-character-chat",
+  "label": "AI Character Chat",
+  "url": "https://perchance.org/ai-character-chat",
+  "kinds": [
+   "character",
+   "lorebook"
+  ],
+  "receiver": false,
+  "format": "aicc-hash",
+  "verified": true,
+  "note": "verified 2026-09-02: a #{addCharacter:\u2026} link opened the app's add-character dialog with name and description prefilled (Pantheon transcript, browser pane). The character travels in the URL hash, the form the app itself uses for its built-in characters. Lorebooks: uploaded as AICC plain-text lore (one paragraph per entry) and attached to a narrator character via loreBookUrls; a character with an embedded book gets the book attached the same way."
+ },
+ {
+  "id": "ai-rpg",
+  "label": "AI RPG",
+  "url": "https://perchance.org/ai-rpg",
+  "kinds": [
+   "scenario"
+  ],
+  "receiver": false,
+  "format": "airpg-upload",
+  "verified": true,
+  "note": "2026-09-02: ai-rpg loads #data=uup1:<upload> / #data=<url> as a shared adventure (format perchance-ai-rpg-v1, read from its source)"
+ },
+ {
+  "id": "ai-girlfriend-chat",
+  "label": "AI Girlfriend Chat",
+  "url": "https://perchance.org/ai-girlfriend-chat",
+  "kinds": [
+   "character",
+   "lorebook"
+  ],
+  "receiver": false,
+  "format": "aicc-hash",
+  "verified": true,
+  "note": "verified 2026-09-05: same engine as ai-character-chat (its own addCharacter handler and loreBookUrls), and a #{addCharacter:\u2026} link opened its add-character dialog prefilled, watched in a browser."
+ },
+ {
+  "id": "aschat",
+  "label": "ASChat",
+  "url": "https://perchance.org/aschat",
+  "kinds": [
+   "character",
+   "lorebook"
+  ],
+  "receiver": false,
+  "format": "aicc-hash",
+  "verified": true,
+  "note": "verified 2026-09-05: ASChat runs the ai-character-chat engine (its own addCharacter handler, urlNamedCharacters and loreBookUrls). A #{addCharacter:\u2026} link opened its editor with the name and the avatar already loaded, watched in a browser."
+ },
+ {
+  "id": "blizzardui",
+  "label": "BlizzardUI",
+  "url": "https://perchance.org/blizzardui?pan={id}",
+  "kinds": [
+   "character",
+   "lorebook",
+   "scenario"
+  ],
+  "receiver": false,
+  "verified": false,
+  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
+ },
+ {
+  "id": "aether",
+  "label": "Aether",
+  "url": "https://perchance.org/aetherui?pan={id}",
+  "kinds": [
+   "character",
+   "lorebook",
+   "scenario"
+  ],
+  "receiver": false,
+  "verified": false,
+  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed"
+ },
+ {
+  "id": "fur-ai",
+  "label": "FurAI",
+  "url": "https://perchance.org/fur-ai",
+  "kinds": [
+   "character"
+  ],
+  "receiver": false,
+  "format": "furai-upload",
+  "verified": false,
+  "note": "format read from a shipped generator that uses this flow in production (2026-09-05): ?char_import=<url to FurAI's own JSON>&name=<Name>. Watched FurAI download and read a probe card through it, but not the character landing in its list, so it stays hidden until that is seen."
+ },
+ {
+  "id": "scenario-petrafiedacc",
+  "label": "Scenario PetrafiedACC",
+  "url": "https://perchance.org/scenario-petrafiedacc",
+  "kinds": [
+   "character"
+  ],
+  "receiver": false,
+  "format": "aicc-hash",
+  "verified": true,
+  "note": "verified 2026-09-05: the same #{addCharacter:\u2026} hash as ai-character-chat opened its Basic Info panel with the name prefilled, watched in a browser."
+ }
 ]
