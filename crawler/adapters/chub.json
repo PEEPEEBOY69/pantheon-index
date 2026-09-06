@@ -58,7 +58,7 @@
  "origin": "https://chub.ai/characters/{fullPath}",
  "crawl": {
   "pageStart": 1,
-  "pages": 200,
+  "pages": 450,
   "passes": [
    {
     "sort": "download_count",
@@ -67,6 +67,11 @@
    },
    {
     "sort": "created_at",
+    "nsfw": "true",
+    "first": 100
+   },
+   {
+    "sort": "rating",
     "nsfw": "true",
     "first": 100
    }

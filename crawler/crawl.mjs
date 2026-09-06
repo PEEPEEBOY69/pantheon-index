@@ -31,7 +31,7 @@ async function previousRecords(outDir, src) {
   return out;
 }
 
-export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null }) {
+export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null, deadline = Date.now() + 70 * 60 * 1000 }) {
   await fs.mkdir(outDir, { recursive: true });
   const seed = JSON.parse(await fs.readFile(path.join(here, "sources.json"), "utf8"));
   const prevSources = await readJson(path.join(outDir, "sources.json"), []);
@@ -57,7 +57,7 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
       try {
         const ad = await loadAdapter(s.adapter);
         adapters.push(ad.descriptor);
-        const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id] });
+        const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log, deadline }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id], deadline });
         fresh = res.records; adapterErrors = res.errors || [];
         if (fresh.length === 0 && adapterErrors.length) { ok = false; errMsg = adapterErrors[0].message; }
       } catch (e) { ok = false; errMsg = String(e.message || e); }

@@ -7,25 +7,31 @@ export const meta = {
   id: "huggingface", label: "HuggingFace datasets", kinds: ["character", "lorebook"], status: "live", transport: "crawler",
   caps: { s: "index", i: true, o: true },
   probe: "https://huggingface.co/api/datasets?search=character%20card&limit=1",
-  queries: ["character card", "sillytavern", "tavern card", "lorebook", "world info", "character cards", "chub", "roleplay characters", "character personas", "tavern ai", "character json", "waifu cards"],
+  queries: ["character card", "sillytavern", "tavern card", "lorebook", "world info", "character cards", "chub", "roleplay characters", "character personas", "tavern ai", "character json", "waifu cards", "character ai", "roleplay dataset", "chara card v2", "silly tavern cards", "ai character", "bot cards", "persona cards", "worldinfo", "risu", "pygmalion characters", "character definitions", "rp cards"],
 };
+// A card PNG is its own picture, so it doubles as the cover — but only when it is small enough
+// to be a grid thumbnail. Anything bigger stays coverless rather than making the grid crawl.
+const COVER_MAX = 600 * 1024;
 const MAX_FILE = 2 * 1024 * 1024;
 const api = "https://huggingface.co";
 
-export async function crawl(fetcher, { ts, limits = { datasets: 60, filesPerDataset: 300 }, log = () => {} }) {
+export async function crawl(fetcher, { ts, limits = {}, log = () => {}, deadline = Infinity }) {
+  const { datasets: maxDatasets = 220, filesPerDataset = 300, files: fileBudget = 6000 } = limits || {};
   const errors = []; const byId = new Map(); const seenDatasets = new Set();
-  const datasets = [];
+  const datasets = []; let spent = 0;
   for (const q of meta.queries) {
     try {
       const { body } = await fetcher.json(`${api}/api/datasets?search=${encodeURIComponent(q)}&limit=100&sort=downloads&direction=-1`);
       for (const d of Array.isArray(body) ? body : []) if (d && d.id && !seenDatasets.has(d.id)) { seenDatasets.add(d.id); datasets.push(d); }
     } catch (e) { errors.push({ query: q, message: String(e.message || e) }); }
-    if (datasets.length >= limits.datasets) break;
   }
-  for (const d of datasets.slice(0, limits.datasets)) {
+  for (const d of datasets.slice(0, maxDatasets)) {
+    if (spent >= fileBudget) { log(`${meta.id}: file budget ${fileBudget} spent, stopping`); break; }
+    if (Date.now() > deadline) { log(`${meta.id}: past the crawl deadline, stopping with ${byId.size} records`); break; }
     try {
       const { body: tree } = await fetcher.json(`${api}/api/datasets/${d.id}/tree/main?recursive=true`);
-      const files = (Array.isArray(tree) ? tree : []).filter(f => f.type === "file" && f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path)).slice(0, limits.filesPerDataset);
+      const files = (Array.isArray(tree) ? tree : []).filter(f => f.type === "file" && f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path)).slice(0, Math.min(filesPerDataset, fileBudget - spent));
+      spent += files.length;
       for (const f of files) {
         const url = `${api}/datasets/${d.id}/resolve/main/${f.path}`;
         try {
@@ -40,7 +46,7 @@ export async function crawl(fetcher, { ts, limits = { datasets: 60, filesPerData
             byId.set(`huggingface:lorebook:${nid}`, makeRecord({ src: meta.id, k: "lorebook", nid, n: lb.name, b: lb.description || `${lb.entries.length} entries`, t: d.tags, c: null, nsfw: isNsfwTags(d.tags), o: origin, p: { tr: "plain", u: url, f: "stwi" }, caps: meta.caps, tok: estimateTokens(lb), ts }));
           } else {
             const c = characterFromCard(obj); if (!c) continue;
-            byId.set(`huggingface:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : d.tags, c: c.avatar, nsfw: isNsfwTags(c.tags) || isNsfwTags(d.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
+            byId.set(`huggingface:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : d.tags, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null), nsfw: isNsfwTags(c.tags) || isNsfwTags(d.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
           }
         } catch (e) { if (!(e instanceof RecordError)) errors.push({ file: url, message: String(e.message || e) }); }
       }

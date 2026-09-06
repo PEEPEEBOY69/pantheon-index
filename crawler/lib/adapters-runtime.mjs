@@ -77,13 +77,14 @@ export function itemsToRecords(a, items, { ts }) {
   return { records, skipped };
 }
 
-export async function crawlDeclarative(a, fetcher, { ts, maxPages = a.crawl?.pages ?? 1, log = () => {} }) {
+export async function crawlDeclarative(a, fetcher, { ts, maxPages = a.crawl?.pages ?? 1, log = () => {}, deadline = Infinity }) {
   const byId = new Map(); const errors = []; let pagesFetched = 0;
   const passes = a.crawl?.passes?.length ? a.crawl.passes : [{}];
   const start = a.crawl?.pageStart ?? 1;
   for (const pass of passes) {
     try {
       for (let page = start; page < start + maxPages; page++) {
+        if (Date.now() > deadline) { log(`${a.id}: past the crawl deadline, stopping with ${byId.size} records`); break; }
         const url = buildSearchUrl({ ...a, search: { ...a.search, fixed: { ...(a.search.fixed || {}), ...(pass.first ? { first: pass.first } : {}) } } }, { ...pass, page });
         const { body } = await fetcher.json(url); pagesFetched++;
         const items = get(body, a.search.items);

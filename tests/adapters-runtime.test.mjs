@@ -43,13 +43,14 @@ test("crawlDeclarative pages until empty, runs every pass, dedupes by id", async
   ]);
   const f = createFetcher({ fetchImpl: impl, minIntervalMs: 0 });
   const { records, errors, pagesFetched } = await crawlDeclarative(chub, f, { ts: 1, maxPages: 10 });
-  assert.equal(errors.length, 0); assert.equal(records.length, 2); assert.equal(pagesFetched, 6);
+  // Derived from the adapter: chub gains passes over time, and the count is not what this test is about.
+  assert.equal(errors.length, 0); assert.equal(records.length, 2); assert.equal(pagesFetched, 3 * chub.crawl.passes.length);
 });
 test("crawlDeclarative isolates a failing pass and reports it", async () => {
   const impl = fakeFetch([{ match: /sort=download_count/, body: chubFx }, { match: /sort=created_at/, status: 500, body: "boom" }]);
   const f = createFetcher({ fetchImpl: impl, minIntervalMs: 0, retries: 0 });
   const { records, errors } = await crawlDeclarative(chub, f, { ts: 1, maxPages: 1 });
-  assert.equal(records.length, 2); assert.equal(errors.length, 1); assert.match(errors[0].message, /HTTP 500/);
+  assert.equal(records.length, 2); assert.equal(errors.length, chub.crawl.passes.length - 1, "every pass but the one that matched is reported"); assert.match(errors[0].message, /HTTP 500/);
 });
 test("imageBase: a bare filename becomes a CDN URL, an absolute one is left alone — FictionLab returns both", () => {
   const a = { id: "fl", kinds: ["scenario"], transport: "super", caps: { s: "live", i: true, o: true }, imageBase: "https://fictionlab.ai/image-cdn/",
@@ -70,4 +71,14 @@ test("imageBase: a bare filename becomes a CDN URL, an absolute one is left alon
   assert.equal(records[0].o, "https://fictionlab.ai/scenario/s1");
   assert.equal(records[0].p.u, "https://fictionlab.ai/api/scenario/fetch/s1?version=2");
   assert.equal(records[0].k, "scenario");
+});
+
+test("crawlDeclarative stops at the deadline instead of being killed mid-run", async () => {
+  const impl = fakeFetch([{ match: /page=/, body: chubFx }]);
+  const f = createFetcher({ fetchImpl: impl, minIntervalMs: 0 });
+  const late = await crawlDeclarative(chub, f, { ts: 1, maxPages: 500, deadline: Date.now() - 1 });
+  assert.equal(late.pagesFetched, 0, "nothing is fetched once the deadline has passed");
+  assert.equal(late.errors.length, 0, "a spent deadline is not an error");
+  const ok = await crawlDeclarative(chub, f, { ts: 1, maxPages: 1, deadline: Date.now() + 60000 });
+  assert.equal(ok.pagesFetched, chub.crawl.passes.length, "a deadline in the future changes nothing");
 });

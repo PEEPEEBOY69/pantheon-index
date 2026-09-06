@@ -41,3 +41,16 @@ test("a dataset whose tree 404s is isolated into errors", async () => {
   const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([{ match: "https://huggingface.co/api/datasets?", body: datasets }]) });
   const { records, errors } = await crawl(f, { ts: 9 }); assert.equal(records.length, 0); assert.equal(errors.length, 2);
 });
+
+test("a card PNG doubles as its own cover, unless it is too big to be a thumbnail", async () => {
+  const treeFor = size => [{ type: "file", path: "cards/alice.png", size }];
+  const build = size => createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([
+    { match: "https://huggingface.co/api/datasets?", body: [{ id: "someone/tavern-cards", tags: [] }] },
+    { match: "https://huggingface.co/api/datasets/someone/tavern-cards/tree/main", body: treeFor(size) },
+    { match: "https://huggingface.co/datasets/someone/tavern-cards/resolve/main/cards/alice.png", body: png },
+  ]) });
+  const small = await crawl(build(200 * 1024), { ts: 9 });
+  assert.equal(small.records[0].c, "https://huggingface.co/datasets/someone/tavern-cards/resolve/main/cards/alice.png");
+  const big = await crawl(build(1500 * 1024), { ts: 9 });
+  assert.equal(big.records[0].c, null, "a 1.5 MB card is not a grid thumbnail");
+});
