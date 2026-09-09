@@ -53,28 +53,26 @@
  {
   "id": "blizzardui",
   "label": "BlizzardUI",
-  "url": "https://perchance.org/blizzardui?pan={id}",
+  "url": "https://perchance.org/blizzardui",
   "kinds": [
-   "character",
-   "lorebook",
    "scenario"
   ],
   "receiver": false,
   "verified": true,
-  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed Turned on 2026-09-05: both are mine and both take all three kinds."
+  "note": "Read from its source 2026-09-08: it loads a shared save from #data=uup1:<file> on page load and its importer requires format 'perchance-ai-rpg-v1' (its own error names Aether too). So Pantheon's existing airpg handoff lands there with no receiver code at all.",
+  "format": "airpg-upload"
  },
  {
   "id": "aether",
   "label": "Aether",
-  "url": "https://perchance.org/aetherui?pan={id}",
+  "url": "https://perchance.org/aetherui",
   "kinds": [
-   "character",
-   "lorebook",
    "scenario"
   ],
   "receiver": false,
   "verified": true,
-  "note": "not yet confirmed to receive a Pantheon handoff \u2014 flip verified once a real import through this target is observed Turned on 2026-09-05: both are mine and both take all three kinds."
+  "note": "Same as BlizzardUI: #data=uup1:<file> on load, perchance-ai-rpg-v1 payload. Read from source 2026-09-08.",
+  "format": "airpg-upload"
  },
  {
   "id": "fur-ai",
