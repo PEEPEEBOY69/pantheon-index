@@ -18,5 +18,10 @@ test("sources: unique ids, valid statuses, hosts lowercase, live ones have an ex
 });
 test("targets: https url containing {id} when receiver is expected later; kinds valid", () => {
   for (const t of targets) { assert.match(t.url, /^https:\/\/perchance\.org\//); assert.equal(typeof t.receiver, "boolean"); assert.ok(t.kinds.every(k => ["character", "lorebook", "scenario"].includes(k))); }
-  assert.ok(targets.find(t => t.id === "blizzardui").url.includes("{id}"));
+  const FORMATS = ["aicc-hash", "airpg-upload", "furai-upload"];
+  for (const t of targets) {
+    if (t.receiver) assert.ok(t.url.includes("{id}"), t.id + ": a receiver target must carry {id} in its URL");
+    else assert.ok(FORMATS.includes(t.format), t.id + ": a target with no receiver must declare a format Pantheon emits, got " + t.format);
+  }
+  assert.ok(targets.some(t => t.id === "blizzardui" && t.format === "airpg-upload"), "BlizzardUI reads #data=uup1: natively");
 });
