@@ -50,7 +50,7 @@
   }
  },
  "detail": {
-  "transport": "super",
+  "transport": "plain",
   "format": "chublore"
  },
  "origin": "https://chub.ai/lorebooks/{fullPath}",

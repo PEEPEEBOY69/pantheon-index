@@ -41,8 +41,14 @@ export function lorebookFromStWi(obj) { const b = bookFrom(obj); return b && b.e
 export function lorebookFromChubNode(node) {
   if (!node || typeof node !== "object") return null;
   let src = node;
-  if (!Array.isArray(node.entries) && typeof node.content === "string") { try { src = { ...node, ...JSON.parse(node.content) }; } catch { return null; } }
-  const b = bookFrom(src); return b && b.entries.length ? { ...b, name: str(node.name) || b.name } : null;
+  // Chub serves lorebook metadata by default and the body only with ?full=true, where the entries
+  // sit under definition.embedded_lorebook (read from the live API, 2026-09-08). Older shapes —
+  // entries inline, or a JSON string in `content` — still parse.
+  const emb = node.definition && node.definition.embedded_lorebook;
+  if (emb && typeof emb === "object") src = { ...emb, name: str(emb.name) || str(node.name), description: str(emb.description) || str(node.description) };
+  else if (!Array.isArray(node.entries) && typeof node.content === "string") { try { src = { ...node, ...JSON.parse(node.content) }; } catch { return null; } }
+  const b = bookFrom(src); if (!b || !b.entries.length) return null;
+  return { ...b, name: (emb ? b.name || str(node.name) : str(node.name) || b.name) };
 }
 export function scenarioFromFictionLab(o) {
   if (!o || typeof o !== "object") return null;
