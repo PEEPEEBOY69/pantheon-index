@@ -59,7 +59,15 @@ export function scenarioFromFictionLab(o) {
 }
 export function scenarioFromPerchanceRp(r) {
   if (!r || typeof r !== "object" || !str(r.title)) return null;
-  return { title: str(r.title), blurb: str(r.shortDescription), intro: str(r.intro || r.overview), starters: arr(r.starters).map(str), tags: arr(r.tags).map(str), cover: typeof r.cardImage === "string" ? r.cardImage : null, lore: null };
+  // Every one of these 723 scenarios carries an overview (the setting, ~3k characters), two
+  // background images and a music playlist, and all of it was being dropped on the floor: the
+  // overview only ever appeared as a fallback for a missing intro, and no record is missing one.
+  const https = v => (typeof v === "string" && v.indexOf("https://") === 0 ? v : "");
+  const bg = r.background && typeof r.background === "object" ? r.background : {};
+  const music = arr(r.music).map(m => (m && typeof m === "object" ? { title: str(m.title), url: https(m.url) } : null)).filter(m => m && m.url);
+  const overview = str(r.overview);
+  return { title: str(r.title), blurb: str(r.shortDescription), overview, intro: str(r.intro) || overview, starters: arr(r.starters).map(str), tags: arr(r.tags).map(str), cover: https(r.cardImage) || null,
+    background: { landscape: https(bg.landscape), portrait: https(bg.portrait) }, music, lore: null };
 }
 export function textOf(p) {
   if (!p) return "";

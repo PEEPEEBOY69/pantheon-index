@@ -55,11 +55,13 @@
   "label": "BlizzardUI",
   "url": "https://perchance.org/blizzardui",
   "kinds": [
+   "character",
+   "lorebook",
    "scenario"
   ],
   "receiver": false,
   "verified": true,
-  "note": "Read from its source 2026-09-08: it loads a shared save from #data=uup1:<file> on page load and its importer requires format 'perchance-ai-rpg-v1' (its own error names Aether too). So Pantheon's existing airpg handoff lands there with no receiver code at all.",
+  "note": "Read from its source 2026-09-09: its perchance-ai-rpg-v1 importer maps codexStructured.npcs[] to the cast, the protagonist fields to the protagonist, and codexTrackedInfo to a locked lore entry \u2014 so characters and lorebooks ride the same #data=uup1: door as scenarios, with no receiver code anywhere.",
   "format": "airpg-upload"
  },
  {
@@ -67,11 +69,13 @@
   "label": "Aether",
   "url": "https://perchance.org/aetherui",
   "kinds": [
+   "character",
+   "lorebook",
    "scenario"
   ],
   "receiver": false,
   "verified": true,
-  "note": "Same as BlizzardUI: #data=uup1:<file> on load, perchance-ai-rpg-v1 payload. Read from source 2026-09-08.",
+  "note": "Same importer as BlizzardUI. Read from its source 2026-09-09: its perchance-ai-rpg-v1 importer maps codexStructured.npcs[] to the cast, the protagonist fields to the protagonist, and codexTrackedInfo to a locked lore entry \u2014 so characters and lorebooks ride the same #data=uup1: door as scenarios, with no receiver code anywhere.",
   "format": "airpg-upload"
  },
  {

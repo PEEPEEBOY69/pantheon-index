@@ -504,7 +504,7 @@
  "targetsUrl": "targets.json",
  "tagsUrl": "tags.json",
  "hashes": {
-  "adapters.json": "14239491638a7954fbfd001fe93404c52269bd76e168623bd78c54bdfabdc783",
+  "adapters.json": "5d8be4861488d02d2d17d9f57785f90d76fd51488c7e943b03dc1d2adb4d3323",
   "sources.json": "a619d85fc149b9ed8d81446a0af74cd58a83f3990b4604814406e0d0929e1723",
   "targets.json": "1c71e04650ee173d5a1034f516acb4bf2d130c522c09dba4e613c941d53b66a4",
   "tags.json": "43fdcd7febc6ab972e744ac486d88d32a96dad27f5ea2a97fba46734ef11744b",

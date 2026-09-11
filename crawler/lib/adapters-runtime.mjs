@@ -23,6 +23,14 @@ export function validateAdapter(a) {
     else for (const k of REQUIRED_MAP) if (typeof s.map[k] !== "string") errors.push(`map.${k}`);
   }
   if (a.detail && a.detail.format && !FORMATS.includes(a.detail.format)) errors.push("detail.format");
+  // A gallery is optional -- most sources publish one picture per item -- but a broken one would
+  // ship a URL that fetches nothing, so it is checked here rather than discovered in a browser.
+  if (a.gallery) {
+    if (!/^https:\/\//.test(a.gallery.url || "")) errors.push("gallery.url");
+    if (String(a.gallery.url || "").indexOf("{nid}") === -1) errors.push("gallery.url.nid");
+    if (typeof a.gallery.items !== "string") errors.push("gallery.items");
+    if (!a.gallery.map || typeof a.gallery.map.u !== "string") errors.push("gallery.map.u");
+  }
   if (a.crawl && (!Array.isArray(a.crawl.passes) || !Number.isFinite(a.crawl.pages))) errors.push("crawl");
   return { ok: errors.length === 0, errors };
 }

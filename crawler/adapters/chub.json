@@ -77,5 +77,15 @@
    }
   ]
  },
- "probe": "https://api.chub.ai/search?namespace=characters&first=1"
+ "probe": "https://api.chub.ai/search?namespace=characters&first=1",
+ "gallery": {
+  "url": "https://api.chub.ai/api/gallery/project/{nid}?limit=48&count=false",
+  "transport": "plain",
+  "items": "nodes",
+  "map": {
+   "u": "primary_image_path",
+   "nsfw": "nsfw_image",
+   "n": "name|description"
+  }
+ }
 }

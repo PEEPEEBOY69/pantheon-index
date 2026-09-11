@@ -82,3 +82,16 @@ test("crawlDeclarative stops at the deadline instead of being killed mid-run", a
   const ok = await crawlDeclarative(chub, f, { ts: 1, maxPages: 1, deadline: Date.now() + 60000 });
   assert.equal(ok.pagesFetched, chub.crawl.passes.length, "a deadline in the future changes nothing");
 });
+
+test("a gallery block is optional, and a broken one is refused before it can ship", () => {
+  const base = JSON.parse(JSON.stringify(chub));
+  delete base.gallery;
+  assert.equal(validateAdapter(base).ok, true, "no gallery is fine: most sources publish one picture per item");
+  const withGallery = { ...base, gallery: { url: "https://api.chub.ai/api/gallery/project/{nid}?limit=48", transport: "plain", items: "nodes", map: { u: "primary_image_path", nsfw: "nsfw_image" } } };
+  assert.equal(validateAdapter(withGallery).ok, true, JSON.stringify(validateAdapter(withGallery).errors));
+  const bad = e => validateAdapter({ ...base, gallery: e }).errors;
+  assert.ok(bad({ url: "http://x/{nid}", items: "nodes", map: { u: "u" } }).includes("gallery.url"), "https only");
+  assert.ok(bad({ url: "https://x/all", items: "nodes", map: { u: "u" } }).includes("gallery.url.nid"), "a gallery url that ignores the item is not a gallery for it");
+  assert.ok(bad({ url: "https://x/{nid}", map: { u: "u" } }).includes("gallery.items"));
+  assert.ok(bad({ url: "https://x/{nid}", items: "nodes", map: {} }).includes("gallery.map.u"), "with no picture field there is nothing to read");
+});
