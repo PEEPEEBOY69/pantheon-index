@@ -3,6 +3,7 @@ import { makeRecord, RecordError } from "../lib/record.mjs";
 import { parseCardPng } from "../lib/png-card.mjs";
 import { characterFromCard, lorebookFromStWi, detectFormat, estimateTokens, isNsfwTags } from "../lib/normalise.mjs";
 
+export const NOT_A_CARD = /(^|\/)(package(-lock)?|tsconfig(\.[\w-]+)?|jsconfig|composer|manifest|plugin|task|fount|common|bun|deno|renovate|lerna|nx|turbo|eslint(rc)?|prettier(rc)?|babel(rc)?|vercel|netlify|firebase|app|settings|config)\.json$|(^|\/)\.[^/]*\.json$|(^|\/)(node_modules|\.github|dist|build|test|tests|__tests__|coverage)\//i;
 export const meta = {
   id: "github", label: "GitHub card repos", kinds: ["character", "lorebook"], status: "live", transport: "crawler",
   caps: { s: "index", i: true, o: true },
@@ -34,7 +35,10 @@ export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, lim
     const branch = r.default_branch || "main";
     try {
       const { body } = await fetcher.json(`https://api.github.com/repos/${r.full_name}/git/trees/${branch}?recursive=1`, { headers });
-      const files = (body?.tree || []).filter(f => f.type === "blob" && f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path)).slice(0, Math.min(filesPerRepo, fileBudget - spent));
+      // Names a card is never stored under. The detector already refuses these once fetched; skipping
+      // them here spends none of the per-crawl file budget on them (194 of 520 records from this
+      // source were package.json before the detector was tightened, 2026-09-10).
+      const files = (body?.tree || []).filter(f => f.type === "blob" && f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path) && !NOT_A_CARD.test(f.path)).slice(0, Math.min(filesPerRepo, fileBudget - spent));
       spent += files.length;
       for (const f of files) {
         const url = `https://raw.githubusercontent.com/${r.full_name}/${branch}/${f.path}`;
