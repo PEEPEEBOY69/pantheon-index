@@ -48,7 +48,7 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
     catch (e) { errors.push({ source: s.id, message: String(e.message || e) }); }
   }
   for (const s of sources.filter(x => x.status === "live" && x.adapter && x.crawl !== false)) {
-    let ok = true, fresh = [], errMsg = null, adapterErrors = [];
+    let ok = true, fresh = [], errMsg = null, adapterErrors = [], retire = [];
     const prev = await previousRecords(outDir, s.id);
     if (Array.isArray(only) && !only.includes(s.id)) {
       try { adapters.push((await loadAdapter(s.adapter)).descriptor); } catch (e) { ok = false; errMsg = String(e.message || e); }
@@ -58,12 +58,12 @@ export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.f
         const ad = await loadAdapter(s.adapter);
         adapters.push(ad.descriptor);
         const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log, deadline }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id], deadline });
-        fresh = res.records; adapterErrors = res.errors || [];
+        fresh = res.records; adapterErrors = res.errors || []; retire = Array.isArray(res.retire) ? res.retire : [];
         if (fresh.length === 0 && adapterErrors.length) { ok = false; errMsg = adapterErrors[0].message; }
       } catch (e) { ok = false; errMsg = String(e.message || e); }
     }
     const prevSeen = await readJson(path.join(outDir, s.id, "seen.json"), {});
-    const { records: merged, seen } = mergeWithPrevious(prev, fresh, { now, crawlOk: ok, prevSeen });
+    const { records: merged, seen } = mergeWithPrevious(prev, fresh, { now, crawlOk: ok, prevSeen, retire });
     for (const rec of merged) allRecords.push(rec);
     const written = await writeSourceShards(outDir, s.id, merged);
     await fs.writeFile(path.join(outDir, s.id, "seen.json"), JSON.stringify(seen));

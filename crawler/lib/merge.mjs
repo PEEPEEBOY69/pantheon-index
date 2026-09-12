@@ -16,9 +16,11 @@ export function sameContent(a, b) {
   return JSON.stringify(x) === JSON.stringify(y);
 }
 
-export function mergeWithPrevious(previous, fresh, { now, crawlOk = true, prevSeen = {} }) {
+export function mergeWithPrevious(previous, fresh, { now, crawlOk = true, prevSeen = {}, retire = [] }) {
   const byId = new Map(); const seen = {};
-  for (const r of previous || []) { byId.set(r.id, r); seen[r.id] = prevSeen[r.id] ?? r.ts; }
+  // An adapter that stops producing an id on purpose says so; those go now, not after PRUNE_DAYS.
+  const gone = new Set(crawlOk ? retire : []);
+  for (const r of previous || []) { if (gone.has(r.id)) continue; byId.set(r.id, r); seen[r.id] = prevSeen[r.id] ?? r.ts; }
   for (const r of fresh || []) {
     const old = byId.get(r.id);
     byId.set(r.id, old && sameContent(old, r) ? old : r);

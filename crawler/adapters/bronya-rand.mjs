@@ -29,6 +29,10 @@ export function bookLinks(html, pageUrl) {
 }
 
 export async function crawl(fetcher, { ts, limits = { bots: 150, books: 120 }, log = () => {} }) {
+  // ids this crawl chose not to produce -- variants of cards that are also here -- so merge drops
+  // them now rather than in thirty days
+  const retire = [];
+  const nidOf = link => decodeURIComponent(new URL(link.href).pathname.replace("/reimagined-couscous/", ""));
   const errors = []; const byId = new Map(); let skipped = 0;
   const bookPage = meta.base + "world-lore-books"; const listPage = meta.base + "bot-list";
   try {
@@ -47,7 +51,22 @@ export async function crawl(fetcher, { ts, limits = { bots: 150, books: 120 }, l
       const pageUrl = meta.base + slug;
       try {
         const { body: html } = await fetcher.text(pageUrl); const title = pageTitle(html); const links = fileLinks(html, pageUrl);
-        for (const link of links.filter(l => l.ext === "json")) {
+        // The archive publishes two or three files per character -- "Melina.json", "Melina (no
+        // scenario).json", sometimes "(chat)" -- and every one of them was a card of its own, so the
+        // whole source showed twice (Cash, 2026-09-12). A variant of a card that is also here is not
+        // a second card; the primary is the one without the suffix.
+        const jsonLinks = links.filter(l => l.ext === "json");
+        const primaries = new Set(jsonLinks.map(l => l.href.replace(/\.json$/i, "").toLowerCase()));
+        // "Veliona (no scenario A).json" is the variant of "Veliona A.json"; the letter is the card.
+        const isVariant = l => {
+          const plain = decodeURIComponent(l.href);
+          const m = /^(.*?) \((?:no scenario(?: ([a-z]))?|chat)\)\.json$/i.exec(plain);
+          if (!m) return false;
+          const primary = (m[1] + (m[2] ? " " + m[2] : "")).toLowerCase();
+          return primaries.has(encodeURI(primary).toLowerCase()) || primaries.has(primary);
+        };
+        for (const l of jsonLinks.filter(isVariant)) retire.push("bronya-rand:character:" + nidOf(l));
+        for (const link of jsonLinks.filter(l => !isVariant(l))) {
           try {
             const { body: obj } = await fetcher.json(link.href); if (detectFormat(obj) !== "ccv2json") { skipped++; continue; }
             const card = characterFromCard(obj); if (!card) { skipped++; continue; }
@@ -60,5 +79,5 @@ export async function crawl(fetcher, { ts, limits = { bots: 150, books: 120 }, l
     }
   } catch (e) { errors.push({ url: listPage, message: String(e.message || e) }); }
   log(`${meta.id}: ${byId.size} records, ${skipped} skipped, ${errors.length} errors`);
-  return { records: [...byId.values()], errors };
+  return { records: [...byId.values()], errors, retire };
 }

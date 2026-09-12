@@ -1,6 +1,6 @@
 {
  "v": 1,
- "builtAt": 1789202293,
+ "builtAt": 1789240218,
  "base": {
   "primary": "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/",
   "fallback": "https://raw.githubusercontent.com/PEEPEEBOY69/pantheon-index/main/index/"
@@ -512,14 +512,14 @@
    "newest": "botbooru/new-000.json"
   },
   "bronya-rand": {
-   "count": 204,
+   "count": 133,
    "heads": [
     "bronya-rand/head-000.json"
    ],
    "recs": [
     "bronya-rand/rec-000.json"
    ],
-   "bytes": 193681,
+   "bytes": 119190,
    "newest": "bronya-rand/new-000.json"
   }
  },
@@ -529,9 +529,9 @@
  "tagsUrl": "tags.json",
  "hashes": {
   "adapters.json": "5d8be4861488d02d2d17d9f57785f90d76fd51488c7e943b03dc1d2adb4d3323",
-  "sources.json": "9cafd8b4e12bd8f1ca569535dd0a30cf0448731b5b2532aef81dac08c75b21c8",
+  "sources.json": "51e346e1e287cdc0760c615dd9a6de177d4d7775bfc69092ca8cfddfd6bec2c0",
   "targets.json": "4aa7b90dd809401cbf12f8aa18cc80d18ad74a89e9b16d445595140ae3727566",
-  "tags.json": "77d9cadf3a03d4e9de549c33fa0c86d59322938f54440b177096f0c1e99c4be5",
+  "tags.json": "08306eb761f3ec5da8a9ddac802be9cd989d92b15dc375f4dd63bc694139b071",
   "chub/rec-000.json": "fbaf804e1f98531e633da3eb457d48e72e42abd52643c974ff9f95237d52af8f",
   "chub/head-000.json": "adf31f99183e65112476050c6f38e81aabbb09308206594a07e8097d0a2de155",
   "chub/rec-001.json": "d6d07c3f5d8e37cca36a772cf3ce633ad6176c9b95363b3a48e6c2383bb70ced",
@@ -965,8 +965,8 @@
   "botbooru/rec-006.json": "c02e15b7066206b67a9288f8da780ed34dc8c649f714a5ab1e24b517b90a037e",
   "botbooru/head-006.json": "1be27419664ae2423a46f28004c73682b1586d031943883bb3bb9f5539904185",
   "botbooru/new-000.json": "19a2ab6d7194f63d834d25d57e382187ef345ed897c5532adf922f480c49444c",
-  "bronya-rand/rec-000.json": "8eb8384d7c24ad7eb61f7efef73d8f02161c1d61e353fcfb45a5b011e2b0cb74",
-  "bronya-rand/head-000.json": "5751742c55b294539dba323cecb4cd63c08e356e5aabe4cfbf47fb2197eef456",
-  "bronya-rand/new-000.json": "866fbe24fdeab81cba3654952c4a1136e0838263110e0cca396854f7f3ca1b61"
+  "bronya-rand/rec-000.json": "bf568c1e61053a282c1c8bf4c018e0d4b91a27806e1378b6487b12f8dafe21e3",
+  "bronya-rand/head-000.json": "6e5abcf35f8071d5ce2de8582ca335fd62b9bb9860d7f673869b7e3fb51bc401",
+  "bronya-rand/new-000.json": "6e5abcf35f8071d5ce2de8582ca335fd62b9bb9860d7f673869b7e3fb51bc401"
  }
 }

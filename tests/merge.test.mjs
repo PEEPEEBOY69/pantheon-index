@@ -37,3 +37,14 @@ test("when the crawl failed (crawlOk=false) nothing is pruned", () => {
 test("output is sorted by id for stable shards", () => {
   const { records } = mergeWithPrevious([], [rec("b", 1), rec("a", 1)], { now: 1 }); assert.deepEqual(records.map(r => r.id), ["a", "b"]);
 });
+
+test("an adapter can retire ids on purpose, and they leave now rather than after PRUNE_DAYS", async () => {
+  const { mergeWithPrevious } = await import("../crawler/lib/merge.mjs");
+  const prev = [{ id: "s:character:a.json", ts: 1 }, { id: "s:character:a (no scenario).json", ts: 1 }];
+  const fresh = [{ id: "s:character:a.json", ts: 2 }];
+  const out = mergeWithPrevious(prev, fresh, { now: 2, crawlOk: true, retire: ["s:character:a (no scenario).json"] });
+  assert.deepEqual(out.records.map(r => r.id), ["s:character:a.json"]);
+  // A failed crawl retires nothing: a broken adapter must not empty a source.
+  const kept = mergeWithPrevious(prev, [], { now: 2, crawlOk: false, retire: ["s:character:a (no scenario).json"] });
+  assert.equal(kept.records.length, 2);
+});
