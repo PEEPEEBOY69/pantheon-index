@@ -45,3 +45,12 @@ test("detectFormat", () => {
   assert.equal(detectFormat(card), "ccv2json"); assert.equal(detectFormat({ spec: "chara_card_v3", data: {} }), "ccv3json");
   assert.equal(detectFormat(stwi), "stwi"); assert.equal(detectFormat({ name: "x", first_mes: "y" }), "ccv2json"); assert.equal(detectFormat({ a: 1 }), null);
 });
+
+test("the GitHub walk stops filing project metadata as characters", () => {
+  // It reads every .json in a card repo. A package.json has a name and a description, which used to
+  // be the whole test, so 194 of 520 records from that source were build files (2026-09-10).
+  assert.equal(detectFormat({ name: "some-tool", version: "1.0.0", description: "A CLI", scripts: {} }), null);
+  assert.equal(detectFormat({ name: "manifest", description: "plugin manifest" }), null);
+  assert.equal(detectFormat({ name: "Melina", description: "d", first_mes: "..." }), "ccv2json");
+  assert.equal(detectFormat({ entries: { 0: { content: "x" } } }), "stwi");
+});

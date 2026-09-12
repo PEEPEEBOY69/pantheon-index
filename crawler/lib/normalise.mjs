@@ -93,11 +93,20 @@ export function lorebookFromBotbooru(lb) {
   const out = lorebookFromStWi({ name: lb.title || lb.name || "Lorebook", description: lb.description || lb.uploader_tagline || "", entries });
   return out;
 }
+// Something a character actually has. A name and a description is not enough: that is also every
+// package.json in every repo the GitHub crawler walks, and 194 of them were sitting in the library
+// as characters whose whole content was a one-line project blurb (measured 2026-09-10). A card with
+// a spec marker is taken at its word; a bare object has to carry one of these to be a character.
+const CARD_MARKS = ["first_mes", "personality", "scenario", "mes_example", "char_greeting", "char_persona", "alternate_greetings", "character_book", "post_history_instructions", "system_prompt"];
+function carriesCharacter(obj) {
+  for (const k of CARD_MARKS) { const v = obj[k]; if (v === undefined || v === null || v === "") continue; if (Array.isArray(v) && !v.length) continue; return true; }
+  return false;
+}
 export function detectFormat(obj) {
   if (!obj || typeof obj !== "object") return null;
   if (obj.spec === "chara_card_v3") return "ccv3json";
   if (obj.spec === "chara_card_v2" || (obj.data && typeof obj.data === "object" && obj.data.name)) return "ccv2json";
-  if (typeof obj.name === "string" && (typeof obj.first_mes === "string" || typeof obj.description === "string")) return "ccv2json";
+  if (typeof obj.name === "string" && carriesCharacter(obj)) return "ccv2json";
   if (obj.entries && typeof obj.entries === "object") return "stwi";
   return null;
 }
