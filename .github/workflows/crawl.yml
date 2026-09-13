@@ -28,6 +28,19 @@ jobs:
           git add index
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           git commit -m "index: $(date -u +%Y-%m-%dT%H:%MZ)"
+          # The files are now at a commit; the manifest names it so every client reads them from
+          # that immutable ref. jsDelivr caches branch paths long after the branch moved, and the
+          # hash in the query never reaches it, so a rebuilt file came back stale for hours.
+          node crawler/pin.mjs "$(git rev-parse HEAD)"
+          git add index/manifest.json
+          git commit -m "manifest: pin $(git rev-parse --short HEAD)"
           git push
       - name: purge jsDelivr manifest
-        run: curl -fsS "https://purge.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/manifest.json" || true
+        run: |
+          # The manifest is the one file still read from the branch; it is purged, and checked.
+          curl -fsS "https://purge.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/manifest.json" || true
+          sleep 20
+          want=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("index/manifest.json","utf8")).commit)')
+          got=$(curl -fsS "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/manifest.json?t=$(date +%s)" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).commit))')
+          echo "manifest on CDN pins $got, wanted $want"
+          [ "$got" = "$want" ] || echo "::warning::CDN still serves the previous manifest; clients fall back to raw GitHub until it catches up"
