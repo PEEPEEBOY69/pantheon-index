@@ -45,3 +45,13 @@ test("applyNsfwGuard nulls blurb only when nsfw", () => {
   assert.equal(applyNsfwGuard(makeRecord(base)).b, "A blurb.");
   assert.equal(applyNsfwGuard(makeRecord({ ...base, nsfw: true })).b, null);
 });
+test("lb: a record says when it is known to have a lorebook, and only then does its head carry lb: 1", () => {
+  const withBook = makeRecord({ ...base, lb: true });
+  assert.equal(withBook.lb, true); assert.equal(validateRecord(withBook).ok, true);
+  assert.equal(toHead(withBook).lb, 1);
+  const none = makeRecord(base);
+  assert.equal(none.lb, false); assert.equal("lb" in toHead(none), false, "heads without a book stay as small as before");
+  assert.equal(makeRecord({ ...base, lb: "yes" }).lb, false, "only true counts");
+  const older = makeRecord(base); delete older.lb; assert.equal(validateRecord(older).ok, true, "records from before lb still validate");
+  assert.equal(validateRecord({ ...makeRecord(base), lb: 1 }).ok, false, "lb is a boolean in a record");
+});

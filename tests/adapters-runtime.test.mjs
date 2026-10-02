@@ -21,6 +21,12 @@ test("buildSearchUrl maps only declared controls, applies fixed and sorts", () =
   assert.equal(u.searchParams.get("search"), "elf"); assert.equal(u.searchParams.get("sort"), "download_count");
   assert.equal(u.searchParams.get("page"), "2"); assert.equal(u.searchParams.get("namespace"), "characters"); assert.equal(u.searchParams.has("bogus"), false);
 });
+test("buildSearchUrl: a token range goes to Chub as min_tokens and max_tokens; without one the fixed minimum stays", () => {
+  const u = new URL(buildSearchUrl(chub, { tokMin: 500, tokMax: 2000 }));
+  assert.equal(u.searchParams.get("min_tokens"), "500"); assert.equal(u.searchParams.get("max_tokens"), "2000");
+  const plain = new URL(buildSearchUrl(chub, { q: "elf" }));
+  assert.equal(plain.searchParams.get("min_tokens"), "50"); assert.equal(plain.searchParams.has("max_tokens"), false);
+});
 test("itemsToRecords: chub nodes → records; blank name skipped; nsfw from nsfw_image", () => {
   const { records, skipped } = itemsToRecords(chub, chubFx.data.nodes, { ts: 1756700000 });
   assert.equal(records.length, 2); assert.equal(skipped, 1);

@@ -41,7 +41,7 @@ export async function crawl(fetcher, { ts, limits = DEFAULT_LIMITS, log = () => 
           if (byId.has(raw.id)) continue;
           const tags = Array.isArray(raw.tags) ? raw.tags.map(String) : [];
           try {
-            byId.set(raw.id, makeRecord({ ts: realmDate(raw.date) || ts, src: meta.id, k: "character", nid: raw.id, n: String(raw.name || "").replace(/[*_`#]/g, "").trim(), b: cleanDesc(raw.desc), t: tags, c: /^[0-9a-f]{64}$/i.test(String(raw.img || "")) ? meta.hub + "/resource/" + raw.img : null, nsfw: nsfw || isNsfwTags(tags), o: meta.originBase + raw.id, p: { tr: "plain", u: meta.downloadBase + raw.id + "?cors=true", f: "charx" }, caps: meta.caps, tok: null, ts }));
+            byId.set(raw.id, makeRecord({ ts: realmDate(raw.date) || ts, src: meta.id, k: "character", nid: raw.id, n: String(raw.name || "").replace(/[*_`#]/g, "").trim(), b: cleanDesc(raw.desc), t: tags, c: /^[0-9a-f]{64}$/i.test(String(raw.img || "")) ? meta.hub + "/resource/" + raw.img : null, nsfw: nsfw || isNsfwTags(tags), o: meta.originBase + raw.id, p: { tr: "plain", u: meta.downloadBase + raw.id + "?cors=true", f: "charx" }, caps: meta.caps, tok: null, ts, lb: raw.haslore === true }));
             fresh++;
           } catch (e) { if (e instanceof RecordError) skipped++; else throw e; }
         }

@@ -25,7 +25,7 @@ export function normaliseTags(arr) {
 const isHttps = u => typeof u === "string" && (/^https:\/\/[^\s]+$/.test(u) || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/[^\s]*$/.test(u)) && u.length <= LIMITS.url;
 
 export function makeRecord(input) {
-  const { src, k, nid, n, b, t, c, nsfw, o, p, caps, tok, ts } = input;
+  const { src, k, nid, n, b, t, c, nsfw, o, p, caps, tok, ts, lb } = input;
   if (!KINDS.includes(k)) throw new RecordError("kind", `bad kind ${k}`);
   if (typeof src !== "string" || !/^[a-z0-9-]{1,40}$/.test(src)) throw new RecordError("src", `bad src ${src}`);
   if (nid === undefined || nid === null || String(nid) === "") throw new RecordError("nid", "missing native id");
@@ -48,6 +48,8 @@ export function makeRecord(input) {
     p: payload, caps: cap,
     tok: Number.isFinite(tok) ? Math.max(0, Math.round(tok)) : null,
     ts: Number.isFinite(ts) ? Math.round(ts) : Math.floor(Date.now() / 1000),
+    // Known to come with a lorebook (a source that says so, e.g. RisuRealm's haslore). False means unknown or none.
+    lb: lb === true,
   };
 }
 
@@ -69,6 +71,7 @@ export function validateRecord(r) {
   if (r.caps && r.caps.i && (!r.p || r.p.tr === null)) errors.push("caps.i without payloadRef");
   if (!(r.tok === null || Number.isFinite(r.tok))) errors.push("tok");
   if (!Number.isFinite(r.ts)) errors.push("ts");
+  if ("lb" in r && typeof r.lb !== "boolean") errors.push("lb");
   return { ok: errors.length === 0, errors };
 }
 
@@ -76,5 +79,6 @@ export function validateRecord(r) {
 // every row of an index-only source came back in shard order — "Trending now" and "Just added"
 // showed the identical twelve cards (seen live 2026-09-03). Two numbers per record, ~0.5 MB across
 // the whole index, and the rows become different pages.
-export const toHead = r => ({ id: r.id, n: r.n, t: r.t, k: r.k, nsfw: r.nsfw, c: r.c, ts: r.ts, tok: r.tok });
+// lb rides along only when true: most records have no book, and the heads stay the size they were.
+export const toHead = r => Object.assign({ id: r.id, n: r.n, t: r.t, k: r.k, nsfw: r.nsfw, c: r.c, ts: r.ts, tok: r.tok }, r.lb === true ? { lb: 1 } : {});
 export const applyNsfwGuard = r => (r.nsfw ? { ...r, b: null } : { ...r });

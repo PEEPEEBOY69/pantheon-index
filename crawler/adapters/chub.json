@@ -18,7 +18,9 @@
    "nsfw": "nsfw",
    "sort": "sort",
    "tags": "topics",
-   "page": "page"
+   "page": "page",
+   "tokMin": "min_tokens",
+   "tokMax": "max_tokens"
   },
   "fixed": {
    "namespace": "characters",
@@ -31,7 +33,9 @@
    "nsfw",
    "sort",
    "tags",
-   "page"
+   "page",
+   "tokMin",
+   "tokMax"
   ],
   "sorts": {
    "relevance": "default",
