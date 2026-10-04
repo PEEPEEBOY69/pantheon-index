@@ -37,6 +37,7 @@ function fetcher(overrides = []) {
     { match: /sv\.risuai\.xyz\/realm\/.*page%3D%3D0.*nsfw%3D%3Dfalse.*sort%3D%3Ddownloads/, body: read("fixtures/realm-list.json") }, { match: "https://sv.risuai.xyz/realm/", body: { cards: [] } },
     { match: /botbooru\.com\/posts\/\?offset=0&/, body: read("fixtures/bb-posts.json") }, { match: "https://botbooru.com/posts/?", body: { total: 2, posts: [] } }, { match: "https://botbooru.com/api/lorebooks?offset=0", body: read("fixtures/bb-lorebooks.json") }, { match: "https://botbooru.com/api/lorebooks?", body: { items: [], total: 1 } },
     { match: "https://rentry.org/", body: fs.readFileSync("fixtures/rentry-raw.txt", "utf8"), kind: "text" }, { match: "https://blocky-mint.github.io/", body: "<a href='https://chub.ai/'>x</a>", kind: "text" },
+    { match: "https://raw.githubusercontent.com/nosfertm/perchance-character-database/main/ai-character-chat/characters/index.json", body: read("fixtures/perchance-db-sample.json") },
     { match: /^https:\/\//, body: "<html>ok</html>", kind: "text", headers: { "access-control-allow-origin": "*" } },
   ]) });
 }
@@ -46,9 +47,10 @@ test("runCrawl writes a complete index from fixtures", async () => {
   const result = await runCrawl({ outDir: out, fetcher: fetcher(), now: 1_700_000_000, limits: { huggingface: { datasets: 5, filesPerDataset: 20 }, github: { repos: 5, filesPerRepo: 20 } }, log: () => {} });
   const m = read(path.join(out, "manifest.json"));
   assert.equal(m.v, 1); assert.equal(m.builtAt, 1_700_000_000);
-  assert.deepEqual(Object.keys(m.sources).sort(), ["aicharactercards", "botbooru", "bronya-rand", "character-tavern", "chub", "chub-lorebooks", "github", "huggingface", "perchance-rp", "risu-realm"], "fictionlab is crawl:false");
+  assert.deepEqual(Object.keys(m.sources).sort(), ["aicharactercards", "botbooru", "bronya-rand", "character-tavern", "chub", "chub-lorebooks", "github", "huggingface", "perchance-db", "perchance-rp", "risu-realm"], "fictionlab is crawl:false");
   assert.equal(m.sources["character-tavern"].count, 3); assert.equal(m.sources.aicharactercards.count, 3); assert.equal(m.sources["bronya-rand"].count, 2); assert.equal(m.sources["risu-realm"].count, 2); assert.equal(m.sources.botbooru.count, 3);
   assert.equal(m.sources.chub.count, 2); assert.equal(m.sources["perchance-rp"].count, 2); assert.equal(m.sources.huggingface.count, 2);
+  assert.equal(m.sources["perchance-db"].count, 2);
   for (const [, s] of Object.entries(m.sources)) for (const f of [...s.heads, ...s.recs]) { assert.ok(fs.existsSync(path.join(out, f)), f); assert.ok(m.hashes[f]); }
   const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub").search); assert.ok(adapters.find(a => a.id === "perchance-rp").caps);
   assert.ok(adapters.find(a => a.id === "fictionlab").search, "crawl:false adapters still ship to the plugin");

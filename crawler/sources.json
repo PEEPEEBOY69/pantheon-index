@@ -58,6 +58,20 @@
   "evidence": "measured 2026-09-01: 10,019,449 bytes, CORS *"
  },
  {
+  "id": "perchance-db",
+  "label": "Perchance Character Database",
+  "kinds": [
+   "character"
+  ],
+  "status": "live",
+  "adapter": "perchance-db.mjs",
+  "hosts": [
+   "nosfertm.github.io"
+  ],
+  "probe": "https://raw.githubusercontent.com/nosfertm/perchance-character-database/main/ai-character-chat/characters/index.json",
+  "evidence": "read 2026-10-04: 934 characters; creative works CC BY-SA 4.0 (TERMS_AND_CONDITIONS.md); the author is credited and the folder linked"
+ },
+ {
   "id": "huggingface",
   "label": "HuggingFace datasets",
   "kinds": [

@@ -1,0 +1,5 @@
+[
+  { "path": "sfw/Ike by Perchance", "manifest": { "name": "Ike", "description": "Your childhood best friend and secret admirer.", "author": "Perchance", "imageUrl": "https://user-uploads.perchance.org/file/1fc3053449b3899638f4328eec5817a8.jpeg", "shareUrl": "https://perchance.org/ai-character-chat?data=Ike~d1ad478c0beadb6481d8b7baf58e521b.gz", "downloadPath": "ai-character-chat/characters/sfw/Ike by Perchance/character.gz", "categories": { "rating": "sfw", "species": ["Human"], "gender": ["Male"], "genre": ["Romance", "Slice of Life"], "source": ["Perchance"], "role": ["Best friend"], "personality": ["Friendly", "Playful"] } } },
+  { "path": "nsfw/Velvet by Someone", "manifest": { "name": "Velvet", "description": "Runs a jazz bar after midnight.", "author": "Someone", "imageUrl": "http://insecure.example/x.png", "downloadPath": "ai-character-chat/characters/nsfw/Velvet by Someone/character.gz", "categories": { "rating": "nsfw", "genre": ["Romance"] } } },
+  { "path": "sfw/Broken", "manifest": { "description": "no name and no file" } }
+]

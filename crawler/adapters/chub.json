@@ -20,7 +20,8 @@
    "tags": "topics",
    "page": "page",
    "tokMin": "min_tokens",
-   "tokMax": "max_tokens"
+   "tokMax": "max_tokens",
+   "creator": "username"
   },
   "fixed": {
    "namespace": "characters",
@@ -35,7 +36,8 @@
    "tags",
    "page",
    "tokMin",
-   "tokMax"
+   "tokMax",
+   "creator"
   ],
   "sorts": {
    "relevance": "default",

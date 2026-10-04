@@ -1,8 +1,8 @@
 // The one record envelope every source collapses into (spec §5). Short field names on purpose.
 export const KINDS = ["character", "lorebook", "scenario"];
-export const FORMATS = ["ccv2png", "ccv2json", "ccv3json", "stwi", "chublore", "fl", "prp", "hubjson", "charx", "bbjson", "bblore"];
+export const FORMATS = ["ccv2png", "ccv2json", "ccv3json", "stwi", "chublore", "fl", "prp", "hubjson", "charx", "bbjson", "bblore", "dexiegz"];
 export const TRANSPORTS = ["plain", "super", "index"];
-export const LIMITS = { name: 100, blurb: 300, tags: 20, tagLen: 30, url: 300 };
+export const LIMITS = { name: 100, blurb: 300, tags: 20, tagLen: 30, url: 300, creator: 60 };
 
 export class RecordError extends Error {
   constructor(code, message) { super(message); this.name = "RecordError"; this.code = code; }
@@ -25,7 +25,7 @@ export function normaliseTags(arr) {
 const isHttps = u => typeof u === "string" && (/^https:\/\/[^\s]+$/.test(u) || /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/[^\s]*$/.test(u)) && u.length <= LIMITS.url;
 
 export function makeRecord(input) {
-  const { src, k, nid, n, b, t, c, nsfw, o, p, caps, tok, ts, lb } = input;
+  const { src, k, nid, n, b, t, c, nsfw, o, p, caps, tok, ts, lb, cr } = input;
   if (!KINDS.includes(k)) throw new RecordError("kind", `bad kind ${k}`);
   if (typeof src !== "string" || !/^[a-z0-9-]{1,40}$/.test(src)) throw new RecordError("src", `bad src ${src}`);
   if (nid === undefined || nid === null || String(nid) === "") throw new RecordError("nid", "missing native id");
@@ -50,6 +50,8 @@ export function makeRecord(input) {
     ts: Number.isFinite(ts) ? Math.round(ts) : Math.floor(Date.now() / 1000),
     // Known to come with a lorebook (a source that says so, e.g. RisuRealm's haslore). False means unknown or none.
     lb: lb === true,
+    // The creator, where the source names one (credited on the item page); left out when unknown.
+    ...(typeof cr === "string" && cr.trim() ? { cr: truncate(cr.trim(), LIMITS.creator) } : {}),
   };
 }
 
@@ -72,6 +74,7 @@ export function validateRecord(r) {
   if (!(r.tok === null || Number.isFinite(r.tok))) errors.push("tok");
   if (!Number.isFinite(r.ts)) errors.push("ts");
   if ("lb" in r && typeof r.lb !== "boolean") errors.push("lb");
+  if ("cr" in r && (typeof r.cr !== "string" || r.cr.length > LIMITS.creator)) errors.push("cr");
   return { ok: errors.length === 0, errors };
 }
 
