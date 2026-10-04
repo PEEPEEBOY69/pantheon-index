@@ -34,7 +34,9 @@ export function characterFromCard(card) {
     first_mes: str(d.first_mes), mes_example: str(d.mes_example), alternate_greetings: arr(d.alternate_greetings).map(str),
     tags: arr(d.tags).map(str), creator: str(d.creator), creator_notes: str(d.creator_notes),
     avatar: typeof d.avatar === "string" && /^https:/.test(d.avatar) ? d.avatar : null,
-    book: bookFrom(d.character_book),
+    // A character that was read once already carries `book`, not `character_book`: reading it again (the publish
+    // form hands its parsed card to publish, which reads it again) must not drop the book (2026-10-04).
+    book: bookFrom(d.character_book) || bookFrom(d.book),
   };
 }
 export function lorebookFromStWi(obj) { const b = bookFrom(obj); return b && b.entries.length ? { ...b, name: b.name || "World Info" } : null; }
