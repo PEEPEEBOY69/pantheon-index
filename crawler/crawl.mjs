@@ -50,7 +50,12 @@ export async function runCrawl({ outDir, fetcher = createFetcher({ robots: true 
   for (const s of sources.filter(x => x.status === "live" && x.adapter && x.crawl !== false)) {
     let ok = true, fresh = [], errMsg = null, adapterErrors = [], retire = [];
     const prev = await previousRecords(outDir, s.id);
-    if (Array.isArray(only) && !only.includes(s.id)) {
+    // Paused (the sources round): the site said no, so nothing is requested. What is held is carried forward with
+    // its own last-seen dates, so it ages out under the merge's 30 days unless the source is turned back on.
+    if (s.crawl === "paused") {
+      try { adapters.push((await loadAdapter(s.adapter)).descriptor); } catch (e) { ok = false; errMsg = String(e.message || e); }
+      fresh = []; log(`crawl ${s.id}: paused, ${prev.length} held records age out`);
+    } else if (Array.isArray(only) && !only.includes(s.id)) {
       try { adapters.push((await loadAdapter(s.adapter)).descriptor); } catch (e) { ok = false; errMsg = String(e.message || e); }
       fresh = prev; log(`crawl ${s.id}: kept ${prev.length} previous records (--only)`);
     } else {

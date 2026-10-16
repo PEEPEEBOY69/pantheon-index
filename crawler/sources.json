@@ -16,7 +16,13 @@
    "avatars.charhub.io"
   ],
   "probe": "https://api.chub.ai/search?namespace=characters&first=1",
-  "evidence": "shipped generators"
+  "evidence": "shipped generators",
+  "terms": {
+   "url": "https://chub.ai/tos",
+   "read": "2026-10-15",
+   "verdict": "silent",
+   "note": "no clause on crawling; public cards are licensed for personal, non-commercial use with credit to Chub"
+  }
  },
  {
   "id": "chub-lorebooks",
@@ -28,7 +34,13 @@
   "adapter": "chub-lorebooks.json",
   "hosts": [],
   "probe": "https://api.chub.ai/search?namespace=lorebooks&first=1",
-  "evidence": "Blizzard A.6b"
+  "evidence": "Blizzard A.6b",
+  "terms": {
+   "url": "https://chub.ai/tos",
+   "read": "2026-10-15",
+   "verdict": "silent",
+   "note": "as chub"
+  }
  },
  {
   "id": "fictionlab",
@@ -36,14 +48,20 @@
   "kinds": [
    "scenario"
   ],
-  "status": "live",
+  "status": "blocked",
   "adapter": "fictionlab.json",
   "hosts": [
    "fictionlab.ai"
   ],
   "probe": "https://fictionlab.ai/api/search?version=2&keyw=&size=1&searchType=scenarios&sortType=trending&time=all_time&page=0&mature=false",
-  "evidence": "Cloudflare challenge 403 from datacenter AND residential (2026-09-01) \u2014 live via superFetch only",
-  "crawl": false
+  "evidence": "blocked 2026-10-15: its terms forbid automated data gathering, which Pantheon's live search of its API is; the plugin stops searching it when this register ships",
+  "crawl": false,
+  "terms": {
+   "url": "https://fictionlab.ai/terms-of-service",
+   "read": "2026-10-15",
+   "verdict": "forbids",
+   "note": "\"you will not engage in or use any data mining, robots, scraping or similar automated data gathering or extraction methods\""
+  }
  },
  {
   "id": "perchance-rp",
@@ -55,7 +73,13 @@
   "adapter": "perchance-rp.mjs",
   "hosts": [],
   "probe": "https://user.uploads.dev/file/4bae8c63c1b8a8f0485e27e30737dc44.json",
-  "evidence": "measured 2026-09-01: 10,019,449 bytes, CORS *"
+  "evidence": "measured 2026-09-01: 10,019,449 bytes, CORS *",
+  "terms": {
+   "url": null,
+   "read": "2026-10-15",
+   "verdict": "none",
+   "note": "perchance.org/terms is a reserved name, not terms; the file is a public upload the ai-rpg generator reads; user.uploads.dev has no robots.txt"
+  }
  },
  {
   "id": "perchance-db",
@@ -69,7 +93,13 @@
    "nosfertm.github.io"
   ],
   "probe": "https://raw.githubusercontent.com/nosfertm/perchance-character-database/main/ai-character-chat/characters/index.json",
-  "evidence": "read 2026-10-04: 934 characters; creative works CC BY-SA 4.0 (TERMS_AND_CONDITIONS.md); the author is credited and the folder linked"
+  "evidence": "read 2026-10-04: 934 characters; creative works CC BY-SA 4.0 (TERMS_AND_CONDITIONS.md); the author is credited and the folder linked",
+  "terms": {
+   "url": "https://github.com/nosfertm/perchance-character-database",
+   "read": "2026-10-15",
+   "verdict": "allows",
+   "note": "creative works CC BY-SA 4.0 (TERMS_AND_CONDITIONS.md); every record credits its author and links its folder"
+  }
  },
  {
   "id": "huggingface",
@@ -84,7 +114,13 @@
    "huggingface.co"
   ],
   "probe": "https://huggingface.co/api/datasets?search=character%20card&limit=1",
-  "evidence": "open API"
+  "evidence": "open API",
+  "terms": {
+   "url": "https://huggingface.co/terms-of-service",
+   "read": "2026-10-15",
+   "verdict": "silent",
+   "note": "an open API; each dataset carries its own licence"
+  }
  },
  {
   "id": "github",
@@ -97,7 +133,13 @@
   "adapter": "github-topics.mjs",
   "hosts": [],
   "probe": "https://api.github.com/search/repositories?q=topic:character-cards&per_page=1",
-  "evidence": "open API"
+  "evidence": "open API",
+  "terms": {
+   "url": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+   "read": "2026-10-15",
+   "verdict": "silent",
+   "note": "the public REST API within its rate limits; each repository carries its own licence"
+  }
  },
  {
   "id": "character-tavern",
@@ -112,8 +154,15 @@
    "ct-cards.storage.character-tavern.com"
   ],
   "probe": "https://character-tavern.com/",
-  "evidence": "homepage sections JSON is open; card PNGs on a CORS-open storage host (2026-09-02)",
-  "adapter": "character-tavern.mjs"
+  "evidence": "paused 2026-10-15: its terms forbid automated access and robots.txt disallows /api/. Held records age out over 30 days. If it gives permission: its sitemap (allowed) lists 4,187 characters with dates and covers, and each character's __data.json (9.4 KB) carries every field",
+  "adapter": "character-tavern.mjs",
+  "terms": {
+   "url": "https://character-tavern.com/legal/tos",
+   "read": "2026-10-15",
+   "verdict": "forbids",
+   "note": "§4 Technical Ground Rules: \"No bots.\" \"Automated access is prohibited\"; §5 lists \"Automate access without permission\". robots.txt also disallows /api/, which the crawler read"
+  },
+  "crawl": "paused"
  },
  {
   "id": "aicharactercards",
@@ -128,7 +177,13 @@
   ],
   "probe": "https://api.aicharactercards.com/",
   "evidence": "open JSON listing at api.aicharactercards.com/api/cards, ~560 cards; /uploads/ is CORS-open (2026-09-02)",
-  "adapter": "aicharactercards.mjs"
+  "adapter": "aicharactercards.mjs",
+  "terms": {
+   "url": "https://aicharactercards.com/terms",
+   "read": "2026-10-15",
+   "verdict": "silent",
+   "note": "no clause on crawling; downloads capped at 10 a minute per user, and the crawler never uses /download"
+  }
  },
  {
   "id": "jannyai",
@@ -136,12 +191,12 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "jannyai.com"
   ],
   "probe": "https://jannyai.com/",
-  "evidence": "shipped generators"
+  "evidence": "2026-10-15: a Cloudflare challenge on every page, robots.txt included (never bypassed)"
  },
  {
   "id": "crushon",
@@ -154,7 +209,7 @@
    "crushon.ai"
   ],
   "probe": "https://crushon.ai/",
-  "evidence": "shipped generators"
+  "evidence": "shipped generators; 2026-10-15: a closed platform, no card export seen; terms not read (its terms page answers 403 to fetchers)"
  },
  {
   "id": "backyard",
@@ -182,8 +237,14 @@
    "sv.risuai.xyz"
   ],
   "probe": "https://realm.risuai.net/",
-  "evidence": "list endpoint from the open-source client (sv.risuai.xyz/realm/\u2026), 30 cards a page across four sorts; downloads are PNG or charx, CORS * (2026-09-02)",
-  "adapter": "risu-realm.mjs"
+  "evidence": "list endpoint from the open-source client (sv.risuai.xyz/realm/…), 30 cards a page across four sorts; downloads are PNG or charx, CORS * (2026-09-02)",
+  "adapter": "risu-realm.mjs",
+  "terms": {
+   "url": null,
+   "read": "2026-10-15",
+   "verdict": "none",
+   "note": "no terms page; robots.txt sets no rules; RisuAI is open source"
+  }
  },
  {
   "id": "wyvern",
@@ -210,7 +271,7 @@
    "soulweaverai.com"
   ],
   "probe": "https://soulweaverai.com/",
-  "evidence": "curated list"
+  "evidence": "curated list; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "nyai",
@@ -223,7 +284,7 @@
    "nyai.me"
   ],
   "probe": "https://nyai.me/ai/bots",
-  "evidence": "curated list"
+  "evidence": "curated list; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "datacat",
@@ -231,12 +292,12 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "datacat.run"
   ],
   "probe": "https://datacat.run/",
-  "evidence": "curated list"
+  "evidence": "2026-10-15: robots.txt disallows /api/, where its data is; its cards are copies of a site that walls them"
  },
  {
   "id": "botbooru",
@@ -251,7 +312,13 @@
   ],
   "probe": "https://botbooru.com/",
   "evidence": "gallery JSON from /js/ui.js: /posts/?page&per_page=24, /post/{id} with all card fields, /api/lorebooks; no CORS (super-fetch); ~3,300 visible posts, ~140 lorebooks (2026-09-02)",
-  "adapter": "botbooru.mjs"
+  "adapter": "botbooru.mjs",
+  "terms": {
+   "url": "https://botbooru.com/tos",
+   "read": "2026-10-15",
+   "verdict": "silent",
+   "note": "no clause on crawling; robots.txt disallows /api/, /post/, /character/, /images/, so the crawler reads only /posts/"
+  }
  },
  {
   "id": "char-archive",
@@ -290,7 +357,7 @@
    "agnai.chat"
   ],
   "probe": "https://agnai.chat/",
-  "evidence": "named, unverified"
+  "evidence": "named, unverified; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "spicychat",
@@ -311,13 +378,13 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "moescape.ai",
    "yodayo.com"
   ],
   "probe": "https://moescape.ai/",
-  "evidence": "named, unverified"
+  "evidence": "2026-10-15: a Cloudflare challenge on every page (never bypassed)"
  },
  {
   "id": "minitavern",
@@ -325,12 +392,12 @@
   "kinds": [
    "character"
   ],
-  "status": "candidate",
+  "status": "dead",
   "hosts": [
    "mini-tavern.com"
   ],
   "probe": "https://mini-tavern.com/",
-  "evidence": "named, unverified"
+  "evidence": "2026-10-15: its sitemap has five pages and no public card listing"
  },
  {
   "id": "sillycard",
@@ -351,13 +418,13 @@
   "kinds": [
    "scenario"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "aidungeon.com",
    "play.aidungeon.com"
   ],
   "probe": "https://play.aidungeon.com/",
-  "evidence": "named"
+  "evidence": "2026-10-15: about 70,000 public scenarios in 14 sitemaps, but its terms (help.aidungeon.com/terms-of-service) forbid any robot, spider or crawler that scrapes or accesses the Services to collect information"
  },
  {
   "id": "aiga",
@@ -370,7 +437,7 @@
    "aiga.io"
   ],
   "probe": "https://www.aiga.io/",
-  "evidence": "named"
+  "evidence": "named; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "rpggo",
@@ -383,7 +450,7 @@
    "rpggo.ai"
   ],
   "probe": "https://rpggo.ai/",
-  "evidence": "named"
+  "evidence": "named; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "altworld",
@@ -391,12 +458,12 @@
   "kinds": [
    "scenario"
   ],
-  "status": "candidate",
+  "status": "blocked",
   "hosts": [
    "altworld.io"
   ],
   "probe": "https://altworld.io/",
-  "evidence": "named"
+  "evidence": "2026-10-15: its terms forbid attempts to scrape the service"
  },
  {
   "id": "talefy",
@@ -409,7 +476,7 @@
    "talefy.ai"
   ],
   "probe": "https://talefy.ai/",
-  "evidence": "named"
+  "evidence": "named; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "kobold",
@@ -417,12 +484,12 @@
   "kinds": [
    "scenario"
   ],
-  "status": "candidate",
+  "status": "dead",
   "hosts": [
    "koboldai.net"
   ],
   "probe": "https://koboldai.net/",
-  "evidence": "named"
+  "evidence": "2026-10-15: KoboldAI Lite ships 41 built-in scenarios, several of them blank templates; too few to be a source"
  },
  {
   "id": "novelai",
@@ -435,7 +502,7 @@
    "novelai.net"
   ],
   "probe": "https://novelai.net/",
-  "evidence": "named"
+  "evidence": "named; 2026-10-15: a closed platform, no card export seen; terms not read"
  },
  {
   "id": "bronya-rand",
@@ -450,7 +517,13 @@
   ],
   "probe": "https://bronya-rand.github.io/reimagined-couscous/world-lore-books",
   "evidence": "static GitHub Pages archive: 84 bot pages with V2 JSON+PNG, world-info JSON books; CORS * (2026-09-02)",
-  "adapter": "bronya-rand.mjs"
+  "adapter": "bronya-rand.mjs",
+  "terms": {
+   "url": null,
+   "read": "2026-10-15",
+   "verdict": "none",
+   "note": "a GitHub Pages archive with no licence or terms of its own"
+  }
  },
  {
   "id": "janitorai",
@@ -521,5 +594,46 @@
   ],
   "probe": "https://prod.nd-api.com/",
   "evidence": "hit by several shipped generators; identify"
+ },
+ {
+  "id": "pygmalion",
+  "label": "Pygmalion",
+  "kinds": [
+   "character"
+  ],
+  "status": "blocked",
+  "hosts": [
+   "pygmalion.chat"
+  ],
+  "probe": "https://pygmalion.chat/",
+  "evidence": "2026-10-15: its terms (pygmalion.chat/terms-of-service) forbid any automated use of the system and systematic retrieval without written permission"
+ },
+ {
+  "id": "lorebary",
+  "label": "LoreBary",
+  "kinds": [
+   "lorebook",
+   "character",
+   "scenario"
+  ],
+  "status": "blocked",
+  "hosts": [
+   "lorebary.com"
+  ],
+  "probe": "https://lorebary.com/",
+  "evidence": "2026-10-15: 1,888 lorebooks, 725 characters and 318 scenarios in its sitemap, but the pages are a script shell and the content comes only from /api, which robots.txt disallows"
+ },
+ {
+  "id": "aetherroom",
+  "label": "AetherRoom",
+  "kinds": [
+   "scenario"
+  ],
+  "status": "dead",
+  "hosts": [
+   "aetherroom.club"
+  ],
+  "probe": null,
+  "evidence": "2026-10-15: the host does not resolve"
  }
 ]

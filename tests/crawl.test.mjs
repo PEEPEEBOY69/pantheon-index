@@ -48,12 +48,13 @@ test("runCrawl writes a complete index from fixtures", async () => {
   const m = read(path.join(out, "manifest.json"));
   assert.equal(m.v, 1); assert.equal(m.builtAt, 1_700_000_000);
   assert.deepEqual(Object.keys(m.sources).sort(), ["aicharactercards", "botbooru", "bronya-rand", "character-tavern", "chub", "chub-lorebooks", "github", "huggingface", "perchance-db", "perchance-rp", "risu-realm"], "fictionlab is crawl:false");
-  assert.equal(m.sources["character-tavern"].count, 3); assert.equal(m.sources.aicharactercards.count, 3); assert.equal(m.sources["bronya-rand"].count, 2); assert.equal(m.sources["risu-realm"].count, 2); assert.equal(m.sources.botbooru.count, 3);
+  assert.equal(m.sources["character-tavern"].count, 0, "paused: nothing requested, nothing held yet"); assert.equal(m.sources.aicharactercards.count, 3); assert.equal(m.sources["bronya-rand"].count, 2); assert.equal(m.sources["risu-realm"].count, 2); assert.equal(m.sources.botbooru.count, 3);
   assert.equal(m.sources.chub.count, 2); assert.equal(m.sources["perchance-rp"].count, 2); assert.equal(m.sources.huggingface.count, 2);
   assert.equal(m.sources["perchance-db"].count, 2);
   for (const [, s] of Object.entries(m.sources)) for (const f of [...s.heads, ...s.recs]) { assert.ok(fs.existsSync(path.join(out, f)), f); assert.ok(m.hashes[f]); }
   const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub").search); assert.ok(adapters.find(a => a.id === "perchance-rp").caps);
-  assert.ok(adapters.find(a => a.id === "fictionlab").search, "crawl:false adapters still ship to the plugin");
+  assert.equal(adapters.find(a => a.id === "fictionlab"), undefined, "blocked 2026-10-15 (its terms forbid automated gathering): its search no longer ships to the plugin");
+  assert.ok(adapters.find(a => a.id === "character-tavern"), "a paused source still ships its descriptor, so held records still import");
   const sources = read(path.join(out, "sources.json")); const chub = sources.find(s => s.id === "chub"); assert.equal(chub.sweep.kind, "json"); assert.equal(chub.lastCrawl.ok, true); assert.equal(chub.lastCrawl.count, 2);
   assert.ok(sources.find(s => s.id === "jannyai").sweep.at); assert.ok(sources.some(s => s.status === "candidate" && s.discoveredFrom), "aggregator candidates appended");
   assert.ok(fs.existsSync(path.join(out, "targets.json")));
@@ -89,4 +90,23 @@ test("runCrawl --only re-crawls the named sources and keeps every other source's
   assert.deepEqual(Object.keys(after.sources).sort(), Object.keys(before.sources).sort()); assert.equal(after.sources["perchance-rp"].count, before.sources["perchance-rp"].count, "not crawled, not broken: kept");
   assert.equal(r.errors.length, 0, "the broken source was not touched"); assert.equal(after.sources.botbooru.count, 3);
   const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub"), "adapters still exported for kept sources");
+});
+
+test("a paused source: nothing is requested, held records are written again with their own dates, and the stale ones age out", async () => {
+  const { crawl: ctCrawl } = await import("../crawler/adapters/character-tavern.mjs");
+  const { writeSourceShards } = await import("../crawler/lib/shard.mjs");
+  const now = 1_700_000_000; const day = 86400;
+  const held = (await ctCrawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([{ match: "https://character-tavern.com/api/homepage/sections", body: read("fixtures/ct-sections.json") }]) }), { ts: now - 50 * day })).records;
+  assert.equal(held.length, 3);
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), "pantheon-paused-"));
+  await writeSourceShards(out, "character-tavern", held);
+  fs.writeFileSync(path.join(out, "character-tavern", "seen.json"), JSON.stringify({ [held[0].id]: now - 40 * day, [held[1].id]: now - 2 * day, [held[2].id]: now - day }));
+  const calls = [];
+  const watching = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: async (url, opts) => { calls.push(String(url)); return (await import("./helpers/fake-fetch.mjs")).fakeFetch([])(url, opts); } });
+  await runCrawl({ outDir: out, fetcher: watching, now, only: ["character-tavern"], log: () => {} });
+  const m = read(path.join(out, "manifest.json"));
+  assert.equal(m.sources["character-tavern"].count, 2, "the one unseen for 40 days aged out");
+  assert.ok(!calls.some(u => u.startsWith("https://character-tavern.com/api/")), "nothing asked of its API: " + calls.filter(u => u.includes("character-tavern")).join(", "));
+  const seen = read(path.join(out, "character-tavern", "seen.json"));
+  assert.equal(seen[held[1].id], now - 2 * day, "held records keep their own last-seen dates");
 });

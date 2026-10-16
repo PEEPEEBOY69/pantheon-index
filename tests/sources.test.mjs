@@ -25,3 +25,17 @@ test("targets: https url containing {id} when receiver is expected later; kinds 
   }
   assert.ok(targets.some(t => t.id === "blizzardui" && t.format === "airpg-upload"), "BlizzardUI reads #data=uup1: natively");
 });
+// The sources round (2026-10-15): a live source carries the terms someone read, and a site that says no is not crawled.
+test("every live source carries the terms someone read, with a date and a verdict; a forbidding one is paused", () => {
+  for (const s of sources.filter(x => x.status === "live")) {
+    assert.ok(s.terms && typeof s.terms === "object", s.id + " has no terms record");
+    assert.match(s.terms.read, /^\d{4}-\d{2}-\d{2}$/, s.id);
+    assert.ok(["allows", "silent", "forbids", "none"].includes(s.terms.verdict), s.id);
+    if (s.terms.verdict !== "none") assert.match(s.terms.url, /^https:\/\//, s.id);
+    if (s.terms.verdict === "forbids") assert.equal(s.crawl, "paused", s.id + " forbids crawling, so it is paused");
+  }
+  for (const id of ["pygmalion", "lorebary", "aetherroom"]) assert.ok(sources.find(s => s.id === id), id + " is in the register");
+  for (const id of ["aidungeon", "pygmalion", "altworld", "lorebary", "jannyai", "moescape", "datacat", "fictionlab"]) assert.equal(sources.find(s => s.id === id).status, "blocked", id);
+  for (const id of ["minitavern", "kobold", "aetherroom"]) assert.equal(sources.find(s => s.id === id).status, "dead", id);
+  assert.equal(sources.find(s => s.id === "character-tavern").crawl, "paused");
+});
