@@ -31,7 +31,7 @@ async function previousRecords(outDir, src) {
   return out;
 }
 
-export async function runCrawl({ outDir, fetcher = createFetcher(), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null, deadline = Date.now() + 70 * 60 * 1000 }) {
+export async function runCrawl({ outDir, fetcher = createFetcher({ robots: true }), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null, deadline = Date.now() + 70 * 60 * 1000 }) {
   await fs.mkdir(outDir, { recursive: true });
   const seed = JSON.parse(await fs.readFile(path.join(here, "sources.json"), "utf8"));
   const prevSources = await readJson(path.join(outDir, "sources.json"), []);

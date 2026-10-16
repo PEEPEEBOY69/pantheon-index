@@ -40,3 +40,12 @@ test("bytes(): returns Uint8Array", async () => {
   const f = createFetcher({ fetchImpl: fakeFetch([{ match: "https://a/", body: new Uint8Array([1, 2, 3]) }]), minIntervalMs: 0 });
   assert.deepEqual(Array.from((await f.bytes("https://a/b")).body), [1, 2, 3]);
 });
+test("robots: a disallowed URL is refused before any request; allowed ones go; off by default", async () => {
+  const impl = fakeFetch([{ match: "https://s/robots.txt", body: "User-agent: *\nDisallow: /api/\n", kind: "text" }, { match: "https://s/", body: { ok: 1 } }]);
+  const f = createFetcher({ fetchImpl: impl, minIntervalMs: 0, retries: 0, robots: true });
+  await assert.rejects(f.json("https://s/api/cards"), e => e instanceof FetchError && e.code === "robots");
+  assert.ok(!impl.calls.some(c => c.url === "https://s/api/cards"), "never requested");
+  assert.deepEqual((await f.json("https://s/page")).body, { ok: 1 });
+  const plain = createFetcher({ fetchImpl: impl, minIntervalMs: 0, retries: 0 });
+  assert.deepEqual((await plain.json("https://s/api/cards")).body, { ok: 1 }, "tests and the plugin build fetchers without the gate");
+});

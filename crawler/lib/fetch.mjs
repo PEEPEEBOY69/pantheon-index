@@ -1,11 +1,15 @@
+import { createRobots } from "./robots.mjs";
 export class FetchError extends Error {
   constructor(code, message, status = null) { super(message); this.name = "FetchError"; this.code = code; this.status = status; }
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-export function createFetcher({ ua = "pantheon-index/0.1 (+https://perchance.org/pantheon-hub)", timeoutMs = 15000, retries = 2, backoffMs = 500, minIntervalMs = 250, fetchImpl = globalThis.fetch, extraHeaders = {} } = {}) {
+export function createFetcher({ ua = "pantheon-index/0.1 (+https://perchance.org/pantheon-hub)", timeoutMs = 15000, retries = 2, backoffMs = 500, minIntervalMs = 250, fetchImpl = globalThis.fetch, extraHeaders = {}, robots = false } = {}) {
   let last = 0;
+  // The crawler's own fetcher asks robots.txt first (crawl.mjs turns it on); tests and other callers build one without.
+  const gate = robots ? createRobots({ fetchImpl, ua }) : null;
   async function raw(url, opts = {}) {
+    if (gate && !(await gate.check(url))) throw new FetchError("robots", `robots.txt disallows ${url}`);
     const wait = last + minIntervalMs - Date.now();
     if (wait > 0) await sleep(wait);
     last = Date.now();
