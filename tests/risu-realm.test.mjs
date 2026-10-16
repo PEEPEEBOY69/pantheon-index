@@ -20,3 +20,19 @@ test("crawl: walks sorts × pages, dedups ids, skips hidden and malformed, nsfw 
   assert.ok(impl.calls.length <= 10, "short page stops the sort: " + impl.calls.length);
 });
 test("crawl: list endpoint down → error recorded, no records, no throw", async () => { const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: fakeFetch([{ match: /realm\//, status: 500, body: "x", kind: "text" }]) }); const r = await crawl(f, { ts: 1, limits: { pagesPerSort: { downloads: 1 }, maxRequests: 3 } }); assert.equal(r.records.length, 0); assert.ok(r.errors.length >= 1); });
+test("crawl with the default limits reads both lists to their ends (2026-10-15: the crawl stopped at 60 pages of ~280)", async () => {
+  const card = (nsfw, page, i) => ({ name: `C ${nsfw ? "n" : "s"}${page}-${i}`, desc: "d", id: `${nsfw ? "aaaaaaaa" : "bbbbbbbb"}-0000-4000-8000-${String(page * 100 + i).padStart(12, "0")}`, tags: [], hidden: 0, type: "normal" });
+  const calls = [];
+  const impl = async url => {
+    calls.push(String(url));
+    const arg = decodeURIComponent(String(url).split("/realm/")[1].split("?")[0]);
+    const page = Number(/page==(\d+)/.exec(arg)[1]); const nsfw = /nsfw==true/.test(arg); const sort = /sort==([^&]*)/.exec(arg)[1];
+    if (sort !== "downloads") return new Response(JSON.stringify({ cards: [] }), { headers: { "content-type": "application/json" } });
+    const n = page < 70 ? 30 : page === 70 ? 7 : 0;
+    return new Response(JSON.stringify({ cards: Array.from({ length: n }, (_, i) => card(nsfw, page, i)) }), { headers: { "content-type": "application/json" } });
+  };
+  const { records, errors } = await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1 });
+  assert.equal(errors.length, 0);
+  assert.equal(records.length, 2 * (70 * 30 + 7), "every card of both lists, past the old 60-page stop");
+  assert.equal(calls.filter(u => decodeURIComponent(u).includes("sort==downloads")).length, 142, "each list stops at its short page");
+});

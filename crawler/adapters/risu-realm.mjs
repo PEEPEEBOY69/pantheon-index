@@ -12,7 +12,9 @@ export const meta = {
   headers: { "x-risuai-info": "170.0.0;web" },
   probe: "https://sv.risuai.xyz/realm/" + encodeURIComponent("search== __shared&&page==0&&nsfw==false&&sort==downloads&&web==web") + "?cache=30",
 };
-export const DEFAULT_LIMITS = { pagesPerSort: { downloads: 60, trending: 20, "": 20, random: 8 }, maxRequests: 260 };
+// Both lists to their ends (2026-10-15): about 280 pages with NSFW and 202 without, measured; 60 a sort left ~1,050
+// cards out. The walk stops on a short page, so these are ceilings, not costs. Random added nothing a full walk lacks.
+export const DEFAULT_LIMITS = { pagesPerSort: { downloads: 400, trending: 20, "": 20 }, maxRequests: 600 };
 export function listUrl({ search = "", page = 0, nsfw = false, sort = "downloads" }) { return meta.hub + "/realm/" + encodeURIComponent(`search==${search} __shared&&page==${page}&&nsfw==${nsfw}&&sort==${sort}&&web==web`) + "?cache=30"; }
 export function cleanDesc(desc) {
   let s = String(desc || "");
