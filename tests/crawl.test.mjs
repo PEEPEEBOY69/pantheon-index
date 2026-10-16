@@ -48,7 +48,7 @@ test("runCrawl writes a complete index from fixtures", async () => {
   const m = read(path.join(out, "manifest.json"));
   assert.equal(m.v, 1); assert.equal(m.builtAt, 1_700_000_000);
   assert.deepEqual(Object.keys(m.sources).sort(), ["aicharactercards", "botbooru", "bronya-rand", "character-tavern", "chub", "chub-lorebooks", "github", "huggingface", "perchance-db", "perchance-rp", "risu-realm"], "fictionlab is crawl:false");
-  assert.equal(m.sources["character-tavern"].count, 0, "paused: nothing requested, nothing held yet"); assert.equal(m.sources.aicharactercards.count, 3); assert.equal(m.sources["bronya-rand"].count, 2); assert.equal(m.sources["risu-realm"].count, 2); assert.equal(m.sources.botbooru.count, 3);
+  assert.equal(m.sources["character-tavern"].count, 0, "paused: nothing requested, nothing held yet"); assert.equal(m.sources.aicharactercards.count, 3); assert.equal(m.sources["bronya-rand"].count, 2); assert.equal(m.sources["risu-realm"].count, 2); assert.equal(m.sources.botbooru.count, 2, "characters only: its lorebooks came from /api/, which robots.txt disallows");
   assert.equal(m.sources.chub.count, 2); assert.equal(m.sources["perchance-rp"].count, 2); assert.equal(m.sources.huggingface.count, 2);
   assert.equal(m.sources["perchance-db"].count, 2);
   for (const [, s] of Object.entries(m.sources)) for (const f of [...s.heads, ...s.recs]) { assert.ok(fs.existsSync(path.join(out, f)), f); assert.ok(m.hashes[f]); }
@@ -88,7 +88,7 @@ test("runCrawl --only re-crawls the named sources and keeps every other source's
   const r = await runCrawl({ outDir: out, fetcher: broken, now: 1_700_086_400, only: ["botbooru"], limits: { huggingface: { datasets: 1, filesPerDataset: 5 }, github: { repos: 1, filesPerRepo: 5 } }, log: () => {} });
   const after = read(path.join(out, "manifest.json"));
   assert.deepEqual(Object.keys(after.sources).sort(), Object.keys(before.sources).sort()); assert.equal(after.sources["perchance-rp"].count, before.sources["perchance-rp"].count, "not crawled, not broken: kept");
-  assert.equal(r.errors.length, 0, "the broken source was not touched"); assert.equal(after.sources.botbooru.count, 3);
+  assert.equal(r.errors.length, 0, "the broken source was not touched"); assert.equal(after.sources.botbooru.count, 2);
   const adapters = read(path.join(out, "adapters.json")); assert.ok(adapters.find(a => a.id === "chub"), "adapters still exported for kept sources");
 });
 
