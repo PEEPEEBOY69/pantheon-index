@@ -1,7 +1,8 @@
 // Aggregator lists are crawled to discover *sources*, not cards (spec §7.1 C). New hosts enter sources.json as candidates.
 export const SOURCES = [
-  { id: "rentry-charcard-list", url: "https://rentry.org/charcardrentrylist/raw" },
-  { id: "rentry-meta-bot-list", url: "https://rentry.org/meta_bot_list/raw" },
+  // The pages, not /raw: rentry's robots.txt disallows /*/raw (2026-10-20); extractHosts reads links out of HTML too.
+  { id: "rentry-charcard-list", url: "https://rentry.org/charcardrentrylist" },
+  { id: "rentry-meta-bot-list", url: "https://rentry.org/meta_bot_list" },
   { id: "blocky-character-card-list", url: "https://blocky-mint.github.io/character-card-list/" },
 ];
 // Suffix-matched: "jsdelivr.net" also drops "cdn.jsdelivr.net". Infra, social, page-theme boilerplate,
@@ -11,7 +12,7 @@ const IGNORE = [
   "youtube.com", "youtu.be", "discord.gg", "discord.com", "reddit.com", "twitter.com", "x.com", "t.co", "imgur.com",
   "wikipedia.org", "schema.org", "w3.org", "jsdelivr.net", "cloudflare.com", "cloudflareinsights.com", "jquery.com",
   "realfavicongenerator.net", "browsehappy.com", "jekyllrb.com", "mademistakes.com", "creativecommons.org", "patreon.com",
-  "ko-fi.com", "buymeacoffee.com", "example.com", "example", "rentry.org", "rentry.co", "neocities.org",
+  "ko-fi.com", "buymeacoffee.com", "example.com", "example", "rentry.org", "rentry.co", "neocities.org", "catbox.moe",
 ];
 export const isIgnoredHost = host => !host || !host.includes(".") || /^link-to-|whatever/.test(host) || IGNORE.some(d => host === d || host.endsWith("." + d));
 
