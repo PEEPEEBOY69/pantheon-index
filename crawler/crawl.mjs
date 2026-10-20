@@ -31,9 +31,10 @@ async function previousRecords(outDir, src) {
   return out;
 }
 
-export async function runCrawl({ outDir, fetcher = createFetcher({ robots: true }), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null, deadline = Date.now() + 70 * 60 * 1000 }) {
+export async function runCrawl({ outDir, fetcher = createFetcher({ robots: true }), now = Math.floor(Date.now() / 1000), limits = {}, log = console.log, only = null, deadline = Date.now() + 70 * 60 * 1000, register = null }) {
   await fs.mkdir(outDir, { recursive: true });
-  const seed = JSON.parse(await fs.readFile(path.join(here, "sources.json"), "utf8"));
+  // register: tests hand in their own copy of the source register; a real run reads crawler/sources.json.
+  const seed = register || JSON.parse(await fs.readFile(path.join(here, "sources.json"), "utf8"));
   const prevSources = await readJson(path.join(outDir, "sources.json"), []);
   const prevById = new Map(prevSources.map(s => [s.id, s]));
   const sources = seed.map(s => ({ ...s, sweep: prevById.get(s.id)?.sweep, lastCrawl: prevById.get(s.id)?.lastCrawl }));
@@ -62,7 +63,7 @@ export async function runCrawl({ outDir, fetcher = createFetcher({ robots: true 
       try {
         const ad = await loadAdapter(s.adapter);
         adapters.push(ad.descriptor);
-        const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log, deadline }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id], deadline });
+        const res = ad.kind === "declarative" ? await crawlDeclarative(ad.a, fetcher, { ts: now, log, deadline }) : await ad.crawl(fetcher, { ts: now, log, limits: limits[s.id], deadline, previous: prev });
         fresh = res.records; adapterErrors = res.errors || []; retire = Array.isArray(res.retire) ? res.retire : [];
         if (fresh.length === 0 && adapterErrors.length) { ok = false; errMsg = adapterErrors[0].message; }
       } catch (e) { ok = false; errMsg = String(e.message || e); }

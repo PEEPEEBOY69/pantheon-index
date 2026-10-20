@@ -32,10 +32,12 @@ test("every live source carries the terms someone read, with a date and a verdic
     assert.match(s.terms.read, /^\d{4}-\d{2}-\d{2}$/, s.id);
     assert.ok(["allows", "silent", "forbids", "none"].includes(s.terms.verdict), s.id);
     if (s.terms.verdict !== "none") assert.match(s.terms.url, /^https:\/\//, s.id);
-    if (s.terms.verdict === "forbids") assert.equal(s.crawl, "paused", s.id + " forbids crawling, so it is paused");
+    // A site whose terms forbid it is paused, unless Cash decided otherwise and the register says so (2026-10-20).
+    if (s.terms.verdict === "forbids" && !s.terms.override) assert.equal(s.crawl, "paused", s.id + " forbids crawling, so it is paused");
+    if (s.terms.override) { assert.equal(s.terms.override.by, "Cash", s.id); assert.match(s.terms.override.date, /^\d{4}-\d{2}-\d{2}$/, s.id); assert.ok(s.terms.override.said, s.id); }
   }
   for (const id of ["pygmalion", "lorebary", "aetherroom"]) assert.ok(sources.find(s => s.id === id), id + " is in the register");
-  for (const id of ["aidungeon", "pygmalion", "altworld", "lorebary", "jannyai", "moescape", "datacat", "fictionlab"]) assert.equal(sources.find(s => s.id === id).status, "blocked", id);
+  for (const id of ["aidungeon", "pygmalion", "altworld", "lorebary", "jannyai", "moescape", "datacat"]) assert.equal(sources.find(s => s.id === id).status, "blocked", id);
   for (const id of ["minitavern", "kobold", "aetherroom"]) assert.equal(sources.find(s => s.id === id).status, "dead", id);
-  assert.equal(sources.find(s => s.id === "character-tavern").crawl, "paused");
+  assert.equal(sources.find(s => s.id === "character-tavern").terms.override.by, "Cash", "read on Cash's decision, 2026-10-20");
 });

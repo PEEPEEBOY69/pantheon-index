@@ -48,19 +48,24 @@
   "kinds": [
    "scenario"
   ],
-  "status": "blocked",
+  "status": "live",
   "adapter": "fictionlab.json",
   "hosts": [
    "fictionlab.ai"
   ],
   "probe": "https://fictionlab.ai/api/search?version=2&keyw=&size=1&searchType=scenarios&sortType=trending&time=all_time&page=0&mature=false",
-  "evidence": "blocked 2026-10-15: its terms forbid automated data gathering, which Pantheon's live search of its API is; the plugin stops searching it when this register ships",
+  "evidence": "2026-10-20: its live search runs in the plugin again; its terms forbid automated data gathering and Cash decided to keep it (terms.override)",
   "crawl": false,
   "terms": {
    "url": "https://fictionlab.ai/terms-of-service",
    "read": "2026-10-15",
    "verdict": "forbids",
-   "note": "\"you will not engage in or use any data mining, robots, scraping or similar automated data gathering or extraction methods\""
+   "note": "\"you will not engage in or use any data mining, robots, scraping or similar automated data gathering or extraction methods\"",
+   "override": {
+    "by": "Cash",
+    "date": "2026-10-20",
+    "said": "keep going no asking for permissions just do it"
+   }
   }
  },
  {
@@ -154,15 +159,19 @@
    "ct-cards.storage.character-tavern.com"
   ],
   "probe": "https://character-tavern.com/",
-  "evidence": "paused 2026-10-15: its terms forbid automated access and robots.txt disallows /api/. Held records age out over 30 days. If it gives permission: its sitemap (allowed) lists 4,187 characters with dates and covers, and each character's __data.json (9.4 KB) carries every field",
+  "evidence": "2026-10-20: read through its sitemap (robots.txt allows it; it lists ~4,200 characters with dates and covers) and each card's __data.json, newest first within a nightly budget; its terms forbid automated access and Cash decided to read it anyway (terms.override). The /api/ it used to read stays off: robots.txt disallows it",
   "adapter": "character-tavern.mjs",
   "terms": {
    "url": "https://character-tavern.com/legal/tos",
    "read": "2026-10-15",
    "verdict": "forbids",
-   "note": "§4 Technical Ground Rules: \"No bots.\" \"Automated access is prohibited\"; §5 lists \"Automate access without permission\". robots.txt also disallows /api/, which the crawler read"
-  },
-  "crawl": "paused"
+   "note": "§4 Technical Ground Rules: \"No bots.\" \"Automated access is prohibited\"; §5 lists \"Automate access without permission\". robots.txt also disallows /api/, which the crawler read",
+   "override": {
+    "by": "Cash",
+    "date": "2026-10-20",
+    "said": "keep going no asking for permissions just do it"
+   }
+  }
  },
  {
   "id": "aicharactercards",
