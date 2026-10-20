@@ -93,4 +93,9 @@ test("crawl reads each card once for its tokens and lorebook, and reuses them wh
   const second = await crawl(createFetcher({ fetchImpl: again, minIntervalMs: 0 }), { ts: 8, previous: first.records });
   assert.equal(second.records.find(r => r.n === "Ike").tok, 200);
   assert.ok(!again.calls.some(c => c.url.endsWith("character.gz") && c.url.includes("Ike")), "an unchanged card is not read again");
+  const late = routes();
+  const third = await crawl(createFetcher({ fetchImpl: late, minIntervalMs: 0 }), { ts: 9, deadline: Date.now() });
+  assert.equal(third.records.length, first.records.length, "near the deadline every card still goes in");
+  assert.ok(late.calls.every(c => c.url === meta.indexUrl), "but no card file is read");
+  assert.equal(third.records.find(r => r.n === "Ike").tok, null);
 });

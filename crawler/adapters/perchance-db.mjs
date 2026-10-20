@@ -49,7 +49,7 @@ export function dexieStats(bytes) {
 }
 const sameCard = (a, b) => a && b && a.n === b.n && a.c === b.c && JSON.stringify(a.t) === JSON.stringify(b.t);
 
-export async function crawl(fetcher, { ts, log = () => {}, previous = [] }) {
+export async function crawl(fetcher, { ts, log = () => {}, previous = [], deadline = Infinity }) {
   const errors = []; const records = [];
   let body;
   try { ({ body } = await fetcher.json(meta.indexUrl)); } catch (e) { return { records, errors: [{ message: String(e.message || e) }] }; }
@@ -72,6 +72,8 @@ export async function crawl(fetcher, { ts, log = () => {}, previous = [] }) {
     // Size and lorebook: kept from the held record while the card looks the same, else read once from its file.
     const old = held.get(rec.id);
     if (old && Number.isFinite(old.tok) && sameCard(old, rec)) { rec.tok = old.tok; rec.lb = old.lb === true; }
+    // Near the run's deadline the files wait for a later night; the card still goes in, without a size.
+    else if (Date.now() > deadline - 120000) { unread++; if (old && Number.isFinite(old.tok)) { rec.tok = old.tok; rec.lb = old.lb === true; } }
     else {
       try { const st = dexieStats((await fetcher.bytes(rec.p.u)).body); if (st) { rec.tok = st.tok; rec.lb = st.lb; read++; } else unread++; }
       catch { unread++; }
