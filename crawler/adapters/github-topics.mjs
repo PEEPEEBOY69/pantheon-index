@@ -60,11 +60,13 @@ export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, lim
       // source were package.json before the detector was tightened, 2026-09-10).
       const files = blobs.filter(f => f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path) && !NOT_A_CARD.test(f.path));
       const isApp = blobs.filter(f => SOURCE_FILE.test(f.path)).length >= APP_SOURCE_FILES && !CARDISH_REPO.test(r.name || r.full_name);
-      for (const f of files) (isApp && !CARDISH_DIR.test(f.path) ? later : first).push({ r, branch, f });
+      // A JSON card's portrait usually sits beside it under the same name (alice.json, alice.png): its cover (2026-10-20).
+      const images = new Map(); for (const b of blobs) { const m = /^(.*)\.(png|jpe?g|webp)$/i.exec(b.path); if (m && b.size <= COVER_MAX) images.set(m[1].toLowerCase(), `https://raw.githubusercontent.com/${r.full_name}/${branch}/${b.path}`); }
+      for (const f of files) { const cover = /\.json$/i.test(f.path) ? images.get(f.path.replace(/\.json$/i, "").toLowerCase()) || null : null; (isApp && !CARDISH_DIR.test(f.path) ? later : first).push({ r, branch, f, cover }); }
       log(`${meta.id}: ${r.full_name} → ${files.length} files${isApp ? " (an app)" : ""}`);
     } catch (e) { errors.push({ repo: r.full_name, message: String(e.message || e) }); }
   }
-  for (const { r, branch, f } of [...first, ...later]) {
+  for (const { r, branch, f, cover } of [...first, ...later]) {
     if (spent >= fileBudget) { log(`${meta.id}: file budget ${fileBudget} spent, stopping`); break; }
     if (Date.now() > deadline) { log(`${meta.id}: past the crawl deadline, stopping with ${byId.size} records`); break; }
     const n = perRepo.get(r.full_name) || 0; if (n >= filesPerRepo) continue;
@@ -82,7 +84,7 @@ export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, lim
         byId.set(`github:lorebook:${nid}`, makeRecord({ src: meta.id, k: "lorebook", nid, n: lb.name, b: lb.description || `${lb.entries.length} entries`, t: r.topics, c: null, nsfw: isNsfwTags(r.topics), o: origin, p: { tr: "plain", u: url, f: "stwi" }, caps: meta.caps, tok: estimateTokens(lb), ts }));
       } else {
         const c = characterFromCard(obj); if (!c) continue;
-        byId.set(`github:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : r.topics, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null), nsfw: isNsfwTags(c.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
+        byId.set(`github:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : r.topics, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null) || cover, nsfw: isNsfwTags(c.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
       }
     } catch (e) { if (!(e instanceof RecordError)) errors.push({ file: url, message: String(e.message || e) }); }
   }

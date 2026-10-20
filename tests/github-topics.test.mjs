@@ -84,3 +84,20 @@ test("repoScore ranks card collections ahead of games and apps, and the crawl vi
   const trees = impl.calls.filter(c => c.url.includes("/git/trees/")).map(c => c.url.split("/repos/")[1].split("/git")[0]);
   assert.deepEqual(trees, ["y/my-character-cards"], "with room for one repo, the collection is the one read");
 });
+
+// 2026-10-20: 7% of GitHub cards had a cover. A card kept as JSON has no picture of its own, but repos usually keep its
+// portrait beside it under the same name; the tree is already read, so that image becomes the cover.
+test("a JSON card takes the image beside it with the same name as its cover", async () => {
+  const collTree = { tree: [{ path: "chars/alice.json", type: "blob", size: 900 }, { path: "chars/alice.png", type: "blob", size: 50000 }, { path: "chars/bob.json", type: "blob", size: 900 }, { path: "chars/huge.json", type: "blob", size: 900 }, { path: "chars/huge.webp", type: "blob", size: 5000000 }] };
+  const impl = fakeFetch([
+    { match: "https://api.github.com/search/repositories?", body: { items: [{ full_name: "fan/cards", name: "cards", default_branch: "main", topics: ["character-cards"] }] } },
+    { match: "https://api.github.com/repos/fan/cards/git/trees/main", body: collTree },
+    { match: "https://raw.githubusercontent.com/fan/cards/main/chars/alice.png", body: new Uint8Array([1, 2, 3]) },
+    { match: "https://raw.githubusercontent.com/fan/cards/main/chars/", body: card },
+  ]);
+  const { records } = await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1, token: "" });
+  const byFile = f => records.find(r => r.id.endsWith(f));
+  assert.equal(byFile("chars/alice.json").c, "https://raw.githubusercontent.com/fan/cards/main/chars/alice.png");
+  assert.equal(byFile("chars/bob.json").c, card.data && card.data.avatar ? byFile("chars/bob.json").c : null, "no image beside it, no cover");
+  assert.equal(byFile("chars/huge.json").c, null, "an image too big for a tile is not used");
+});

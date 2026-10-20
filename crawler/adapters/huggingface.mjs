@@ -32,7 +32,10 @@ export async function crawl(fetcher, { ts, limits = {}, log = () => {}, deadline
       const { body: tree } = await fetcher.json(`${api}/api/datasets/${d.id}/tree/main?recursive=true`);
       const files = (Array.isArray(tree) ? tree : []).filter(f => f.type === "file" && f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path)).slice(0, Math.min(filesPerDataset, fileBudget - spent));
       spent += files.length;
+      // A JSON card's portrait usually sits beside it under the same name: its cover (2026-10-20, 39% had one).
+      const images = new Map(); for (const b of (Array.isArray(tree) ? tree : [])) { const m = b && b.type === "file" && /^(.*)\.(png|jpe?g|webp)$/i.exec(b.path); if (m && b.size <= COVER_MAX) images.set(m[1].toLowerCase(), `${api}/datasets/${d.id}/resolve/main/${b.path}`); }
       for (const f of files) {
+        const cover = /\.json$/i.test(f.path) ? images.get(f.path.replace(/\.json$/i, "").toLowerCase()) || null : null;
         const url = `${api}/datasets/${d.id}/resolve/main/${f.path}`;
         try {
           let obj = null, format = null;
@@ -46,7 +49,7 @@ export async function crawl(fetcher, { ts, limits = {}, log = () => {}, deadline
             byId.set(`huggingface:lorebook:${nid}`, makeRecord({ src: meta.id, k: "lorebook", nid, n: lb.name, b: lb.description || `${lb.entries.length} entries`, t: d.tags, c: null, nsfw: isNsfwTags(d.tags), o: origin, p: { tr: "plain", u: url, f: "stwi" }, caps: meta.caps, tok: estimateTokens(lb), ts }));
           } else {
             const c = characterFromCard(obj); if (!c) continue;
-            byId.set(`huggingface:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : d.tags, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null), nsfw: isNsfwTags(c.tags) || isNsfwTags(d.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
+            byId.set(`huggingface:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : d.tags, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null) || cover, nsfw: isNsfwTags(c.tags) || isNsfwTags(d.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
           }
         } catch (e) { if (!(e instanceof RecordError)) errors.push({ file: url, message: String(e.message || e) }); }
       }

@@ -54,3 +54,18 @@ test("a card PNG doubles as its own cover, unless it is too big to be a thumbnai
   const big = await crawl(build(1500 * 1024), { ts: 9 });
   assert.equal(big.records[0].c, null, "a 1.5 MB card is not a grid thumbnail");
 });
+
+// 2026-10-20: 39% of Hugging Face cards had a cover; a JSON card takes the image beside it with the same name.
+test("a JSON card takes the image beside it with the same name as its cover", async () => {
+  const one = [{ id: "fan/cards", tags: ["roleplay"] }];
+  const files = [{ type: "file", path: "c/alice.json", size: 900 }, { type: "file", path: "c/alice.webp", size: 40000 }, { type: "file", path: "c/bob.json", size: 900 }];
+  const impl = fakeFetch([
+    { match: "https://huggingface.co/api/datasets?", body: one },
+    { match: "https://huggingface.co/api/datasets/fan/cards/tree/main", body: files },
+    { match: "https://huggingface.co/datasets/fan/cards/resolve/main/c/", body: card },
+  ]);
+  const { records } = await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1, limits: { datasets: 1 } });
+  const byFile = f => records.find(r => r.id.endsWith(f));
+  assert.equal(byFile("c/alice.json").c, "https://huggingface.co/datasets/fan/cards/resolve/main/c/alice.webp");
+  assert.equal(byFile("c/bob.json").c, card.data && card.data.avatar ? byFile("c/bob.json").c : null);
+});
