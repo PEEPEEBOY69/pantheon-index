@@ -22,9 +22,19 @@ const SOURCE_FILE = /\.(js|mjs|cjs|ts|tsx|jsx|py|vue|svelte|go|rs|java|cs|cpp|c|
 const APP_SOURCE_FILES = 30;
 const CARDISH_DIR = /(^|\/)[^/]*(char|card|bot|persona|lore|world|preset|tavern|chub)[^/]*\//i;
 const CARDISH_REPO = /(char|card|bot|persona|lore|world)/i;
+// The searches find ~1,006 repos (2026-10-20) and only the first maxRepos are read, so the order matters: card-like
+// words in the name count most, then in the description and topics; stars break ties; forks and archives fall back.
+export function repoScore(r) {
+  const name = String(r.name || r.full_name || "").toLowerCase();
+  const text = `${String(r.description || "").toLowerCase()} ${(r.topics || []).join(" ").toLowerCase()}`;
+  const words = /(character|chara\b|cards?\b|lorebook|world.?info|persona|bots?\b|tavern|chub|risu)/;
+  let s = 0; if (words.test(name)) s += 20; if (words.test(text)) s += 10;
+  s += Math.log10(1 + (Number(r.stargazers_count) || 0)); if (r.fork) s -= 15; if (r.archived) s -= 2;
+  return s;
+}
 
 export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, limits = {}, log = () => {}, deadline = Infinity }) {
-  const { repos: maxRepos = 320, filesPerRepo = 300, files: fileBudget = 6000 } = limits || {};
+  const { repos: maxRepos = 600, filesPerRepo = 300, files: fileBudget = 6000 } = limits || {};
   const headers = { accept: "application/vnd.github+json", ...(token ? { authorization: `Bearer ${token}` } : {}) };
   const errors = []; const byId = new Map(); const repos = new Map(); let spent = 0;
   const queries = [...meta.topics.map(t => "topic:" + t), ...(meta.searches || [])];
@@ -39,7 +49,7 @@ export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, lim
   // calls, not budget); then every collection's files and the card-like folders of the apps; then, with what budget is
   // left, the apps' other files. Nothing that fit the budget before is skipped, it is only read later.
   const first = []; const later = []; const perRepo = new Map();
-  for (const r of [...repos.values()].slice(0, maxRepos)) {
+  for (const r of [...repos.values()].sort((a, b) => repoScore(b) - repoScore(a)).slice(0, maxRepos)) {
     if (Date.now() > deadline) { log(`${meta.id}: past the crawl deadline, stopping before the trees of the rest`); break; }
     const branch = r.default_branch || "main";
     try {

@@ -65,3 +65,22 @@ test("crawl: an app's card-like folders and every collection come first; an app'
   await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1, token: "", limits: { files: 10 } });
   assert.deepEqual(order().slice(3).sort(), ["dev/some-tavern-app/main/locales/en.json", "dev/some-tavern-app/main/public/img/logo.png"], "with budget left, the app's other files are still read");
 });
+
+// 2026-10-20: the searches find ~1,006 repos and the crawl reads 320 at most, in search order, so a big "roleplay"
+// topic full of games and apps came before the card collections. Repos are ranked first: card-like names, descriptions
+// and topics lead, stars break ties, forks fall back.
+test("repoScore ranks card collections ahead of games and apps, and the crawl visits in that order", async () => {
+  const { repoScore } = await import("../crawler/adapters/github-topics.mjs");
+  const game = { full_name: "x/rpg-engine", name: "rpg-engine", description: "A roleplay game engine", topics: ["roleplay"], stargazers_count: 900 };
+  const coll = { full_name: "y/my-character-cards", name: "my-character-cards", description: "SillyTavern character cards", topics: [], stargazers_count: 2 };
+  const fork = { ...coll, full_name: "z/my-character-cards", fork: true };
+  assert.ok(repoScore(coll) > repoScore(game), "a card collection outranks a popular game");
+  assert.ok(repoScore(coll) > repoScore(fork), "a fork falls back");
+  const impl = fakeFetch([
+    { match: "https://api.github.com/search/repositories?", body: { items: [{ ...game, default_branch: "main" }, { ...coll, default_branch: "main" }] } },
+    { match: "https://api.github.com/repos/", body: { tree: [] } },
+  ]);
+  await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1, token: "", limits: { repos: 1 } });
+  const trees = impl.calls.filter(c => c.url.includes("/git/trees/")).map(c => c.url.split("/repos/")[1].split("/git")[0]);
+  assert.deepEqual(trees, ["y/my-character-cards"], "with room for one repo, the collection is the one read");
+});
