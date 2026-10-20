@@ -41,6 +41,7 @@ jobs:
           curl -fsS "https://purge.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/manifest.json" || true
           sleep 20
           want=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("index/manifest.json","utf8")).commit)')
-          got=$(curl -fsS "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/manifest.json?t=$(date +%s)" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).commit))')
+          # jsDelivr sometimes answers this check with a 403 (2026-10-20): that is a warning about the CDN, never a failed crawl.
+          got=$(curl -fsS "https://cdn.jsdelivr.net/gh/PEEPEEBOY69/pantheon-index@main/index/manifest.json?t=$(date +%s)" 2>/dev/null | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).commit)}catch{console.log("unreadable")}})' || echo unreadable)
           echo "manifest on CDN pins $got, wanted $want"
           [ "$got" = "$want" ] || echo "::warning::CDN still serves the previous manifest; clients fall back to raw GitHub until it catches up"
