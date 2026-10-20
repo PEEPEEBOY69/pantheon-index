@@ -37,5 +37,9 @@ if (s.adapter.endsWith(".json")) { const a = JSON.parse(await fs.readFile(file, 
 else { const mod = await import(pathToFileURL(file).href); res = await mod.crawl(fetcher, { ts: Math.floor(Date.now() / 1000), limits, log: () => {} }); }
 const kinds = {}; for (const r of res.records) kinds[r.k] = (kinds[r.k] || 0) + 1;
 console.log(`${id}: ${res.records.length} records ${JSON.stringify(kinds)} in ${Math.round((Date.now() - t0) / 1000)} s; ${res.errors.length} errors; ${refused.length} refused by robots.txt`);
+// How much of each field the source fills (2026-10-20): the Perchance Character Database adapter shipped flagging 6 of
+// its 414 NSFW cards and tagging 2% because its keys were capitalised; a line like this would have shown it on day one.
+const share = fn => { const n = res.records.filter(fn).length; return `${n} (${Math.round(100 * n / Math.max(1, res.records.length))}%)`; };
+console.log(`  fields: nsfw ${share(r => r.nsfw)}, tags ${share(r => r.t && r.t.length)}, cover ${share(r => r.c)}, tokens ${share(r => Number.isFinite(r.tok))}, lorebook ${share(r => r.lb)}, creator ${share(r => r.cr)}`);
 for (const e of res.errors.slice(0, 5)) console.log("  error: " + JSON.stringify(e).slice(0, 200));
 for (const u of refused.slice(0, 5)) console.log("  refused: " + u);
