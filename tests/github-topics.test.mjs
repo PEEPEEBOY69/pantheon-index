@@ -42,3 +42,26 @@ test("search failure for one topic is isolated", async () => {
   const f = createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl });
   const { records, errors } = await crawl(f, { ts: 3, token: undefined }); assert.equal(records.length, 2); assert.equal(errors.length, 1, "one refused query, one error, every other query still crawls");
 });
+
+// 2026-10-20: 127 of the 265 repos one night read were apps (SillyTavern forks, tools) whose PNGs are UI art and whose
+// JSON is config; they took two thirds of the 6,000-file budget. Their likely-card files now come first, with every
+// collection's, and their other files only get what budget is left. Nothing is skipped that budget allows.
+test("crawl: an app's card-like folders and every collection come first; an app's other files only get the budget left", async () => {
+  const cardPng = buildPngWithText([["chara", Buffer.from(JSON.stringify(card)).toString("base64")]]);
+  const src = Array.from({ length: 40 }, (_, i) => ({ path: `src/m${i}.js`, type: "blob", size: 10 }));
+  const appTree = { tree: [...src, { path: "public/img/logo.png", type: "blob", size: 100 }, { path: "locales/en.json", type: "blob", size: 100 }, { path: "default/characters/Seraphina.png", type: "blob", size: 100 }] };
+  const collTree = { tree: [{ path: "alice.png", type: "blob", size: 100 }, { path: "bob.png", type: "blob", size: 100 }] };
+  const searchBody = { items: [{ full_name: "dev/some-tavern-app", default_branch: "main", topics: ["sillytavern"] }, { full_name: "fan/cards", default_branch: "main", topics: ["character-cards"] }] };
+  const impl = fakeFetch([
+    { match: "https://api.github.com/search/repositories?", body: searchBody },
+    { match: "https://api.github.com/repos/dev/some-tavern-app/git/trees/main", body: appTree },
+    { match: "https://api.github.com/repos/fan/cards/git/trees/main", body: collTree },
+    { match: "https://raw.githubusercontent.com/", body: cardPng },
+  ]);
+  const order = () => impl.calls.filter(c => c.url.startsWith("https://raw.githubusercontent.com/")).map(c => c.url.replace("https://raw.githubusercontent.com/", ""));
+  await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1, token: "", limits: { files: 3 } });
+  assert.deepEqual(order(), ["dev/some-tavern-app/main/default/characters/Seraphina.png", "fan/cards/main/alice.png", "fan/cards/main/bob.png"], "a 3-file budget goes to the likely cards, not the logo or the locale file");
+  impl.calls.length = 0;
+  await crawl(createFetcher({ minIntervalMs: 0, retries: 0, fetchImpl: impl }), { ts: 1, token: "", limits: { files: 10 } });
+  assert.deepEqual(order().slice(3).sort(), ["dev/some-tavern-app/main/locales/en.json", "dev/some-tavern-app/main/public/img/logo.png"], "with budget left, the app's other files are still read");
+});

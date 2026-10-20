@@ -17,6 +17,11 @@ export const meta = {
 // to be a grid thumbnail. Anything bigger stays coverless rather than making the grid crawl.
 const COVER_MAX = 600 * 1024;
 const MAX_FILE = 2 * 1024 * 1024;
+// An app (30+ source files) keeps its cards in folders named for them; a repo named for cards is a collection, whatever else it holds.
+const SOURCE_FILE = /\.(js|mjs|cjs|ts|tsx|jsx|py|vue|svelte|go|rs|java|cs|cpp|c|h|rb|php|kt|swift|dart|lua)$/i;
+const APP_SOURCE_FILES = 30;
+const CARDISH_DIR = /(^|\/)[^/]*(char|card|bot|persona|lore|world|preset|tavern|chub)[^/]*\//i;
+const CARDISH_REPO = /(char|card|bot|persona|lore|world)/i;
 
 export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, limits = {}, log = () => {}, deadline = Infinity }) {
   const { repos: maxRepos = 320, filesPerRepo = 300, files: fileBudget = 6000 } = limits || {};
@@ -29,37 +34,47 @@ export async function crawl(fetcher, { ts, token = process.env.GITHUB_TOKEN, lim
       for (const r of body?.items || []) if (r && r.full_name && !repos.has(r.full_name)) repos.set(r.full_name, r);
     } catch (e) { errors.push({ topic, message: String(e.message || e) }); }
   }
+  // 2026-10-20: two passes. A night read 265 repos and 127 were apps (SillyTavern forks, tools) whose PNGs are UI art
+  // and whose JSON is config, and they took two thirds of the file budget. So every repo's tree is read first (API
+  // calls, not budget); then every collection's files and the card-like folders of the apps; then, with what budget is
+  // left, the apps' other files. Nothing that fit the budget before is skipped, it is only read later.
+  const first = []; const later = []; const perRepo = new Map();
   for (const r of [...repos.values()].slice(0, maxRepos)) {
-    if (spent >= fileBudget) { log(`${meta.id}: file budget ${fileBudget} spent, stopping`); break; }
-    if (Date.now() > deadline) { log(`${meta.id}: past the crawl deadline, stopping with ${byId.size} records`); break; }
+    if (Date.now() > deadline) { log(`${meta.id}: past the crawl deadline, stopping before the trees of the rest`); break; }
     const branch = r.default_branch || "main";
     try {
       const { body } = await fetcher.json(`https://api.github.com/repos/${r.full_name}/git/trees/${branch}?recursive=1`, { headers });
+      const blobs = (body?.tree || []).filter(f => f.type === "blob");
       // Names a card is never stored under. The detector already refuses these once fetched; skipping
       // them here spends none of the per-crawl file budget on them (194 of 520 records from this
       // source were package.json before the detector was tightened, 2026-09-10).
-      const files = (body?.tree || []).filter(f => f.type === "blob" && f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path) && !NOT_A_CARD.test(f.path)).slice(0, Math.min(filesPerRepo, fileBudget - spent));
-      spent += files.length;
-      for (const f of files) {
-        const url = `https://raw.githubusercontent.com/${r.full_name}/${branch}/${f.path}`;
-        const origin = `https://github.com/${r.full_name}/blob/${branch}/${f.path}`;
-        const nid = `${r.full_name}/${f.path}`;
-        try {
-          let obj, format;
-          if (/\.png$/i.test(f.path)) { obj = parseCardPng((await fetcher.bytes(url)).body); format = obj ? "ccv2png" : null; }
-          else { obj = (await fetcher.json(url)).body; format = detectFormat(obj); }
-          if (!obj || !format) continue;
-          if (format === "stwi") {
-            const lb = lorebookFromStWi(obj); if (!lb) continue;
-            byId.set(`github:lorebook:${nid}`, makeRecord({ src: meta.id, k: "lorebook", nid, n: lb.name, b: lb.description || `${lb.entries.length} entries`, t: r.topics, c: null, nsfw: isNsfwTags(r.topics), o: origin, p: { tr: "plain", u: url, f: "stwi" }, caps: meta.caps, tok: estimateTokens(lb), ts }));
-          } else {
-            const c = characterFromCard(obj); if (!c) continue;
-            byId.set(`github:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : r.topics, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null), nsfw: isNsfwTags(c.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
-          }
-        } catch (e) { if (!(e instanceof RecordError)) errors.push({ file: url, message: String(e.message || e) }); }
-      }
-      log(`${meta.id}: ${r.full_name} → ${files.length} files`);
+      const files = blobs.filter(f => f.size <= MAX_FILE && /\.(png|json)$/i.test(f.path) && !NOT_A_CARD.test(f.path));
+      const isApp = blobs.filter(f => SOURCE_FILE.test(f.path)).length >= APP_SOURCE_FILES && !CARDISH_REPO.test(r.name || r.full_name);
+      for (const f of files) (isApp && !CARDISH_DIR.test(f.path) ? later : first).push({ r, branch, f });
+      log(`${meta.id}: ${r.full_name} → ${files.length} files${isApp ? " (an app)" : ""}`);
     } catch (e) { errors.push({ repo: r.full_name, message: String(e.message || e) }); }
+  }
+  for (const { r, branch, f } of [...first, ...later]) {
+    if (spent >= fileBudget) { log(`${meta.id}: file budget ${fileBudget} spent, stopping`); break; }
+    if (Date.now() > deadline) { log(`${meta.id}: past the crawl deadline, stopping with ${byId.size} records`); break; }
+    const n = perRepo.get(r.full_name) || 0; if (n >= filesPerRepo) continue;
+    perRepo.set(r.full_name, n + 1); spent++;
+    const url = `https://raw.githubusercontent.com/${r.full_name}/${branch}/${f.path}`;
+    const origin = `https://github.com/${r.full_name}/blob/${branch}/${f.path}`;
+    const nid = `${r.full_name}/${f.path}`;
+    try {
+      let obj, format;
+      if (/\.png$/i.test(f.path)) { obj = parseCardPng((await fetcher.bytes(url)).body); format = obj ? "ccv2png" : null; }
+      else { obj = (await fetcher.json(url)).body; format = detectFormat(obj); }
+      if (!obj || !format) continue;
+      if (format === "stwi") {
+        const lb = lorebookFromStWi(obj); if (!lb) continue;
+        byId.set(`github:lorebook:${nid}`, makeRecord({ src: meta.id, k: "lorebook", nid, n: lb.name, b: lb.description || `${lb.entries.length} entries`, t: r.topics, c: null, nsfw: isNsfwTags(r.topics), o: origin, p: { tr: "plain", u: url, f: "stwi" }, caps: meta.caps, tok: estimateTokens(lb), ts }));
+      } else {
+        const c = characterFromCard(obj); if (!c) continue;
+        byId.set(`github:character:${nid}`, makeRecord({ src: meta.id, k: "character", nid, n: c.name, b: c.creator_notes || c.description, t: c.tags.length ? c.tags : r.topics, c: c.avatar || (format === "ccv2png" && f.size <= COVER_MAX ? url : null), nsfw: isNsfwTags(c.tags), o: origin, p: { tr: "plain", u: url, f: format }, caps: meta.caps, tok: estimateTokens(c), ts }));
+      }
+    } catch (e) { if (!(e instanceof RecordError)) errors.push({ file: url, message: String(e.message || e) }); }
   }
   return { records: [...byId.values()], errors };
 }
