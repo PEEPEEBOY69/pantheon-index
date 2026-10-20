@@ -18,12 +18,23 @@ export const meta = {
 
 const encPath = (p) => String(p).split("/").map(encodeURIComponent).join("/");
 
-// The database's own categories as tags; its rating goes to the nsfw flag instead.
+// The database's own categories as tags; its rating goes to the nsfw flag instead. Its keys come spelled every way
+// ("Rating", "Age Group", "age_group"; ~900 of 934 capitalised, 2026-10-20), so they are read case- and spacing-blind.
+// The explicit fields (sexual content, preferences, experience, fetishes) mark a card NSFW and are not shown as tags.
+const keyed = cat => { const out = {}; for (const [k, v] of Object.entries(cat || {})) out[String(k).toLowerCase().replace(/[_\s]+/g, " ").trim()] = v; return out; };
+const list = v => (Array.isArray(v) ? v : typeof v === "string" && v.trim() ? [v] : []).filter(x => typeof x === "string" && x.trim()).map(x => x.trim());
+const TAG_KEYS = ["genre", "species", "gender", "role", "personality", "source", "setting", "age group", "physical traits", "work name"];
+const EXPLICIT_KEYS = ["sexual content", "sexual preferences", "sexual experience", "fetishes"];
 export function tagsOf(cat) {
-  const c = cat || {};
-  const out = [];
-  for (const k of ["genre", "species", "gender", "role", "personality", "source"]) for (const v of Array.isArray(c[k]) ? c[k] : []) if (typeof v === "string" && v.trim()) out.push(v.trim());
+  const c = keyed(cat); const out = [];
+  for (const k of TAG_KEYS) for (const v of list(c[k])) if (!out.includes(v)) out.push(v);
   return out;
+}
+export function isNsfwEntry(manifest, path) {
+  const c = keyed(manifest && manifest.categories);
+  if (list(c.rating).some(r => r.toLowerCase() === "nsfw")) return true;
+  if (/^nsfw\//i.test(String(path || ""))) return true;
+  return EXPLICIT_KEYS.some(k => list(c[k]).some(v => !/^(none|no)$/i.test(v)));
 }
 
 export async function crawl(fetcher, { ts, log = () => {} }) {
@@ -39,7 +50,7 @@ export async function crawl(fetcher, { ts, log = () => {} }) {
       records.push(makeRecord({
         src: meta.id, k: "character", nid: path.replace(/\s+/g, "_"), n: String(m.name), b: typeof m.description === "string" ? m.description : "",
         t: tagsOf(m.categories), c: typeof m.imageUrl === "string" && /^https:\/\//.test(m.imageUrl) ? m.imageUrl : null,
-        nsfw: String((m.categories || {}).rating || "").toLowerCase() === "nsfw",
+        nsfw: isNsfwEntry(m, path),
         o: meta.originBase + encPath(path),
         p: { tr: "plain", u: REPO + encPath(m.downloadPath), f: "dexiegz" },
         caps: meta.caps, ts, cr: typeof m.author === "string" ? m.author : "",

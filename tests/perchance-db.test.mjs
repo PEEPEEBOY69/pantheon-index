@@ -56,3 +56,20 @@ test("crawl: an index that is not an array is one error, no records", async () =
   assert.equal(records.length, 0);
   assert.equal(errors.length, 1);
 });
+
+// 2026-10-20: the database spells its category keys "Rating", "Genre", "Age Group" on ~900 of 934 characters; the
+// adapter read only lowercase keys, so it flagged 6 of the 414 the database rates NSFW (408 showed under Safe) and gave 2%
+// of them any tags. Keys are now read case- and spacing-blind, and NSFW also follows the nsfw/ folder and any sexual field.
+test("categories in any spelling: NSFW from the rating, the folder or a sexual field; the descriptive ones become tags", async () => {
+  const { tagsOf, isNsfwEntry } = await import("../crawler/adapters/perchance-db.mjs");
+  const cap = { Rating: "nsfw", Species: ["Human"], Gender: ["Female"], Genre: ["Romance"], "Age Group": ["Adult"], "Physical Traits": ["Tall"], Role: ["Rival"], Personality: ["Bold"], Source: ["Original"], "Work Name": ["Saga"], "Sexual Content": ["Anal sex"], Fetishes: ["x"] };
+  assert.equal(isNsfwEntry({ categories: cap }, "ai-character-chat/characters/a"), true);
+  assert.equal(isNsfwEntry({ categories: { Rating: ["NSFW"] } }, "a"), true, "a list rating, any case");
+  assert.equal(isNsfwEntry({ categories: { rating: "sfw", "Sexual Content": ["Seduction"] } }, "a"), true, "a sexual field outweighs a sfw rating");
+  assert.equal(isNsfwEntry({ categories: { rating: "sfw" } }, "nsfw/Someone"), true, "the nsfw/ folder");
+  assert.equal(isNsfwEntry({ categories: { Rating: "sfw", Genre: ["Comedy"] } }, "sfw/Someone"), false);
+  const tags = tagsOf(cap);
+  for (const t of ["Romance", "Human", "Female", "Rival", "Bold", "Original", "Adult", "Tall", "Saga"]) assert.ok(tags.includes(t), t);
+  assert.ok(!tags.includes("Anal sex") && !tags.includes("x"), "explicit fields are not tags");
+  assert.deepEqual(tagsOf({ genre: ["Comedy"], age_group: ["Teen"] }), ["Comedy", "Teen"], "lowercase and underscores still read");
+});
