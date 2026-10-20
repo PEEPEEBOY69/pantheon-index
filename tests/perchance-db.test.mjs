@@ -73,3 +73,24 @@ test("categories in any spelling: NSFW from the rating, the folder or a sexual f
   assert.ok(!tags.includes("Anal sex") && !tags.includes("x"), "explicit fields are not tags");
   assert.deepEqual(tagsOf({ genre: ["Comedy"], age_group: ["Teen"] }), ["Comedy", "Teen"], "lowercase and underscores still read");
 });
+
+// 2026-10-20: the database gave no token counts, so its 926 characters left the results whenever someone chose a Length.
+// Each card is the official chat's export (~5 KB gzipped): read once for its size and its lorebook links, then reused
+// while its name, cover and tags stay the same.
+test("crawl reads each card once for its tokens and lorebook, and reuses them while the card is unchanged", async () => {
+  const { gzipSync } = await import("node:zlib");
+  const { dexieStats } = await import("../crawler/adapters/perchance-db.mjs");
+  const card = (role, msgs, lore) => gzipSync(Buffer.from(JSON.stringify({ formatName: "dexie", data: { data: [{ tableName: "characters", rows: [{ name: "X", roleInstruction: role, reminderMessage: "", initialMessages: msgs.map(content => ({ author: "ai", content })), loreBookUrls: lore }] }] } })));
+  assert.deepEqual(dexieStats(card("a".repeat(400), ["b".repeat(39)], ["https://x/l.txt"])), { tok: 110, lb: true });
+  assert.equal(dexieStats(Buffer.from("not gzip")), null);
+  const routes = () => fakeFetch([{ match: meta.indexUrl, body: sample }, { match: "https://raw.githubusercontent.com/nosfertm/perchance-character-database/main/ai-character-chat/characters/sfw/Ike", body: new Uint8Array(card("x".repeat(800), [], [])) }]);
+  const impl = routes();
+  const first = await crawl(createFetcher({ fetchImpl: impl, minIntervalMs: 0 }), { ts: 7 });
+  const ike = first.records.find(r => r.n === "Ike");
+  assert.equal(ike.tok, 200); assert.equal(ike.lb, false);
+  assert.equal(first.errors.length, 0, "a card that cannot be read keeps no count and is not an error");
+  const again = routes();
+  const second = await crawl(createFetcher({ fetchImpl: again, minIntervalMs: 0 }), { ts: 8, previous: first.records });
+  assert.equal(second.records.find(r => r.n === "Ike").tok, 200);
+  assert.ok(!again.calls.some(c => c.url.endsWith("character.gz") && c.url.includes("Ike")), "an unchanged card is not read again");
+});
