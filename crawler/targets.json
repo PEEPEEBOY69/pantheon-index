@@ -101,5 +101,18 @@
   "format": "aicc-hash",
   "verified": true,
   "note": "verified 2026-09-05: the same #{addCharacter:\u2026} hash as ai-character-chat opened its Basic Info panel with the name prefilled, watched in a browser."
+ },
+ {
+  "id": "sonder",
+  "label": "Sonder",
+  "url": "https://perchance.org/sonder-ai-character-chat?pan={id}",
+  "kinds": [
+   "character",
+   "lorebook",
+   "scenario"
+  ],
+  "receiver": true,
+  "verified": true,
+  "note": "verified 2026-10-21: ?pan=aicharactercards:character:100 on the live page reached the generator frame (Perchance forwards the query string) and Sonder opened Astarion from the library with add / add & chat, watched in a browser. Sonder reads ?pan at boot through pan.receive(); lorebooks and scenarios take the same road (a scenario becomes a narrator character), covered by Sonder's own flows, not yet watched live."
  }
 ]
