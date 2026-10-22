@@ -4,17 +4,41 @@ const arr = v => (Array.isArray(v) ? v : []);
 const NSFW_TAGS = new Set(["nsfw", "adult", "18+", "explicit", "erotic", "smut", "mature", "lewd"]);
 export const isNsfwTags = tags => arr(tags).some(t => NSFW_TAGS.has(String(t).trim().toLowerCase()));
 
+// A card's lore timing (2026-10-22): chance, delay, sticky, cooldown, inclusion group and second-key logic, read from a
+// card v2 entry's `extensions` or SillyTavern world info's top level, kept in a compact `extensions` only when they differ
+// from the default. Without them Cash's isekai card put its 1% and 5% encounters into every message of a character chat.
+function timingFrom(e) {
+  const x = e.extensions && typeof e.extensions === "object" ? e.extensions : {};
+  const pick = (...v) => v.find(y => y !== undefined && y !== null && y !== "");
+  const int = v => { const n = Math.floor(Number(v)); return Number.isFinite(n) && n > 0 ? n : 0; };
+  const out = {};
+  const useProb = pick(x.useProbability, e.useProbability);
+  const prob = Number(pick(x.probability, e.probability));
+  if (useProb !== false && Number.isFinite(prob) && prob >= 0 && prob < 100) { out.probability = prob; out.useProbability = true; }
+  for (const k of ["delay", "sticky", "cooldown"]) { const n = int(pick(x[k], e[k])); if (n) out[k] = n; }
+  const group = str(pick(x.group, e.group)).trim();
+  if (group) out.group = group;
+  if (pick(x.group_override, e.groupOverride) === true) out.group_override = true;
+  const gw = Number(pick(x.group_weight, e.groupWeight));
+  if (Number.isFinite(gw) && gw >= 0 && gw !== 100) out.group_weight = gw;
+  const logic = Number(pick(x.selectiveLogic, e.selectiveLogic));
+  if (logic === 1 || logic === 2 || logic === 3) out.selectiveLogic = logic;
+  return Object.keys(out).length ? out : null;
+}
+
 function entryFrom(e, i) {
   if (!e || typeof e !== "object") return null;
   const keys = arr(e.keys ?? e.key ?? e.triggers).map(str).filter(Boolean);
   const content = str(e.content);
   if (!content && keys.length === 0) return null;
+  const timing = timingFrom(e);
   return {
     title: str(e.name || e.comment || e.title || (keys[0] ?? `entry ${i + 1}`)),
     keys, secondary_keys: arr(e.secondary_keys ?? e.keysecondary).map(str).filter(Boolean),
     content, enabled: e.enabled !== undefined ? Boolean(e.enabled) : !e.disable,
     constant: Boolean(e.constant), position: e.position ?? null,
     insertion_order: Number.isFinite(e.insertion_order) ? e.insertion_order : Number.isFinite(e.order) ? e.order : i,
+    ...(timing ? { extensions: timing } : {}),
   };
 }
 function bookFrom(b) {
