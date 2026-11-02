@@ -2,6 +2,7 @@
 // measured 2026-08-21; keys measured 2026-09-01). Third-party upload — mirror the *index*, not the file.
 import { makeRecord, RecordError } from "../lib/record.mjs";
 import { scenarioFromPerchanceRp, isNsfwTags, estimateTokens } from "../lib/normalise.mjs";
+import { enrichScenarioTags } from "../lib/scenario-tags.mjs";
 
 export const meta = {
   id: "perchance-rp", label: "Perchance RP scenarios", kinds: ["scenario"], status: "live", transport: "crawler",
@@ -22,7 +23,7 @@ export async function crawl(fetcher, { ts, log = () => {} }) {
     if (!s || !raw.id) { skipped++; continue; }
     try {
       records.push(makeRecord({
-        src: meta.id, k: "scenario", nid: raw.id, n: s.title, b: s.blurb, t: s.tags, c: s.cover, nsfw: isNsfwTags(s.tags),
+        src: meta.id, k: "scenario", nid: raw.id, n: s.title, b: s.blurb, t: enrichScenarioTags(s), c: s.cover, nsfw: isNsfwTags(s.tags),
         o: meta.originBase + encodeURIComponent(String(raw.id)),
         p: { tr: "index", u: meta.blobUrl, f: "prp" }, caps: meta.caps, tok: estimateTokens(s), ts,
       }));
