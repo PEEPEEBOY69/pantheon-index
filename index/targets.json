@@ -114,5 +114,28 @@
   "receiver": true,
   "verified": true,
   "note": "verified 2026-10-21: ?pan=aicharactercards:character:100 on the live page reached the generator frame (Perchance forwards the query string) and Sonder opened Astarion from the library with add / add & chat, watched in a browser. Sonder reads ?pan at boot through pan.receive(); lorebooks and scenarios take the same road (a scenario becomes a narrator character), covered by Sonder's own flows, not yet watched live."
+ },
+ {
+  "id": "mnoengine",
+  "label": "MNO RPG Engine",
+  "url": "https://perchance.org/mnoengine",
+  "kinds": [
+   "scenario"
+  ],
+  "receiver": false,
+  "format": "mno-upload",
+  "verified": true,
+  "note": "read from its source 2026-11-02: ?importdata=[<name>~]<32 hex>.gz, fetched only from user.uploads.dev and gunzipped; an mno-world file loads directly. The plugin builds the world, uploads it gzipped and checks the name it gets back; when the name is not <32 hex>.gz the world downloads and MNO opens on Import World."
+ },
+ {
+  "id": "vellum",
+  "label": "Vellum",
+  "url": "https://perchance.org/vellum-rpg?pan={id}",
+  "kinds": [
+   "scenario"
+  ],
+  "receiver": true,
+  "verified": false,
+  "note": "Vellum reads Pantheon through the plugin; its ?pan=<id> receive is the contract sent to the Vellum session 2026-11-02. Unverified, so hidden, until Vellum ships it and Open in Vellum is watched live."
  }
 ]
