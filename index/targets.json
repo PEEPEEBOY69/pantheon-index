@@ -25,6 +25,18 @@
   "note": "2026-09-02: ai-rpg loads #data=uup1:<upload> / #data=<url> as a shared adventure (format perchance-ai-rpg-v1, read from its source)"
  },
  {
+  "id": "as-rpg",
+  "label": "AS-RPG",
+  "url": "https://perchance.org/as-rpg",
+  "kinds": [
+   "scenario"
+  ],
+  "receiver": false,
+  "format": "airpg-upload",
+  "verified": true,
+  "note": "read from its source 2026-11-02: #data=uup1:<file> (or a URL), plain or .gz, parsed as perchance-ai-rpg-v1 and added as a new adventure, the same contract as ai-rpg."
+ },
+ {
   "id": "ai-girlfriend-chat",
   "label": "AI Girlfriend Chat",
   "url": "https://perchance.org/ai-girlfriend-chat",
