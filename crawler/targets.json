@@ -74,7 +74,10 @@
   "receiver": false,
   "verified": true,
   "note": "Read from its source 2026-09-09: its perchance-ai-rpg-v1 importer maps codexStructured.npcs[] to the cast, the protagonist fields to the protagonist, and codexTrackedInfo to a locked lore entry \u2014 so characters and lorebooks ride the same #data=uup1: door as scenarios, with no receiver code anywhere.",
-  "format": "airpg-upload"
+  "format": "airpg-upload",
+  "accepts": [
+   "blizzardui-setup"
+  ]
  },
  {
   "id": "aether",
